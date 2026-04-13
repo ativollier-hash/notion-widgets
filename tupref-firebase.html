@@ -10,23 +10,31 @@ body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
 .w{background:#fff;border-radius:22px;padding:24px;max-width:700px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
 h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
 .day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px}
-.step{font-size:12px;color:#9a958e;margin-bottom:12px;font-style:italic}
+.info{font-size:12px;color:#9a958e;margin-bottom:12px;font-style:italic}
 .who{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
 .wbtn{padding:10px 22px;border:2.5px solid #ece8e2;border-radius:14px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .15s;color:#2d2a26}
 .wbtn:hover{border-color:#e07a5f;color:#e07a5f}
 .wbtn.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
-.wbtn.done{border-color:#6bbd7b;background:#6bbd7b;color:#fff;pointer-events:none}
 .qnum{font-size:10px;color:#c5c0b8;margin-bottom:8px}
-.opts{display:flex;gap:12px;margin-bottom:14px}
+.opts{display:flex;gap:12px;margin-bottom:12px}
 .opt{flex:1;padding:16px 12px;border:2.5px solid #ece8e2;border-radius:16px;background:#faf8f5;cursor:pointer;transition:all .25s}
 .opt:hover{border-color:#e07a5f;transform:translateY(-2px)}
+.opt.sel{border-color:#e07a5f;background:rgba(224,122,95,.06)}
 .opt.off{pointer-events:none;opacity:.5}
-.opt.picked{border-color:#e07a5f;background:rgba(224,122,95,.06)}
 .opt.match{border-color:#6bbd7b;background:rgba(107,189,123,.06)}
+.opt.picked{border-color:#e07a5f;background:rgba(224,122,95,.06)}
 .opt.dim{opacity:.35}
 .opt .emoji{font-size:28px;margin-bottom:4px}
 .opt .txt{font-family:'Playfair Display',serif;font-size:14px;color:#2d2a26;line-height:1.3}
-.players{display:flex;gap:20px;justify-content:center;margin-bottom:10px}
+.whybox{margin:10px auto;max-width:420px;display:none}
+.whybox.v{display:block;animation:fi .3s ease}
+.whybox label{font-size:11px;color:#9a958e;font-weight:600;display:block;margin-bottom:4px;text-align:left}
+.whybox textarea{width:100%;padding:8px 12px;border:1.5px solid #ece8e2;border-radius:10px;font-family:'Nunito',sans-serif;font-size:12px;color:#2d2a26;background:#faf8f5;resize:none;outline:none;min-height:36px}
+.whybox textarea:focus{border-color:#e07a5f}
+.validate{margin-top:8px;padding:10px 28px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s;display:none}
+.validate.v{display:inline-block}
+.validate:hover{background:#c9694f;transform:translateY(-1px)}
+.players{display:flex;gap:20px;justify-content:center;margin:12px 0}
 .player{text-align:center;min-width:80px}
 .player .nm{font-size:11px;font-weight:700;color:#2d2a26}
 .player .st{font-size:22px;margin-top:2px;min-height:30px}
@@ -37,21 +45,14 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .result.diff{background:linear-gradient(135deg,#fff5f2,#fef9f0)}
 .result .rtxt{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26}
 .result .rsub{font-size:11px;color:#9a958e;margin-top:2px}
-.whybox{margin:10px auto;max-width:420px;display:none}
-.whybox.v{display:block;animation:fi .3s ease}
-.whybox label{font-size:11px;color:#9a958e;font-weight:600;display:block;margin-bottom:4px}
-.whybox textarea{width:100%;padding:8px 12px;border:1.5px solid #ece8e2;border-radius:10px;font-family:'Nunito',sans-serif;font-size:12px;color:#2d2a26;background:#faf8f5;resize:none;outline:none;min-height:36px}
-.whybox textarea:focus{border-color:#e07a5f}
-.whybox .sendbtn{margin-top:4px;padding:6px 16px;border:none;border-radius:8px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer}
-.whybox .sendbtn:hover{background:#c9694f}
 .whys{margin:8px auto;max-width:500px;text-align:left;display:none}
 .whys.v{display:block;animation:fi .4s ease}
 .wb{padding:10px 14px;background:#faf8f5;border-radius:12px;margin-bottom:6px;font-size:12px;color:#2d2a26}
 .wb b{color:#e07a5f}
-.nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 .btn{padding:7px 16px;border:2px solid #ece8e2;border-radius:10px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;transition:all .15s;color:#2d2a26}
 .btn:hover{border-color:#e07a5f;color:#e07a5f}
-.rst{font-size:9px;color:#c5c0b8;border-color:#f0ebe4;margin-top:8px}
+.rst{font-size:9px;color:#c5c0b8;border-color:#f0ebe4;margin-top:6px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
 .status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
 .ft{margin-top:10px;font-size:9px;color:#c5c0b8}
@@ -62,12 +63,12 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <div class="w">
 <h2>Tu Préfères ? 🎮</h2>
 <div class="day" id="day"></div>
-<div class="step" id="step">Sélectionne ton nom pour voter</div>
-<div class="who" id="whoDiv">
-<button class="wbtn" id="wa" onclick="setWho('a')">🏰 Alexandre</button>
-<button class="wbtn" id="wk" onclick="setWho('k')">🐟 Klara</button>
+<div class="info" id="info">Choisis ton nom, ta réponse, dis pourquoi, et valide !</div>
+<div class="who">
+<button class="wbtn" id="wa" onclick="toggleWho('a')">🏰 Alexandre</button>
+<button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara</button>
 </div>
-<div id="content"></div>
+<div id="qzone"></div>
 <div class="status" id="status"></div>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
@@ -93,7 +94,7 @@ var qs=[
 ["❄️","Froid pour toujours","☀️","Chaud pour toujours"],
 ["🏠","Rester à la maison","✈️","Voyager non-stop"],
 ["🐶","Avoir un chien","🐱","Avoir un chat"],
-["💰","Riche sans temps libre","⏰","Temps libre sans argent"],
+["💰","Riche sans temps","⏰","Temps libre sans argent"],
 ["🎤","Chanter en public","💃","Danser en public"],
 ["📱","Sans téléphone 1 mois","🍫","Sans sucre 1 mois"],
 ["🏝️","Île déserte + wifi","🏙️","Grande ville sans wifi"],
@@ -119,153 +120,119 @@ var qs=[
 ["🤿","Plongée","🪂","Parachute"],
 ["🏡","Maison campagne","🏢","Appart en ville"],
 ["🎄","Noël ensemble","🎆","Nouvel an ensemble"],
-["🐎","Balade à cheval","🚴","Balade à vélo"],
+["🐎","Cheval","🚴","Vélo"],
 ["🍦","Glace","🧁","Gâteau"],
-["📞","Appel surprise","💬","Long message écrit"],
-["🌺","Recevoir des fleurs","🧸","Cadeau fait main"],
+["📞","Appel surprise","💬","Long message"],
+["🌺","Fleurs","🧸","Cadeau fait main"],
 ["🎯","Top 1 dans 1 sport","🏅","Bon dans 10 sports"]
 ];
-var me=null,idx=0,today=new Date().toISOString().slice(0,10);
-var justVoted=false;
-
-document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+var me=null,myPick=null,idx=0;
+var today=new Date().toISOString().slice(0,10);
 idx=Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/(1000*60*60*24))%qs.length;
 
-function setWho(w){
-  if(me===w){me=null}else{me=w}
-  document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
-  document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
-  document.getElementById('step').textContent=me?'Choisis ta réponse !':'Sélectionne ton nom pour voter';
-  listenQ();
-}
+document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
 
-function deselect(){
-  me=null;
-  document.getElementById('wa').className='wbtn';
-  document.getElementById('wk').className='wbtn';
-  document.getElementById('step').textContent='Sélectionne ton nom pour voter';
-}
+function toggleWho(w){me=me===w?null:w;myPick=null;
+document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
+document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
+document.getElementById('info').textContent=me?'Choisis ta réponse ↓':'Choisis ton nom';
+listenQ();}
 
 function getRef(){return db.collection('couple').doc('tpref-'+today+'-'+idx)}
 
+function selectOpt(opt){myPick=opt;listenQ();}
+
+function validate(){
+if(!me||!myPick)return;
+var why=document.getElementById('whyIn')?document.getElementById('whyIn').value.trim():'';
+var u={};
+u[me]=myPick;
+u['why_'+me]=why;
+u['date']=today;
+u['q']=idx;
+getRef().set(u,{merge:true}).then(function(){
+  document.getElementById('status').textContent='✅ Validé !';
+  me=null;myPick=null;
+  document.getElementById('wa').className='wbtn';
+  document.getElementById('wk').className='wbtn';
+  document.getElementById('info').textContent='Vote envoyé ! En attente de l\'autre...';
+  setTimeout(function(){document.getElementById('status').textContent=''},2000);
+});
+}
+
 function buildUI(data){
-  var d=data||{};
-  var q=qs[idx];
-  var both=d.a&&d.k;
-  var isMatch=both&&d.a===d.k;
-  var canPick=me&&!d[me];
-
-  if(me&&d[me]&&!justVoted){
-    document.getElementById('wa').className='wbtn'+(me==='a'?' done':'');
-    document.getElementById('wk').className='wbtn'+(me==='k'?' done':'');
-    document.getElementById('step').textContent='Vote enregistré ! En attente de l\'autre...';
-  }
-
-  var html='<div class="qnum">Question '+(idx+1)+' / '+qs.length+'</div>';
-  html+='<div class="opts">';
-  ['A','B'].forEach(function(opt){
-    var ei=opt==='A'?0:2;var ti=opt==='A'?1:3;
-    var cls='opt';
-    if(both){
-      if(d.a===opt&&d.k===opt)cls+=' match';
-      else if(d.a===opt||d.k===opt)cls+=' picked';
-      else cls+=' dim';
-    }else if(!canPick){
-      cls+=' off';
-    }
-    html+='<div class="'+cls+'" onclick="pick(\''+opt+'\')">';
-    html+='<div class="emoji">'+q[ei]+'</div><div class="txt">'+q[ti]+'</div></div>';
-  });
-  html+='</div>';
-
-  html+='<div class="players">';
-  [{w:'a',nm:'Alexandre',ic:'🏰'},{w:'k',nm:'Klara',ic:'🐟'}].forEach(function(p){
-    html+='<div class="player"><div class="nm">'+p.ic+' '+p.nm+'</div>';
-    if(both){html+='<div class="st">'+qs[idx][d[p.w]==='A'?0:2]+'</div>'}
-    else if(d[p.w]){html+='<div class="st">✅</div>'}
-    else{html+='<div class="wait">En attente...</div>'}
-    html+='</div>';
-  });
-  html+='</div>';
-
+var d=data||{};
+var q=qs[idx];
+var both=d.a&&d.k;
+var isMatch=both&&d.a===d.k;
+var alreadyVoted=me&&d[me];
+var canPick=me&&!alreadyVoted;
+var html='<div class="qnum">Question '+(idx+1)+' / '+qs.length+'</div>';
+html+='<div class="opts">';
+['A','B'].forEach(function(opt){
+  var ei=opt==='A'?0:2;var ti=opt==='A'?1:3;
+  var cls='opt';
   if(both){
-    html+='<div class="result v '+(isMatch?'match':'diff')+'">';
-    html+='<div class="rtxt">'+(isMatch?'🎉 Match !':'😄 Pas d\'accord !')+'</div>';
-    html+='<div class="rsub">'+(isMatch?'Vous pensez pareil !':'C\'est ça qui est fun')+'</div></div>';
+    if(d.a===opt&&d.k===opt)cls+=' match';
+    else if(d.a===opt||d.k===opt)cls+=' picked';
+    else cls+=' dim';
+  }else if(canPick&&myPick===opt){cls+=' sel'}
+  else if(!canPick){cls+=' off'}
+  html+='<div class="'+cls+'" onclick="selectOpt(\''+opt+'\')">';
+  html+='<div class="emoji">'+q[ei]+'</div><div class="txt">'+q[ti]+'</div></div>';
+});
+html+='</div>';
 
-    if(me&&!d['why_'+me]){
-      html+='<div class="whybox v"><label>Pourquoi ce choix ?</label>';
-      html+='<textarea id="whyIn" placeholder="Parce que..."></textarea>';
-      html+='<button class="sendbtn" onclick="sendWhy()">Envoyer</button></div>';
-    }
+if(canPick&&myPick){
+  html+='<div class="whybox v"><label>Pourquoi ce choix ? (optionnel)</label>';
+  html+='<textarea id="whyIn" placeholder="Parce que..."></textarea></div>';
+  html+='<button class="validate v" onclick="validate()">Valider ✓</button>';
+}
 
-    if(d.why_a||d.why_k){
-      html+='<div class="whys v">';
-      if(d.why_a)html+='<div class="wb"><b>🏰 Alexandre :</b> '+d.why_a+'</div>';
-      if(d.why_k)html+='<div class="wb"><b>🐟 Klara :</b> '+d.why_k+'</div>';
-      html+='</div>';
-    }
-
-    document.getElementById('step').textContent='Résultat !';
-  }
-
-  html+='<div class="nav">';
-  html+='<button class="btn" onclick="nav(-1)">←</button>';
-  html+='<button class="btn" onclick="rand()">🎲 Aléatoire</button>';
-  html+='<button class="btn" onclick="nav(1)">→</button>';
+html+='<div class="players">';
+[{w:'a',nm:'Alexandre',ic:'🏰'},{w:'k',nm:'Klara',ic:'🐟'}].forEach(function(p){
+  html+='<div class="player"><div class="nm">'+p.ic+' '+p.nm+'</div>';
+  if(both){html+='<div class="st">'+qs[idx][d[p.w]==='A'?0:2]+'</div>'}
+  else if(d[p.w]){html+='<div class="st">✅</div>'}
+  else{html+='<div class="wait">En attente...</div>'}
   html+='</div>';
-  html+='<button class="btn rst" onclick="resetQ()">🔄 Reset</button>';
+});
+html+='</div>';
 
-  document.getElementById('content').innerHTML=html;
+if(both){
+  html+='<div class="result v '+(isMatch?'match':'diff')+'">';
+  html+='<div class="rtxt">'+(isMatch?'🎉 Match !':'😄 Pas d\'accord !')+'</div>';
+  html+='<div class="rsub">'+(isMatch?'Vous pensez pareil !':'C\'est ça qui est fun')+'</div></div>';
+  if(d.why_a||d.why_k){
+    html+='<div class="whys v">';
+    if(d.why_a)html+='<div class="wb"><b>🏰 Alexandre :</b> '+d.why_a+'</div>';
+    if(d.why_k)html+='<div class="wb"><b>🐟 Klara :</b> '+d.why_k+'</div>';
+    html+='</div>';
+  }
 }
 
-function pick(opt){
-  if(!me)return;
-  var ref=getRef();
-  justVoted=true;
-  ref.get().then(function(doc){
-    var d=doc.exists?doc.data():{};
-    if(d[me])return;
-    var u={};u[me]=opt;u['date']=today;u['q']=idx;
-    return ref.set(u,{merge:true});
-  }).then(function(){
-    document.getElementById('status').textContent='✅ Vote enregistré !';
-    setTimeout(function(){
-      document.getElementById('status').textContent='';
-      justVoted=false;
-      deselect();
-      listenQ();
-    },1500);
-  });
+html+='<div class="nav">';
+html+='<button class="btn" onclick="nav(-1)">←</button>';
+html+='<button class="btn" onclick="rand()">🎲 Aléatoire</button>';
+html+='<button class="btn" onclick="nav(1)">→</button>';
+html+='</div>';
+html+='<button class="btn rst" onclick="resetQ()">🔄 Reset</button>';
+
+document.getElementById('qzone').innerHTML=html;
 }
 
-function sendWhy(){
-  if(!me)return;
-  var el=document.getElementById('whyIn');
-  if(!el||!el.value.trim())return;
-  var u={};u['why_'+me]=el.value.trim();
-  getRef().set(u,{merge:true}).then(function(){
-    document.getElementById('status').textContent='✅ Envoyé !';
-    setTimeout(function(){document.getElementById('status').textContent=''},1500);
-  });
-}
+function resetQ(){getRef().delete().then(function(){
+  myPick=null;
+  document.getElementById('status').textContent='🔄 Reset !';
+  setTimeout(function(){document.getElementById('status').textContent=''},1500);
+})}
 
-function resetQ(){
-  getRef().delete().then(function(){
-    deselect();
-    document.getElementById('status').textContent='🔄 Reset !';
-    setTimeout(function(){document.getElementById('status').textContent=''},1500);
-  });
-}
-
-function nav(d){idx=((idx+d)%qs.length+qs.length)%qs.length;deselect();listenQ()}
-function rand(){idx=Math.floor(Math.random()*qs.length);deselect();listenQ()}
+function nav(d){idx=((idx+d)%qs.length+qs.length)%qs.length;myPick=null;listenQ()}
+function rand(){idx=Math.floor(Math.random()*qs.length);myPick=null;listenQ()}
 
 var unsub=null;
-function listenQ(){
-  if(unsub)unsub();
-  unsub=getRef().onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)});
-}
+function listenQ(){if(unsub)unsub();
+unsub=getRef().onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)})}
 listenQ();
 </script>
 </body>
