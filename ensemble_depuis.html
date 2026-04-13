@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#faf8f5;display:flex;align-items:center;justify-content:center;padding:14px;min-height:100vh}
+.w{background:#fff;border-radius:22px;padding:28px 24px;max-width:700px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
+h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:2px}
+.sub{font-size:12px;color:#9a958e;margin-bottom:18px}
+.heart{font-size:42px;animation:beat 1.2s ease-in-out infinite;display:inline-block;margin-bottom:10px}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}}
+.counter{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.unit{background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;padding:16px 12px;min-width:80px;border:1px solid #f0ebe4}
+.val{font-family:'Playfair Display',serif;font-size:36px;font-weight:800;color:#e07a5f;line-height:1}
+.lbl{font-size:10px;color:#9a958e;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.since{font-family:'Playfair Display',serif;font-size:14px;color:#2d2a26;margin-bottom:6px;font-style:italic}
+.total{font-size:12px;color:#b0ab9f;margin-bottom:4px}
+.names{display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:18px}
+.name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#2d2a26}
+.x{color:#e07a5f;font-size:18px}
+.setup{margin-top:12px;padding:14px;background:#faf8f5;border-radius:14px;border:1px solid #ece8e2}
+.setup label{font-size:12px;color:#9a958e;font-weight:600;display:block;margin-bottom:6px}
+.setup input{padding:8px 14px;border:1.5px solid #ece8e2;border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;color:#2d2a26;outline:none;transition:border .2s}
+.setup input:focus{border-color:#e07a5f}
+.setup .hint{font-size:10px;color:#c5c0b8;margin-top:6px}
+.ft{margin-top:14px;font-size:9px;color:#c5c0b8}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:fi .6s ease}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="heart">💕</div>
+<h2>Emsemble depuis</h2>
+<div class="sub">chaque seconde compte</div>
+<div class="names"><span class="name">🏰 Mon Prince</span><span class="x">×</span><span class="name">PiranaFish 🐟</span></div>
+<div class="since" id="since"></div>
+<div class="counter">
+<div class="unit anim"><div class="val" id="d">0</div><div class="lbl">jours</div></div>
+<div class="unit anim" style="animation-delay:.1s"><div class="val" id="h">0</div><div class="lbl">heures</div></div>
+<div class="unit anim" style="animation-delay:.2s"><div class="val" id="m">0</div><div class="lbl">minutes</div></div>
+<div class="unit anim" style="animation-delay:.3s"><div class="val" id="s">0</div><div class="lbl">secondes</div></div>
+</div>
+<div class="total" id="total"></div>
+<div class="setup" id="setup">
+<label>📅 Date du début de votre histoire</label>
+<input type="date" id="dateInput" onchange="setDate(this.value)">
+<div class="hint">Change la date ici pour personnaliser le compteur</div>
+</div>
+<div class="ft">🏰💕🐟 nous deux.</div>
+</div>
+<script>
+var KEY='couple-start-date';
+var startDate=null;
+
+function load(){
+var saved=localStorage.getItem(KEY);
+if(saved){
+startDate=new Date(saved);
+document.getElementById('dateInput').value=saved;
+document.getElementById('since').textContent='depuis le '+startDate.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+}
+}
+
+function setDate(v){
+if(!v)return;
+localStorage.setItem(KEY,v);
+startDate=new Date(v);
+document.getElementById('since').textContent='depuis le '+startDate.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+}
+
+function update(){
+if(!startDate){
+document.getElementById('d').textContent='—';
+document.getElementById('h').textContent='—';
+document.getElementById('m').textContent='—';
+document.getElementById('s').textContent='—';
+document.getElementById('total').textContent='Choisis votre date en bas ↓';
+return;
+}
+var now=new Date();
+var diff=now-startDate;
+if(diff<0)diff=0;
+
+var sec=Math.floor(diff/1000);
+var days=Math.floor(sec/86400);
+var hrs=Math.floor((sec%86400)/3600);
+var mins=Math.floor((sec%3600)/60);
+var secs=sec%60;
+
+document.getElementById('d').textContent=days;
+document.getElementById('h').textContent=hrs;
+document.getElementById('m').textContent=mins;
+document.getElementById('s').textContent=secs<10?'0'+secs:secs;
+
+var totalH=Math.floor(sec/3600);
+var totalM=Math.floor(sec/60);
+document.getElementById('total').textContent=totalH.toLocaleString('fr-FR')+' heures · '+totalM.toLocaleString('fr-FR')+' minutes · '+sec.toLocaleString('fr-FR')+' secondes';
+}
+
+load();
+update();
+setInterval(update,1000);
+</script>
+</body>
+</html>
