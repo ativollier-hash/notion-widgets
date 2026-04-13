@@ -2,140 +2,52 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mood du jour</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#faf8f5;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
-.card{background:#fff;border-radius:24px;padding:28px 24px;max-width:420px;width:100%;box-shadow:0 4px 30px rgba(0,0,0,.06);border:1px solid #ece8e2}
-.title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;text-align:center;color:#2d2a26;margin-bottom:4px}
-.subtitle{text-align:center;font-size:13px;color:#9a958e;margin-bottom:20px}
-.section{margin-bottom:18px}
-.person{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.flag{font-size:22px}
-.name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#2d2a26}
-.loc{font-size:11px;color:#b0ab9f;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.moods{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-.mood-btn{width:44px;height:44px;border-radius:14px;border:2.5px solid transparent;background:#f5f2ed;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:all .2s ease;position:relative}
-.mood-btn:hover{transform:scale(1.12);background:#ece8e2}
-.mood-btn.selected{border-color:#e07a5f;background:rgba(224,122,95,.1);transform:scale(1.15);box-shadow:0 2px 12px rgba(224,122,95,.25)}
-.mood-btn .label{position:absolute;bottom:-16px;font-size:9px;color:#9a958e;white-space:nowrap;opacity:0;transition:opacity .2s}
-.mood-btn:hover .label,.mood-btn.selected .label{opacity:1}
-.msg-area{width:100%;padding:10px 14px;border:1.5px solid #ece8e2;border-radius:14px;font-family:'Nunito',sans-serif;font-size:13px;color:#2d2a26;background:#faf8f5;resize:none;outline:none;transition:border .2s;min-height:40px}
-.msg-area:focus{border-color:#e07a5f}
-.msg-area::placeholder{color:#c5c0b8}
-.divider{height:1px;background:#ece8e2;margin:22px 0 18px}
-.result{text-align:center;padding:16px 12px;background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;margin-top:12px;display:none}
-.result.show{display:block;animation:fadeIn .4s ease}
-.result-mood{font-size:40px;margin-bottom:6px}
-.result-text{font-family:'Playfair Display',serif;font-size:16px;color:#2d2a26;font-weight:600}
-.result-msg{font-size:13px;color:#9a958e;margin-top:4px;font-style:italic}
-.save-btn{display:block;width:100%;padding:12px;border:none;border-radius:14px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s;margin-top:16px;letter-spacing:.3px}
-.save-btn:hover{background:#c9694f;transform:translateY(-1px);box-shadow:0 4px 16px rgba(224,122,95,.35)}
-.save-btn:active{transform:translateY(0)}
-.footer{text-align:center;margin-top:16px;font-size:11px;color:#c5c0b8}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1.15)}}
-.mood-btn.pop{animation:pop .3s ease}
+body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
+.w{background:#fff;border-radius:20px;padding:20px 24px;max-width:700px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid #ece8e2}
+h2{font-family:'Playfair Display',serif;font-size:18px;text-align:center;color:#2d2a26;margin-bottom:16px}
+.row{display:flex;gap:24px;align-items:flex-start}
+.col{flex:1;min-width:0}
+.p{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.nm{font-size:13px;font-weight:700;color:#2d2a26}
+.lc{font-size:10px;color:#b0ab9f;font-weight:600}
+.ms{display:flex;flex-wrap:wrap;gap:5px}
+.m{width:40px;height:40px;border-radius:12px;border:2.5px solid transparent;background:#f5f2ed;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.m:hover{transform:scale(1.15);background:#ece8e2}
+.m.s{border-color:#e07a5f;background:rgba(224,122,95,.1);transform:scale(1.18);box-shadow:0 2px 10px rgba(224,122,95,.25)}
+.sep{width:1px;background:#ece8e2;align-self:stretch;margin:0 4px}
+.r{text-align:center;padding:10px;background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:14px;margin-top:14px;display:none}
+.r.v{display:block;animation:fi .4s ease}
+.rm{font-size:32px}
+.rd{font-family:'Playfair Display',serif;font-size:12px;color:#2d2a26;margin-top:2px}
+.ft{text-align:center;margin-top:10px;font-size:9px;color:#c5c0b8}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="title">mood du jour ✨</div>
-  <div class="subtitle">comment on se sent aujourd'hui ?</div>
-
-  <div class="section" id="s-fish">
-    <div class="person">
-      <span class="flag">🐟</span>
-      <div><div class="name">PiranaFish</div><div class="loc">🇫🇷 France</div></div>
-    </div>
-    <div class="moods" data-who="fish">
-      <button class="mood-btn" data-mood="😍" onclick="pick(this)">😍<span class="label">In love</span></button>
-      <button class="mood-btn" data-mood="😊" onclick="pick(this)">😊<span class="label">Happy</span></button>
-      <button class="mood-btn" data-mood="😴" onclick="pick(this)">😴<span class="label">Tired</span></button>
-      <button class="mood-btn" data-mood="💪" onclick="pick(this)">💪<span class="label">Motivated</span></button>
-      <button class="mood-btn" data-mood="😢" onclick="pick(this)">😢<span class="label">Missing you</span></button>
-      <button class="mood-btn" data-mood="🥳" onclick="pick(this)">🥳<span class="label">Excited</span></button>
-      <button class="mood-btn" data-mood="😤" onclick="pick(this)">😤<span class="label">Stressed</span></button>
-    </div>
-    <textarea class="msg-area" id="msg-fish" placeholder="Petit mot pour elle..." rows="1"></textarea>
-  </div>
-
-  <div class="divider"></div>
-
-  <div class="section" id="s-princess">
-    <div class="person">
-      <span class="flag">🏰</span>
-      <div><div class="name">Mon Princess des 5 Royaumes</div><div class="loc">🇳🇨 Nouvelle-Calédonie</div></div>
-    </div>
-    <div class="moods" data-who="princess">
-      <button class="mood-btn" data-mood="😍" onclick="pick(this)">😍<span class="label">In love</span></button>
-      <button class="mood-btn" data-mood="😊" onclick="pick(this)">😊<span class="label">Happy</span></button>
-      <button class="mood-btn" data-mood="😴" onclick="pick(this)">😴<span class="label">Tired</span></button>
-      <button class="mood-btn" data-mood="💪" onclick="pick(this)">💪<span class="label">Motivated</span></button>
-      <button class="mood-btn" data-mood="😢" onclick="pick(this)">😢<span class="label">Missing you</span></button>
-      <button class="mood-btn" data-mood="🥳" onclick="pick(this)">🥳<span class="label">Excited</span></button>
-      <button class="mood-btn" data-mood="😤" onclick="pick(this)">😤<span class="label">Stressed</span></button>
-    </div>
-    <textarea class="msg-area" id="msg-princess" placeholder="Petit mot pour lui..." rows="1"></textarea>
-  </div>
-
-  <button class="save-btn" onclick="save()">Enregistrer le mood 💕</button>
-
-  <div class="result" id="result">
-    <div class="result-mood" id="r-moods"></div>
-    <div class="result-text" id="r-text"></div>
-    <div class="result-msg" id="r-msg"></div>
-  </div>
-
-  <div class="footer">🐟💕🏰 nous deux.</div>
+<div class="w">
+<h2>mood du jour ✨</h2>
+<div class="row">
+<div class="col">
+<div class="p"><span style="font-size:18px">🏰❤️</span><div><div class="nm">Mon Prince</div><div class="lc">🇫🇷 France</div></div></div>
+<div class="ms" id="f"></div>
 </div>
-
+<div class="sep"></div>
+<div class="col">
+<div class="p"><span style="font-size:18px">🐟💕</span><div><div class="nm">PiranaFish</div><div class="lc">🇳🇨 N. Calédonie</div></div></div>
+<div class="ms" id="p"></div>
+</div>
+</div>
+<div class="r" id="res"><div class="rm" id="rm"></div><div class="rd" id="rd"></div></div>
+<div class="ft">🏰💕🐟 nous deux.</div>
+</div>
 <script>
-let selected = { fish: null, princess: null };
-
-function pick(btn) {
-  const who = btn.closest('.moods').dataset.who;
-  btn.closest('.moods').querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected', 'pop');
-  setTimeout(() => btn.classList.remove('pop'), 300);
-  selected[who] = btn.dataset.mood;
-}
-
-function save() {
-  const f = selected.fish;
-  const p = selected.princess;
-  if (!f && !p) return;
-  
-  const r = document.getElementById('result');
-  const moods = document.getElementById('r-moods');
-  const text = document.getElementById('r-text');
-  const msg = document.getElementById('r-msg');
-  
-  const today = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-  
-  moods.textContent = (f || '❓') + ' × ' + (p || '❓');
-  text.textContent = today;
-  
-  const mf = document.getElementById('msg-fish').value.trim();
-  const mp = document.getElementById('msg-princess').value.trim();
-  let msgs = [];
-  if (mf) msgs.push('🐟 ' + mf);
-  if (mp) msgs.push('🏰 ' + mp);
-  msg.textContent = msgs.join('  •  ') || '';
-  
-  r.classList.remove('show');
-  void r.offsetWidth;
-  r.classList.add('show');
-}
-
-document.querySelectorAll('.msg-area').forEach(el => {
-  el.addEventListener('input', function() {
-    this.style.height = 'auto';
-    this.style.height = this.scrollHeight + 'px';
-  });
-});
+var e=['😍','😊','😴','💪','😢','🥳','😤','🤒'],sel={f:null,p:null};
+['f','p'].forEach(function(w){var d=document.getElementById(w);e.forEach(function(em){var b=document.createElement('button');b.className='m';b.textContent=em;b.onclick=function(){d.querySelectorAll('.m').forEach(function(x){x.classList.remove('s')});b.classList.add('s');sel[w]=em;up()};d.appendChild(b)})});
+function up(){var f=sel.f,p=sel.p;if(!f&&!p)return;var d=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});document.getElementById('rm').textContent=(f||'…')+' × '+(p||'…');document.getElementById('rd').textContent=d;var r=document.getElementById('res');r.classList.remove('v');void r.offsetWidth;r.classList.add('v')}
 </script>
 </body>
 </html>
