@@ -4,114 +4,63 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
 .w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
 h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:2px}
 .sub{font-size:12px;color:#9a958e;margin-bottom:14px;font-style:italic}
-#map{width:100%;height:340px;border-radius:14px;border:2px solid #e8e2d8;margin-bottom:16px}
+.map{position:relative;width:100%;border-radius:14px;overflow:hidden;margin-bottom:16px;border:2px solid #e8e2d8}
+.map iframe{width:100%;height:350px;border:none}
+.overlay{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.pin{position:absolute;font-size:32px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3));animation:bounce 2s ease-in-out infinite}
+.pin-lr{top:22%;left:37%}
+.pin-nc{top:56%;right:8%}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.lbl{position:absolute;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;color:#2d2a26;background:rgba(255,255,255,.92);padding:3px 10px;border-radius:8px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lbl-lr{top:28%;left:30%}
+.lbl-nc{top:62%;right:3%}
+.line{position:absolute;top:0;left:0;width:100%;height:100%}
+.line svg{width:100%;height:100%}
+.flight{stroke:#e07a5f;stroke-width:3;fill:none;stroke-dasharray:10 6;animation:dash 3s linear infinite;filter:drop-shadow(0 0 4px rgba(224,122,95,.4))}
+.flight-bg{stroke:rgba(224,122,95,.15);stroke-width:10;fill:none}
+@keyframes dash{to{stroke-dashoffset:-32}}
 .dist{background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;padding:16px 20px;display:flex;justify-content:center;gap:28px;flex-wrap:wrap;align-items:center}
 .stat{text-align:center}
 .val{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:#e07a5f;line-height:1}
-.lbl{font-size:10px;color:#9a958e;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+.lbl2{font-size:10px;color:#9a958e;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
 .heart{font-size:24px;animation:beat 1.2s ease-in-out infinite;display:inline-block}
 @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.2)}30%{transform:scale(1)}45%{transform:scale(1.15)}}
 .ft{margin-top:12px;font-size:9px;color:#c5c0b8}
-.leaflet-popup-content-wrapper{border-radius:12px!important;font-family:'Nunito',sans-serif!important}
-.leaflet-popup-content{margin:10px 14px!important;font-size:13px!important;font-weight:600}
-@keyframes planeMove{0%{stroke-dashoffset:0}100%{stroke-dashoffset:-2000}}
 </style>
 </head>
 <body>
 <div class="w">
 <h2>Notre Distance 🌍</h2>
 <div class="sub">16 774 km ne sont rien quand on s'aime</div>
-<div id="map"></div>
+<div class="map">
+<iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-20,0,180,-40&layer=mapnik" scrolling="no"></iframe>
+<div class="overlay">
+<div class="line">
+<svg viewBox="0 0 100 100" preserveAspectRatio="none">
+<path class="flight-bg" d="M 37 25 Q 55 10, 90 58"/>
+<path class="flight" d="M 37 25 Q 55 10, 90 58"/>
+</svg>
+</div>
+<div class="pin pin-lr">🏰</div>
+<div class="lbl lbl-lr">🇫🇷 La Rochelle</div>
+<div class="pin pin-nc">🐟</div>
+<div class="lbl lbl-nc">🇳🇨 N. Calédonie</div>
+</div>
+</div>
 <div class="dist">
-<div class="stat"><div class="val">16 774</div><div class="lbl">kilomètres</div></div>
+<div class="stat"><div class="val">16 774</div><div class="lbl2">kilomètres</div></div>
 <div class="heart">💕</div>
-<div class="stat"><div class="val">22h 30</div><div class="lbl">de vol</div></div>
+<div class="stat"><div class="val">22h 30</div><div class="lbl2">de vol</div></div>
 <div class="heart">💕</div>
-<div class="stat"><div class="val">+9h</div><div class="lbl">décalage</div></div>
+<div class="stat"><div class="val">+9h</div><div class="lbl2">décalage</div></div>
 </div>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script>
-var lr=[46.1591,-1.1520];
-var nc=[-22.2558,166.4505];
-
-var map=L.map('map',{
-scrollWheelZoom:false,
-zoomControl:true,
-attributionControl:false
-}).setView([15,80],2);
-
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-maxZoom:18,
-subdomains:'abcd'
-}).addTo(map);
-
-var pulseIcon=function(emoji,label){
-return L.divIcon({
-className:'',
-html:'<div style="text-align:center;position:relative"><div style="font-size:28px;filter:drop-shadow(0 2px 6px rgba(224,122,95,.5))">'+emoji+'</div><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:rgba(224,122,95,.2);animation:pulse 2s ease-in-out infinite"></div><div style="font-family:Nunito,sans-serif;font-size:11px;font-weight:700;color:#2d2a26;background:rgba(255,255,255,.9);padding:2px 8px;border-radius:8px;margin-top:2px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.1)">'+label+'</div></div><style>@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.6}50%{transform:translate(-50%,-50%) scale(2);opacity:0}}</style>',
-iconSize:[80,60],
-iconAnchor:[40,20]
-});
-};
-
-L.marker(lr,{icon:pulseIcon('🏰','🇫🇷 La Rochelle')}).addTo(map);
-L.marker(nc,{icon:pulseIcon('🐟','🇳🇨 N. Calédonie')}).addTo(map);
-
-var points=[];
-var steps=80;
-for(var i=0;i<=steps;i++){
-var t=i/steps;
-var lat=lr[0]+(nc[0]-lr[0])*t;
-var rawLng=lr[1]+(nc[1]-lr[1])*t;
-var arc=Math.sin(t*Math.PI)*(-25);
-lat+=arc;
-points.push([lat,rawLng]);
-}
-
-L.polyline(points,{
-color:'#e07a5f',
-weight:3,
-opacity:.3,
-dashArray:'1 0'
-}).addTo(map);
-
-L.polyline(points,{
-color:'#e07a5f',
-weight:2.5,
-opacity:.8,
-dashArray:'12 8',
-className:'flight-line'
-}).addTo(map);
-
-var style=document.createElement('style');
-style.textContent='.flight-line{animation:dash 4s linear infinite}@keyframes dash{to{stroke-dashoffset:-40}}';
-document.head.appendChild(style);
-
-var planeIdx=0;
-var planeMarker=L.marker(points[0],{
-icon:L.divIcon({
-className:'',
-html:'<div style="font-size:24px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))">✈️</div>',
-iconSize:[30,30],
-iconAnchor:[15,15]
-})
-}).addTo(map);
-
-function movePlane(){
-planeIdx=(planeIdx+1)%points.length;
-planeMarker.setLatLng(points[planeIdx]);
-setTimeout(movePlane,120);
-}
-movePlane();
-</script>
 </body>
 </html>
