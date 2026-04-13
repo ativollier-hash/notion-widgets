@@ -10,47 +10,48 @@ body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
 .w{background:#fff;border-radius:22px;padding:24px;max-width:700px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
 h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
 .day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px}
-.who{margin-bottom:14px}
-.who span{font-size:11px;color:#9a958e;display:block;margin-bottom:6px}
-.wbtn{padding:8px 20px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .15s;color:#2d2a26;margin:0 4px}
+.step{font-size:12px;color:#9a958e;margin-bottom:12px;font-style:italic}
+.who{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
+.wbtn{padding:10px 22px;border:2.5px solid #ece8e2;border-radius:14px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .15s;color:#2d2a26}
 .wbtn:hover{border-color:#e07a5f;color:#e07a5f}
 .wbtn.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
+.wbtn.done{border-color:#6bbd7b;background:#6bbd7b;color:#fff;pointer-events:none}
 .qnum{font-size:10px;color:#c5c0b8;margin-bottom:8px}
-.opts{display:flex;gap:12px;margin-bottom:12px}
+.opts{display:flex;gap:12px;margin-bottom:14px}
 .opt{flex:1;padding:16px 12px;border:2.5px solid #ece8e2;border-radius:16px;background:#faf8f5;cursor:pointer;transition:all .25s}
 .opt:hover{border-color:#e07a5f;transform:translateY(-2px)}
+.opt.off{pointer-events:none;opacity:.5}
 .opt.picked{border-color:#e07a5f;background:rgba(224,122,95,.06)}
 .opt.match{border-color:#6bbd7b;background:rgba(107,189,123,.06)}
-.opt.dim{opacity:.4}
-.opt.off{pointer-events:none;opacity:.6}
+.opt.dim{opacity:.35}
 .opt .emoji{font-size:28px;margin-bottom:4px}
 .opt .txt{font-family:'Playfair Display',serif;font-size:14px;color:#2d2a26;line-height:1.3}
-.players{display:flex;gap:16px;justify-content:center;margin-bottom:10px}
+.players{display:flex;gap:20px;justify-content:center;margin-bottom:10px}
 .player{text-align:center;min-width:80px}
 .player .nm{font-size:11px;font-weight:700;color:#2d2a26}
-.player .st{font-size:20px;margin-top:2px;min-height:28px}
+.player .st{font-size:22px;margin-top:2px;min-height:30px}
 .player .wait{font-size:10px;color:#b0ab9f;font-style:italic}
-.result{padding:12px;border-radius:14px;margin-bottom:10px;display:none}
+.result{padding:14px;border-radius:14px;margin-bottom:10px;display:none}
 .result.v{display:block;animation:fi .5s ease}
 .result.match{background:linear-gradient(135deg,#f0faf2,#e8f5e9)}
 .result.diff{background:linear-gradient(135deg,#fff5f2,#fef9f0)}
-.result .rtxt{font-family:'Playfair Display',serif;font-size:16px;color:#2d2a26}
+.result .rtxt{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26}
 .result .rsub{font-size:11px;color:#9a958e;margin-top:2px}
 .whybox{margin:10px auto;max-width:420px;display:none}
 .whybox.v{display:block;animation:fi .3s ease}
 .whybox label{font-size:11px;color:#9a958e;font-weight:600;display:block;margin-bottom:4px}
 .whybox textarea{width:100%;padding:8px 12px;border:1.5px solid #ece8e2;border-radius:10px;font-family:'Nunito',sans-serif;font-size:12px;color:#2d2a26;background:#faf8f5;resize:none;outline:none;min-height:36px}
 .whybox textarea:focus{border-color:#e07a5f}
-.whybox .sendbtn{margin-top:4px;padding:5px 14px;border:none;border-radius:8px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer}
+.whybox .sendbtn{margin-top:4px;padding:6px 16px;border:none;border-radius:8px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer}
 .whybox .sendbtn:hover{background:#c9694f}
 .whys{margin:8px auto;max-width:500px;text-align:left;display:none}
-.whys.v{display:block;animation:fi .3s ease}
-.wb{padding:8px 12px;background:#faf8f5;border-radius:10px;margin-bottom:6px;font-size:12px;color:#2d2a26}
+.whys.v{display:block;animation:fi .4s ease}
+.wb{padding:10px 14px;background:#faf8f5;border-radius:12px;margin-bottom:6px;font-size:12px;color:#2d2a26}
 .wb b{color:#e07a5f}
 .nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
 .btn{padding:7px 16px;border:2px solid #ece8e2;border-radius:10px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;transition:all .15s;color:#2d2a26}
 .btn:hover{border-color:#e07a5f;color:#e07a5f}
-.rst{font-size:9px;color:#c5c0b8;border-color:#f0ebe4;margin-top:6px}
+.rst{font-size:9px;color:#c5c0b8;border-color:#f0ebe4;margin-top:8px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
 .status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
 .ft{margin-top:10px;font-size:9px;color:#c5c0b8}
@@ -61,9 +62,10 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <div class="w">
 <h2>Tu Préfères ? 🎮</h2>
 <div class="day" id="day"></div>
-<div class="who"><span>Qui es-tu ?</span>
-<button class="wbtn" id="wa" onclick="toggleWho('a')">🏰 Alexandre</button>
-<button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara</button>
+<div class="step" id="step">Sélectionne ton nom pour voter</div>
+<div class="who" id="whoDiv">
+<button class="wbtn" id="wa" onclick="setWho('a')">🏰 Alexandre</button>
+<button class="wbtn" id="wk" onclick="setWho('k')">🐟 Klara</button>
 </div>
 <div id="content"></div>
 <div class="status" id="status"></div>
@@ -113,7 +115,7 @@ var qs=[
 ["🎪","Parc d'attractions","🏛️","Musée"],
 ["👻","Film d'horreur","😂","Comédie romantique"],
 ["🛏️","Grasse matinée","🌅","Lever de soleil"],
-["🎹","Apprendre le piano","🎸","Apprendre la guitare"],
+["🎹","Piano","🎸","Guitare"],
 ["🤿","Plongée","🪂","Parachute"],
 ["🏡","Maison campagne","🏢","Appart en ville"],
 ["🎄","Noël ensemble","🎆","Nouvel an ensemble"],
@@ -124,17 +126,24 @@ var qs=[
 ["🎯","Top 1 dans 1 sport","🏅","Bon dans 10 sports"]
 ];
 var me=null,idx=0,today=new Date().toISOString().slice(0,10);
+var justVoted=false;
 
 document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+idx=Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/(1000*60*60*24))%qs.length;
 
-function dayIndex(){var d=new Date();return Math.floor((d-new Date(d.getFullYear(),0,0))/(1000*60*60*24))%qs.length}
-idx=dayIndex();
-
-function toggleWho(w){
+function setWho(w){
   if(me===w){me=null}else{me=w}
-  document.getElementById('wa').classList.toggle('s',me==='a');
-  document.getElementById('wk').classList.toggle('s',me==='k');
+  document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
+  document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
+  document.getElementById('step').textContent=me?'Choisis ta réponse !':'Sélectionne ton nom pour voter';
   listenQ();
+}
+
+function deselect(){
+  me=null;
+  document.getElementById('wa').className='wbtn';
+  document.getElementById('wk').className='wbtn';
+  document.getElementById('step').textContent='Sélectionne ton nom pour voter';
 }
 
 function getRef(){return db.collection('couple').doc('tpref-'+today+'-'+idx)}
@@ -146,18 +155,24 @@ function buildUI(data){
   var isMatch=both&&d.a===d.k;
   var canPick=me&&!d[me];
 
+  if(me&&d[me]&&!justVoted){
+    document.getElementById('wa').className='wbtn'+(me==='a'?' done':'');
+    document.getElementById('wk').className='wbtn'+(me==='k'?' done':'');
+    document.getElementById('step').textContent='Vote enregistré ! En attente de l\'autre...';
+  }
+
   var html='<div class="qnum">Question '+(idx+1)+' / '+qs.length+'</div>';
   html+='<div class="opts">';
   ['A','B'].forEach(function(opt){
     var ei=opt==='A'?0:2;var ti=opt==='A'?1:3;
     var cls='opt';
-    if(!canPick)cls+=' off';
     if(both){
-      cls=' opt';
       if(d.a===opt&&d.k===opt)cls+=' match';
       else if(d.a===opt||d.k===opt)cls+=' picked';
       else cls+=' dim';
-    }else if(me&&d[me]===opt){cls=' opt picked off'}
+    }else if(!canPick){
+      cls+=' off';
+    }
     html+='<div class="'+cls+'" onclick="pick(\''+opt+'\')">';
     html+='<div class="emoji">'+q[ei]+'</div><div class="txt">'+q[ti]+'</div></div>';
   });
@@ -177,19 +192,21 @@ function buildUI(data){
     html+='<div class="result v '+(isMatch?'match':'diff')+'">';
     html+='<div class="rtxt">'+(isMatch?'🎉 Match !':'😄 Pas d\'accord !')+'</div>';
     html+='<div class="rsub">'+(isMatch?'Vous pensez pareil !':'C\'est ça qui est fun')+'</div></div>';
-  }
 
-  if(both&&me&&!d['why_'+me]){
-    html+='<div class="whybox v"><label>Pourquoi ce choix ?</label>';
-    html+='<textarea id="whyIn" placeholder="Parce que..."></textarea>';
-    html+='<button class="sendbtn" onclick="sendWhy()">Envoyer</button></div>';
-  }
+    if(me&&!d['why_'+me]){
+      html+='<div class="whybox v"><label>Pourquoi ce choix ?</label>';
+      html+='<textarea id="whyIn" placeholder="Parce que..."></textarea>';
+      html+='<button class="sendbtn" onclick="sendWhy()">Envoyer</button></div>';
+    }
 
-  if(both&&(d.why_a||d.why_k)){
-    html+='<div class="whys v">';
-    if(d.why_a)html+='<div class="wb"><b>🏰 Alexandre :</b> '+d.why_a+'</div>';
-    if(d.why_k)html+='<div class="wb"><b>🐟 Klara :</b> '+d.why_k+'</div>';
-    html+='</div>';
+    if(d.why_a||d.why_k){
+      html+='<div class="whys v">';
+      if(d.why_a)html+='<div class="wb"><b>🏰 Alexandre :</b> '+d.why_a+'</div>';
+      if(d.why_k)html+='<div class="wb"><b>🐟 Klara :</b> '+d.why_k+'</div>';
+      html+='</div>';
+    }
+
+    document.getElementById('step').textContent='Résultat !';
   }
 
   html+='<div class="nav">';
@@ -197,7 +214,7 @@ function buildUI(data){
   html+='<button class="btn" onclick="rand()">🎲 Aléatoire</button>';
   html+='<button class="btn" onclick="nav(1)">→</button>';
   html+='</div>';
-  html+='<button class="btn rst" onclick="resetQ()">🔄 Reset cette question</button>';
+  html+='<button class="btn rst" onclick="resetQ()">🔄 Reset</button>';
 
   document.getElementById('content').innerHTML=html;
 }
@@ -205,45 +222,49 @@ function buildUI(data){
 function pick(opt){
   if(!me)return;
   var ref=getRef();
+  justVoted=true;
   ref.get().then(function(doc){
     var d=doc.exists?doc.data():{};
     if(d[me])return;
-    if(d.a&&d.k)return;
     var u={};u[me]=opt;u['date']=today;u['q']=idx;
     return ref.set(u,{merge:true});
   }).then(function(){
-    document.getElementById('status').textContent='✅ Choix enregistré !';
-    setTimeout(function(){document.getElementById('status').textContent=''},2000);
+    document.getElementById('status').textContent='✅ Vote enregistré !';
+    setTimeout(function(){
+      document.getElementById('status').textContent='';
+      justVoted=false;
+      deselect();
+      listenQ();
+    },1500);
   });
 }
 
 function sendWhy(){
   if(!me)return;
-  var v=document.getElementById('whyIn');
-  if(!v||!v.value.trim())return;
-  var u={};u['why_'+me]=v.value.trim();
+  var el=document.getElementById('whyIn');
+  if(!el||!el.value.trim())return;
+  var u={};u['why_'+me]=el.value.trim();
   getRef().set(u,{merge:true}).then(function(){
-    document.getElementById('status').textContent='✅ Explication envoyée !';
-    setTimeout(function(){document.getElementById('status').textContent=''},2000);
+    document.getElementById('status').textContent='✅ Envoyé !';
+    setTimeout(function(){document.getElementById('status').textContent=''},1500);
   });
 }
 
 function resetQ(){
   getRef().delete().then(function(){
+    deselect();
     document.getElementById('status').textContent='🔄 Reset !';
     setTimeout(function(){document.getElementById('status').textContent=''},1500);
   });
 }
 
-function nav(d){idx=((idx+d)%qs.length+qs.length)%qs.length;listenQ()}
-function rand(){idx=Math.floor(Math.random()*qs.length);listenQ()}
+function nav(d){idx=((idx+d)%qs.length+qs.length)%qs.length;deselect();listenQ()}
+function rand(){idx=Math.floor(Math.random()*qs.length);deselect();listenQ()}
 
 var unsub=null;
 function listenQ(){
   if(unsub)unsub();
-  unsub=getRef().onSnapshot(function(doc){
-    buildUI(doc.exists?doc.data():null);
-  });
+  unsub=getRef().onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)});
 }
 listenQ();
 </script>
