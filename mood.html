@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mood du jour</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#faf8f5;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+.card{background:#fff;border-radius:24px;padding:28px 24px;max-width:420px;width:100%;box-shadow:0 4px 30px rgba(0,0,0,.06);border:1px solid #ece8e2}
+.title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;text-align:center;color:#2d2a26;margin-bottom:4px}
+.subtitle{text-align:center;font-size:13px;color:#9a958e;margin-bottom:20px}
+.section{margin-bottom:18px}
+.person{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.flag{font-size:22px}
+.name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#2d2a26}
+.loc{font-size:11px;color:#b0ab9f;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.moods{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.mood-btn{width:44px;height:44px;border-radius:14px;border:2.5px solid transparent;background:#f5f2ed;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:all .2s ease;position:relative}
+.mood-btn:hover{transform:scale(1.12);background:#ece8e2}
+.mood-btn.selected{border-color:#e07a5f;background:rgba(224,122,95,.1);transform:scale(1.15);box-shadow:0 2px 12px rgba(224,122,95,.25)}
+.mood-btn .label{position:absolute;bottom:-16px;font-size:9px;color:#9a958e;white-space:nowrap;opacity:0;transition:opacity .2s}
+.mood-btn:hover .label,.mood-btn.selected .label{opacity:1}
+.msg-area{width:100%;padding:10px 14px;border:1.5px solid #ece8e2;border-radius:14px;font-family:'Nunito',sans-serif;font-size:13px;color:#2d2a26;background:#faf8f5;resize:none;outline:none;transition:border .2s;min-height:40px}
+.msg-area:focus{border-color:#e07a5f}
+.msg-area::placeholder{color:#c5c0b8}
+.divider{height:1px;background:#ece8e2;margin:22px 0 18px}
+.result{text-align:center;padding:16px 12px;background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;margin-top:12px;display:none}
+.result.show{display:block;animation:fadeIn .4s ease}
+.result-mood{font-size:40px;margin-bottom:6px}
+.result-text{font-family:'Playfair Display',serif;font-size:16px;color:#2d2a26;font-weight:600}
+.result-msg{font-size:13px;color:#9a958e;margin-top:4px;font-style:italic}
+.save-btn{display:block;width:100%;padding:12px;border:none;border-radius:14px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s;margin-top:16px;letter-spacing:.3px}
+.save-btn:hover{background:#c9694f;transform:translateY(-1px);box-shadow:0 4px 16px rgba(224,122,95,.35)}
+.save-btn:active{transform:translateY(0)}
+.footer{text-align:center;margin-top:16px;font-size:11px;color:#c5c0b8}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1.15)}}
+.mood-btn.pop{animation:pop .3s ease}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="title">mood du jour ✨</div>
+  <div class="subtitle">comment on se sent aujourd'hui ?</div>
+
+  <div class="section" id="s-fish">
+    <div class="person">
+      <span class="flag">🐟</span>
+      <div><div class="name">PiranaFish</div><div class="loc">🇫🇷 France</div></div>
+    </div>
+    <div class="moods" data-who="fish">
+      <button class="mood-btn" data-mood="😍" onclick="pick(this)">😍<span class="label">In love</span></button>
+      <button class="mood-btn" data-mood="😊" onclick="pick(this)">😊<span class="label">Happy</span></button>
+      <button class="mood-btn" data-mood="😴" onclick="pick(this)">😴<span class="label">Tired</span></button>
+      <button class="mood-btn" data-mood="💪" onclick="pick(this)">💪<span class="label">Motivated</span></button>
+      <button class="mood-btn" data-mood="😢" onclick="pick(this)">😢<span class="label">Missing you</span></button>
+      <button class="mood-btn" data-mood="🥳" onclick="pick(this)">🥳<span class="label">Excited</span></button>
+      <button class="mood-btn" data-mood="😤" onclick="pick(this)">😤<span class="label">Stressed</span></button>
+    </div>
+    <textarea class="msg-area" id="msg-fish" placeholder="Petit mot pour elle..." rows="1"></textarea>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section" id="s-princess">
+    <div class="person">
+      <span class="flag">🏰</span>
+      <div><div class="name">Mon Princess des 5 Royaumes</div><div class="loc">🇳🇨 Nouvelle-Calédonie</div></div>
+    </div>
+    <div class="moods" data-who="princess">
+      <button class="mood-btn" data-mood="😍" onclick="pick(this)">😍<span class="label">In love</span></button>
+      <button class="mood-btn" data-mood="😊" onclick="pick(this)">😊<span class="label">Happy</span></button>
+      <button class="mood-btn" data-mood="😴" onclick="pick(this)">😴<span class="label">Tired</span></button>
+      <button class="mood-btn" data-mood="💪" onclick="pick(this)">💪<span class="label">Motivated</span></button>
+      <button class="mood-btn" data-mood="😢" onclick="pick(this)">😢<span class="label">Missing you</span></button>
+      <button class="mood-btn" data-mood="🥳" onclick="pick(this)">🥳<span class="label">Excited</span></button>
+      <button class="mood-btn" data-mood="😤" onclick="pick(this)">😤<span class="label">Stressed</span></button>
+    </div>
+    <textarea class="msg-area" id="msg-princess" placeholder="Petit mot pour lui..." rows="1"></textarea>
+  </div>
+
+  <button class="save-btn" onclick="save()">Enregistrer le mood 💕</button>
+
+  <div class="result" id="result">
+    <div class="result-mood" id="r-moods"></div>
+    <div class="result-text" id="r-text"></div>
+    <div class="result-msg" id="r-msg"></div>
+  </div>
+
+  <div class="footer">🐟💕🏰 nous deux.</div>
+</div>
+
+<script>
+let selected = { fish: null, princess: null };
+
+function pick(btn) {
+  const who = btn.closest('.moods').dataset.who;
+  btn.closest('.moods').querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected', 'pop');
+  setTimeout(() => btn.classList.remove('pop'), 300);
+  selected[who] = btn.dataset.mood;
+}
+
+function save() {
+  const f = selected.fish;
+  const p = selected.princess;
+  if (!f && !p) return;
+  
+  const r = document.getElementById('result');
+  const moods = document.getElementById('r-moods');
+  const text = document.getElementById('r-text');
+  const msg = document.getElementById('r-msg');
+  
+  const today = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  
+  moods.textContent = (f || '❓') + ' × ' + (p || '❓');
+  text.textContent = today;
+  
+  const mf = document.getElementById('msg-fish').value.trim();
+  const mp = document.getElementById('msg-princess').value.trim();
+  let msgs = [];
+  if (mf) msgs.push('🐟 ' + mf);
+  if (mp) msgs.push('🏰 ' + mp);
+  msg.textContent = msgs.join('  •  ') || '';
+  
+  r.classList.remove('show');
+  void r.offsetWidth;
+  r.classList.add('show');
+}
+
+document.querySelectorAll('.msg-area').forEach(el => {
+  el.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+  });
+});
+</script>
+</body>
+</html>
