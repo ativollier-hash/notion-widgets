@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
+.w{background:#fff;border-radius:20px;padding:24px;max-width:700px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
+h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
+.qbox{background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:18px;padding:24px 20px;margin-bottom:16px;position:relative;overflow:hidden}
+.qbox::before{content:'❓';position:absolute;top:-8px;right:-4px;font-size:60px;opacity:.07}
+.cat{display:inline-block;background:#e07a5f;color:#fff;font-size:10px;font-weight:700;padding:3px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.q{font-family:'Playfair Display',serif;font-size:19px;color:#2d2a26;line-height:1.5}
+.num{font-size:11px;color:#c5c0b8;margin-top:8px}
+.ans{display:flex;gap:16px;margin-bottom:14px;text-align:left}
+.col{flex:1;min-width:0}
+.p{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.nm{font-size:12px;font-weight:700;color:#2d2a26}
+.lc{font-size:9px;color:#b0ab9f;font-weight:600}
+.box{position:relative}
+textarea{width:100%;padding:10px 12px;border:1.5px solid #ece8e2;border-radius:12px;font-family:'Nunito',sans-serif;font-size:12px;color:#2d2a26;background:#faf8f5;resize:none;outline:none;transition:border .3s;min-height:50px}
+textarea:focus{border-color:#e07a5f}
+textarea::placeholder{color:#c5c0b8;font-style:italic}
+.send{position:absolute;right:6px;bottom:6px;width:28px;height:28px;border-radius:50%;border:none;background:#e07a5f;color:#fff;font-size:13px;cursor:pointer;transition:all .2s;display:none}
+.send:hover{background:#c9694f;transform:scale(1.1)}
+.send.v{display:block}
+.sep{width:1px;background:#ece8e2;align-self:stretch}
+.bubble{padding:10px 12px;background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:12px;margin-top:6px;display:none;position:relative;text-align:left}
+.bubble.v{display:block;animation:fi .4s ease}
+.bt{font-size:12px;color:#2d2a26;line-height:1.4;font-style:italic}
+.x{position:absolute;top:4px;right:8px;background:none;border:none;color:#c5c0b8;cursor:pointer;font-size:14px}
+.x:hover{color:#e07a5f}
+.nav{margin-bottom:14px}
+.btn{display:inline-block;padding:8px 18px;border:none;border-radius:12px;background:#f5f2ed;color:#2d2a26;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;margin:3px}
+.btn:hover{background:#e07a5f;color:#fff;transform:translateY(-1px)}
+.ft{margin-top:12px;font-size:9px;color:#c5c0b8}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="w">
+<h2>Question du jour 💭</h2>
+<div class="day" id="day"></div>
+<div class="qbox" id="qbox">
+<div class="cat" id="cat"></div>
+<div class="q" id="q"></div>
+<div class="num" id="num"></div>
+</div>
+<div class="ans">
+<div class="col">
+<div class="p"><span style="font-size:16px">🏰❤️</span><div><div class="nm">Mon Prince</div><div class="lc">🇫🇷 France</div></div></div>
+<div class="box">
+<textarea id="tf" placeholder="Ta réponse..." oninput="ck('f')"></textarea>
+<button class="send" id="sf" onclick="go('f')">💌</button>
+</div>
+<div class="bubble" id="bf"><button class="x" onclick="cl('f')">✕</button><div class="bt" id="mtf"></div></div>
+</div>
+<div class="sep"></div>
+<div class="col">
+<div class="p"><span style="font-size:16px">🐟💕</span><div><div class="nm">PiranaFish</div><div class="lc">🇳🇨 N. Calédonie</div></div></div>
+<div class="box">
+<textarea id="tp" placeholder="Ta réponse..." oninput="ck('p')"></textarea>
+<button class="send" id="sp" onclick="go('p')">💌</button>
+</div>
+<div class="bubble" id="bp"><button class="x" onclick="cl('p')">✕</button><div class="bt" id="mtp"></div></div>
+</div>
+</div>
+<div class="nav">
+<button class="btn" onclick="nav(-1)">←</button>
+<button class="btn" onclick="rand()">🎲 Aléatoire</button>
+<button class="btn" onclick="nav(1)">→</button>
+</div>
+<div class="ft">🏰💕🐟 nous deux.</div>
+</div>
+<script>
+var qs=[
+["💕 Nous","Si on pouvait se téléporter l'un vers l'autre là maintenant, tu ferais quoi en premier ?"],
+["💭 Rêves","Si on gagnait au loto demain, on ferait quoi de notre vie ?"],
+["🔥 Spicy","C'est quoi le truc le plus random que tu trouves attirant chez moi ?"],
+["🧠 Deep","Quel souvenir de nous te rend le plus heureux/heureuse ?"],
+["😂 Fun","Si on était dans un film, ce serait quel genre et pourquoi ?"],
+["💕 Nous","C'est quoi le moment exact où tu as su que c'était sérieux ?"],
+["🌍 Voyage","Si on pouvait vivre 1 an n'importe où, ce serait où ?"],
+["🧠 Deep","Qu'est-ce que tu as appris sur toi grâce à notre relation ?"],
+["😂 Fun","Télépathie ou téléportation — tu choisis quoi ?"],
+["💭 Rêves","Comment tu imagines notre vie dans 5 ans ?"],
+["💕 Nous","C'est quoi ta façon préférée de recevoir de l'amour ?"],
+["🔥 Spicy","Quel compliment de ma part t'a le plus marqué ?"],
+["🌍 Voyage","Le plat d'un autre pays que tu rêves de goûter ensemble ?"],
+["🧠 Deep","Tu pouvais changer une chose dans ta vie (sauf la distance), quoi ?"],
+["😂 Fun","Tu me décris en 3 emojis, tu mets quoi ?"],
+["💕 Nous","Quel est notre inside joke préféré ?"],
+["💭 Rêves","Si on ouvrait un business ensemble, ce serait quoi ?"],
+["🔥 Spicy","C'est quoi un truc que t'as jamais osé me dire ?"],
+["🌍 Voyage","Top 3 des endroits où tu veux qu'on aille ensemble ?"],
+["🧠 Deep","C'est quoi ta plus grande peur dans la vie ?"],
+["😂 Fun","Si j'étais un animal, je serais quoi d'après toi ?"],
+["💕 Nous","Le meilleur conseil qu'on t'a donné sur les relations ?"],
+["💭 Rêves","Grande maison à la campagne ou appart en centre-ville ?"],
+["🔥 Spicy","C'est quoi le premier truc que tu as remarqué chez moi ?"],
+["🌍 Voyage","Road trip ou farniente sur la plage ?"],
+["🧠 Deep","Tu pouvais revivre une journée de ta vie, laquelle ?"],
+["😂 Fun","Apocalypse zombie — tu prends quoi comme 3 objets ?"],
+["💕 Nous","Un petit geste du quotidien qui te ferait plaisir de ma part ?"],
+["💭 Rêves","Combien d'enfants tu veux ? Et quels prénoms ?"],
+["🔥 Spicy","Décris notre premier rendez-vous idéal quand on se retrouve"],
+["🌍 Voyage","Japon, Islande ou Brésil — tu choisis lequel ?"],
+["🧠 Deep","C'est quoi ton plus grand regret ?"],
+["😂 Fun","Un talent instantané — tu prends quoi ?"],
+["💕 Nous","Qu'est-ce qui te manque le plus de moi au quotidien ?"],
+["💭 Rêves","On adopte un animal ensemble — lequel ?"],
+["🔥 Spicy","Massage de 2h ou dîner aux chandelles ?"],
+["🌍 Voyage","T'as déjà eu un culture shock quelque part ?"],
+["🧠 Deep","La chose dont tu es le plus fier/fière ?"],
+["😂 Fun","Un seul plat pour le reste de ta vie — lequel ?"],
+["💕 Nous","Le titre du livre de notre histoire d'amour ?"],
+["💭 Rêves","Un skill que tu veux absolument apprendre ?"],
+["🔥 Spicy","C'est quoi ton love language principal ?"],
+["🌍 Voyage","La meilleure bouffe que t'as mangée c'était où ?"],
+["🧠 Deep","Tu crois au destin ou au hasard ?"],
+["😂 Fun","On échange de corps 24h — tu fais quoi ?"],
+["💕 Nous","La chose la plus drôle qui nous est arrivée ?"],
+["💭 Rêves","Retraite à 40 ou carrière de rêve jusqu'à 60 ?"],
+["🔥 Spicy","Décris ton dimanche matin parfait avec moi"],
+["🌍 Voyage","Tour du monde — on commence par quel continent ?"],
+["🧠 Deep","La leçon de vie la plus importante que tu as apprise ?"],
+["😂 Fun","100 canards taille cheval ou 1 cheval taille canard ?"],
+["💕 Nous","La chanson qui te fait penser à nous ?"],
+["💭 Rêves","Mariage sur la plage, en montagne ou en ville ?"],
+["🔥 Spicy","Ton fantasme de voyage à deux ?"],
+["🧠 Deep","Tu parlais à toi-même à 15 ans, tu dirais quoi ?"],
+["😂 Fun","Voler ou être invisible — tu choisis quoi ?"],
+["💕 Nous","Quel emoji représente le mieux notre couple ?"],
+["💭 Rêves","Notre tradition de couple, ce serait quoi ?"],
+["🔥 Spicy","Morning person ou night owl ?"],
+["🌍 Voyage","L'endroit le plus beau que t'as vu ?"],
+["🧠 Deep","Le truc qui te rend le plus anxieux/anxieuse ?"],
+["💕 Nous","Un mot pour décrire ce que tu ressens pour moi ?"],
+["😂 Fun","Si on était un duo célèbre, on serait qui ?"],
+["💭 Rêves","T'aimerais écrire un livre ? Sur quoi ?"],
+["🌍 Voyage","Camping sauvage ou hôtel 5 étoiles ?"],
+["🧠 Deep","Tu penses qu'on se serait trouvés dans une autre vie ?"]
+];
+var idx=0;
+function today(){return new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+function dayIndex(){var d=new Date();return Math.floor((d-new Date(d.getFullYear(),0,0))/(1000*60*60*24))%qs.length}
+function reset(){
+['f','p'].forEach(function(w){
+document.getElementById('t'+w).value='';
+document.getElementById('s'+w).classList.remove('v');
+document.getElementById('b'+w).classList.remove('v');
+document.getElementById('mt'+w).textContent='';
+});
+}
+function show(i){
+idx=((i%qs.length)+qs.length)%qs.length;
+reset();
+var qb=document.getElementById('qbox');
+qb.style.animation='none';void qb.offsetWidth;qb.style.animation='fi .5s ease';
+document.getElementById('cat').textContent=qs[idx][0];
+document.getElementById('q').textContent=qs[idx][1];
+document.getElementById('num').textContent='Question '+(idx+1)+' / '+qs.length;
+}
+function rand(){show(Math.floor(Math.random()*qs.length))}
+function nav(d){show(idx+d)}
+function ck(w){var t=document.getElementById('t'+w);document.getElementById('s'+w).classList.toggle('v',t.value.trim().length>0)}
+function go(w){
+var t=document.getElementById('t'+w),v=t.value.trim();if(!v)return;
+document.getElementById('mt'+w).textContent='« '+v+' »';
+var b=document.getElementById('b'+w);b.classList.remove('v');void b.offsetWidth;b.classList.add('v');
+t.value='';document.getElementById('s'+w).classList.remove('v');
+}
+function cl(w){document.getElementById('b'+w).classList.remove('v')}
+document.querySelectorAll('textarea').forEach(function(el){el.addEventListener('input',function(){this.style.height='auto';this.style.height=this.scrollHeight+'px'})});
+document.getElementById('day').textContent=today();
+show(dayIndex());
+</script>
+</body>
+</html>
