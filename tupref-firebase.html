@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:700px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
+h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:14px}
+.vs{font-family:'Playfair Display',serif;font-size:14px;color:#e07a5f;margin:10px 0}
+.qnum{font-size:10px;color:#c5c0b8;margin-bottom:14px}
+.opts{display:flex;gap:12px;margin-bottom:16px}
+.opt{flex:1;padding:18px 14px;border:2.5px solid #ece8e2;border-radius:16px;background:#faf8f5;cursor:pointer;transition:all .25s;text-align:center}
+.opt:hover{border-color:#e07a5f;transform:translateY(-2px);box-shadow:0 4px 16px rgba(224,122,95,.12)}
+.opt.picked{border-color:#e07a5f;background:rgba(224,122,95,.06)}
+.opt.win{border-color:#6bbd7b;background:rgba(107,189,123,.06)}
+.opt.lose{border-color:#ece8e2;opacity:.5}
+.opt .emoji{font-size:28px;margin-bottom:6px}
+.opt .txt{font-family:'Playfair Display',serif;font-size:15px;color:#2d2a26;line-height:1.3}
+.players{display:flex;gap:16px;justify-content:center;margin-bottom:14px}
+.player{text-align:center;min-width:80px}
+.player .nm{font-size:12px;font-weight:700;color:#2d2a26}
+.player .pick{font-size:24px;margin-top:4px;min-height:32px}
+.player .wait{font-size:11px;color:#b0ab9f;font-style:italic;margin-top:4px}
+.result{padding:14px;border-radius:14px;margin-bottom:14px;display:none;animation:fi .5s ease}
+.result.v{display:block}
+.result.match{background:linear-gradient(135deg,#f0faf2,#e8f5e9)}
+.result.diff{background:linear-gradient(135deg,#fff5f2,#fef9f0)}
+.result .rtxt{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26}
+.result .rsub{font-size:12px;color:#9a958e;margin-top:4px}
+.score{font-size:12px;color:#9a958e;margin-bottom:12px}
+.score b{color:#e07a5f;font-size:16px}
+.nav{display:flex;gap:6px;justify-content:center}
+.btn{padding:8px 18px;border:2px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
+.btn:hover{border-color:#e07a5f;color:#e07a5f;transform:translateY(-1px)}
+.status{font-size:10px;color:#6bbd7b;margin-top:8px;font-weight:600}
+.ft{margin-top:12px;font-size:9px;color:#c5c0b8}
+.loading{color:#9a958e;font-size:12px;padding:20px}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="w">
+<h2>Tu Préfères ? 🎮</h2>
+<div class="day" id="day"></div>
+<div id="content"><div class="loading">Chargement...</div></div>
+<div class="status" id="status"></div>
+<div class="ft">🏰💕🐟 Nous Deux.</div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",
+  authDomain:"notion-bdd.firebaseapp.com",
+  projectId:"notion-bdd",
+  storageBucket:"notion-bdd.firebasestorage.app",
+  messagingSenderId:"641330827114",
+  appId:"1:641330827114:web:0bf5fc986540a4c9085f13"
+});
+var db=firebase.firestore();
+var qs=[
+["🏖️","Vivre sur la plage","🏔️","Vivre à la montagne"],
+["⏪","Revivre le passé","⏩","Connaître le futur"],
+["🦸","Être invisible","🦅","Savoir voler"],
+["🍕","Manger que pizza","🍣","Manger que sushi"],
+["🌅","Se lever tôt","🌙","Se coucher tard"],
+["🎬","Soirée film","🎮","Soirée jeux vidéo"],
+["❄️","Vivre où il fait froid","☀️","Vivre où il fait chaud"],
+["🏠","Rester à la maison","✈️","Voyager tout le temps"],
+["🐶","Avoir un chien","🐱","Avoir un chat"],
+["💰","Beaucoup d'argent mais pas de temps","⏰","Beaucoup de temps mais peu d'argent"],
+["🎤","Chanter en public","💃","Danser en public"],
+["📱","Plus de téléphone 1 mois","🍫","Plus de sucre 1 mois"],
+["🏝️","Île déserte avec wifi","🏙️","Grande ville sans wifi"],
+["🧠","Lire dans les pensées","⏱️","Arrêter le temps"],
+["🍽️","Cuisiner ensemble","🛋️","Commander et chiller"],
+["🌊","Vacances plage","🗺️","Vacances road trip"],
+["📚","Lire le livre","🎬","Regarder le film"],
+["🎁","Faire des cadeaux","💌","Recevoir des lettres d'amour"],
+["🌃","Dîner romantique en ville","🏕️","Camping sous les étoiles"],
+["🧳","1 long voyage par an","✈️","Plein de petits weekends"],
+["🍳","Petit-dej au lit","🌙","Dîner aux chandelles"],
+["🎵","Vivre sans musique","🎨","Vivre sans couleurs"],
+["🏋️","Sport le matin","🌙","Sport le soir"],
+["📸","Photo souvenir","🎥","Vidéo souvenir"],
+["🗣️","Tout dire","🤫","Garder du mystère"],
+["🎂","Anniversaire surprise","🎉","Anniversaire planifié ensemble"],
+["🏃","Marathon ensemble","🧘","Yoga ensemble"],
+["🌮","Street food","🍷","Restaurant gastronomique"],
+["🎪","Parc d'attractions","🏛️","Musée"],
+["👻","Film d'horreur ensemble","😂","Comédie romantique"],
+["🛏️","Grasse matinée","🌅","Lever de soleil ensemble"],
+["🎹","Apprendre le piano","🎸","Apprendre la guitare"],
+["🤿","Plongée sous-marine","🪂","Parachute"],
+["🏡","Maison à la campagne","🏢","Appart en ville"],
+["🎄","Noël ensemble","🎆","Nouvel an ensemble"],
+["🐎","Balade à cheval","🚴","Balade à vélo"],
+["🍦","Glace","🧁","Gâteau"],
+["📞","Appel surprise","💬","Long message écrit"],
+["🌺","Recevoir des fleurs","🧸","Recevoir un cadeau fait main"],
+["🎯","Être le meilleur dans 1 sport","🏅","Être bon dans 10 sports"]
+];
+var idx=0;
+var today=new Date().toISOString().slice(0,10);
+var scoreRef=db.collection('couple').doc('tpref-score');
+
+document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+
+function dayIndex(){var d=new Date();return Math.floor((d-new Date(d.getFullYear(),0,0))/(1000*60*60*24))%qs.length}
+
+function getDocRef(){return db.collection('couple').doc('tpref-'+today+'-'+idx)}
+
+function buildUI(data,scoreData){
+  var d=data||{};
+  var q=qs[idx];
+  var bothPicked=d.a&&d.k;
+  var isMatch=bothPicked&&d.a===d.k;
+  var sc=scoreData||{match:0,total:0};
+
+  var html='<div class="score">Score : <b>'+sc.match+'</b> / '+sc.total+' en commun</div>';
+  html+='<div class="qnum">Question '+(idx+1)+' / '+qs.length+'</div>';
+  html+='<div class="opts">';
+
+  ['A','B'].forEach(function(opt){
+    var ei=opt==='A'?0:2;
+    var ti=opt==='A'?1:3;
+    var cls='opt';
+    if(bothPicked){
+      if(d.a===opt&&d.k===opt)cls+=' win';
+      else if(d.a===opt||d.k===opt)cls+=' picked';
+      else cls+=' lose';
+    }
+    html+='<div class="'+cls+'" onclick="pick(\''+opt+'\')">';
+    html+='<div class="emoji">'+q[ei]+'</div>';
+    html+='<div class="txt">'+q[ti]+'</div></div>';
+  });
+  html+='</div>';
+
+  html+='<div class="players">';
+  [{w:'a',nm:'Alexandre',ic:'🏰'},{w:'k',nm:'Klara',ic:'🐟'}].forEach(function(p){
+    html+='<div class="player"><div class="nm">'+p.ic+' '+p.nm+'</div>';
+    if(bothPicked){
+      var picked=qs[idx][d[p.w]==='A'?0:2];
+      html+='<div class="pick">'+picked+'</div>';
+    }else if(d[p.w]){
+      html+='<div class="pick">✅</div>';
+    }else{
+      html+='<div class="wait">En attente...</div>';
+    }
+    html+='</div>';
+  });
+  html+='</div>';
+
+  var res=document.createElement('div');
+  if(bothPicked){
+    html+='<div class="result v '+(isMatch?'match':'diff')+'">';
+    html+='<div class="rtxt">'+(isMatch?'🎉 Match parfait !':'😄 Pas d\'accord !')+'</div>';
+    html+='<div class="rsub">'+(isMatch?'Vous pensez pareil':'C\'est ça qui est marrant')+'</div></div>';
+  }
+
+  html+='<div class="nav">';
+  html+='<button class="btn" onclick="nav(-1)">←</button>';
+  html+='<button class="btn" onclick="rand()">🎲 Aléatoire</button>';
+  html+='<button class="btn" onclick="nav(1)">→</button>';
+  html+='</div>';
+
+  document.getElementById('content').innerHTML=html;
+}
+
+function pick(opt){
+  var ref=getDocRef();
+  ref.get().then(function(doc){
+    var d=doc.exists?doc.data():{};
+    if(d.a&&d.k)return;
+    var update={};
+    update['date']=today;
+    update['q']=idx;
+
+    var who=prompt('Qui es-tu ?','Alexandre');
+    if(!who)return;
+    var key=who.toLowerCase().indexOf('klara')>=0||who.toLowerCase().indexOf('k')===0?'k':'a';
+    if(d[key])return;
+    update[key]=opt;
+    return ref.set(update,{merge:true}).then(function(){
+      return ref.get();
+    }).then(function(newDoc){
+      var nd=newDoc.data();
+      if(nd.a&&nd.k){
+        var isMatch=nd.a===nd.k;
+        scoreRef.get().then(function(sDoc){
+          var s=sDoc.exists?sDoc.data():{match:0,total:0};
+          var su={match:s.match+(isMatch?1:0),total:s.total+1};
+          scoreRef.set(su,{merge:true});
+        });
+      }
+    });
+  }).then(function(){
+    document.getElementById('status').textContent='✅ Choix enregistré !';
+    setTimeout(function(){document.getElementById('status').textContent=''},2000);
+  });
+}
+
+function nav(d){idx=((idx+d)%qs.length+qs.length)%qs.length;listen()}
+function rand(){idx=Math.floor(Math.random()*qs.length);listen()}
+
+var unsub=null;
+function listen(){
+  if(unsub)unsub();
+  unsub=getDocRef().onSnapshot(function(doc){
+    scoreRef.get().then(function(sDoc){
+      buildUI(doc.exists?doc.data():null,sDoc.exists?sDoc.data():null);
+    });
+  });
+}
+
+listen();
+</script>
+</body>
+</html>
