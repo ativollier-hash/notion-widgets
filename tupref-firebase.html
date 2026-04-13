@@ -9,44 +9,66 @@
 body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
 .w{background:#fff;border-radius:22px;padding:24px;max-width:700px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
 h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
-.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:14px}
-.vs{font-family:'Playfair Display',serif;font-size:14px;color:#e07a5f;margin:10px 0}
-.qnum{font-size:10px;color:#c5c0b8;margin-bottom:14px}
-.opts{display:flex;gap:12px;margin-bottom:16px}
-.opt{flex:1;padding:18px 14px;border:2.5px solid #ece8e2;border-radius:16px;background:#faf8f5;cursor:pointer;transition:all .25s;text-align:center}
-.opt:hover{border-color:#e07a5f;transform:translateY(-2px);box-shadow:0 4px 16px rgba(224,122,95,.12)}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px}
+.who-pick{margin-bottom:14px}
+.who-pick span{font-size:12px;color:#9a958e;display:block;margin-bottom:6px}
+.who-btn{padding:8px 20px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .15s;color:#2d2a26;margin:0 4px}
+.who-btn:hover{border-color:#e07a5f;color:#e07a5f}
+.who-btn.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
+.qnum{font-size:10px;color:#c5c0b8;margin-bottom:6px}
+.vs{font-family:'Playfair Display',serif;font-size:13px;color:#e07a5f;margin:6px 0}
+.opts{display:flex;gap:12px;margin-bottom:12px}
+.opt{flex:1;padding:16px 12px;border:2.5px solid #ece8e2;border-radius:16px;background:#faf8f5;cursor:pointer;transition:all .25s}
+.opt:hover{border-color:#e07a5f;transform:translateY(-2px)}
 .opt.picked{border-color:#e07a5f;background:rgba(224,122,95,.06)}
-.opt.win{border-color:#6bbd7b;background:rgba(107,189,123,.06)}
-.opt.lose{border-color:#ece8e2;opacity:.5}
-.opt .emoji{font-size:28px;margin-bottom:6px}
-.opt .txt{font-family:'Playfair Display',serif;font-size:15px;color:#2d2a26;line-height:1.3}
-.players{display:flex;gap:16px;justify-content:center;margin-bottom:14px}
+.opt.match{border-color:#6bbd7b;background:rgba(107,189,123,.06)}
+.opt.dim{opacity:.4}
+.opt.disabled{pointer-events:none}
+.opt .emoji{font-size:28px;margin-bottom:4px}
+.opt .txt{font-family:'Playfair Display',serif;font-size:14px;color:#2d2a26;line-height:1.3}
+.players{display:flex;gap:16px;justify-content:center;margin-bottom:10px}
 .player{text-align:center;min-width:80px}
-.player .nm{font-size:12px;font-weight:700;color:#2d2a26}
-.player .pick{font-size:24px;margin-top:4px;min-height:32px}
-.player .wait{font-size:11px;color:#b0ab9f;font-style:italic;margin-top:4px}
-.result{padding:14px;border-radius:14px;margin-bottom:14px;display:none;animation:fi .5s ease}
-.result.v{display:block}
+.player .nm{font-size:11px;font-weight:700;color:#2d2a26}
+.player .st{font-size:20px;margin-top:2px;min-height:28px}
+.player .wait{font-size:10px;color:#b0ab9f;font-style:italic}
+.result{padding:12px;border-radius:14px;margin-bottom:10px;display:none}
+.result.v{display:block;animation:fi .5s ease}
 .result.match{background:linear-gradient(135deg,#f0faf2,#e8f5e9)}
 .result.diff{background:linear-gradient(135deg,#fff5f2,#fef9f0)}
-.result .rtxt{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26}
-.result .rsub{font-size:12px;color:#9a958e;margin-top:4px}
-.score{font-size:12px;color:#9a958e;margin-bottom:12px}
-.score b{color:#e07a5f;font-size:16px}
-.nav{display:flex;gap:6px;justify-content:center}
-.btn{padding:8px 18px;border:2px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
-.btn:hover{border-color:#e07a5f;color:#e07a5f;transform:translateY(-1px)}
-.status{font-size:10px;color:#6bbd7b;margin-top:8px;font-weight:600}
-.ft{margin-top:12px;font-size:9px;color:#c5c0b8}
-.loading{color:#9a958e;font-size:12px;padding:20px}
-@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.result .rtxt{font-family:'Playfair Display',serif;font-size:16px;color:#2d2a26}
+.result .rsub{font-size:11px;color:#9a958e;margin-top:2px}
+.why{margin:10px auto;max-width:400px;display:none}
+.why.v{display:block;animation:fi .3s ease}
+.why label{font-size:11px;color:#9a958e;font-weight:600;display:block;margin-bottom:4px}
+.why textarea{width:100%;padding:8px 12px;border:1.5px solid #ece8e2;border-radius:10px;font-family:'Nunito',sans-serif;font-size:12px;color:#2d2a26;background:#faf8f5;resize:none;outline:none;min-height:36px}
+.why textarea:focus{border-color:#e07a5f}
+.why .send{margin-top:4px;padding:5px 14px;border:none;border-radius:8px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer}
+.why .send:hover{background:#c9694f}
+.whys{margin:8px auto;max-width:500px;text-align:left;display:none}
+.whys.v{display:block;animation:fi .3s ease}
+.wbubble{padding:8px 12px;background:#faf8f5;border-radius:10px;margin-bottom:6px;font-size:12px;color:#2d2a26}
+.wbubble b{color:#e07a5f}
+.score{font-size:11px;color:#9a958e;margin-bottom:10px}
+.score b{color:#e07a5f;font-size:14px}
+.nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.btn{padding:7px 16px;border:2px solid #ece8e2;border-radius:10px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;transition:all .15s;color:#2d2a26}
+.btn:hover{border-color:#e07a5f;color:#e07a5f}
+.btn.reset{font-size:9px;color:#c5c0b8;border-color:#ece8e2}
+.btn.reset:hover{color:#e07a5f;border-color:#e07a5f}
+.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
+.ft{margin-top:10px;font-size:9px;color:#c5c0b8}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 <div class="w">
 <h2>Tu Préfères ? 🎮</h2>
 <div class="day" id="day"></div>
-<div id="content"><div class="loading">Chargement...</div></div>
+<div class="who-pick"><span>Qui es-tu ?</span>
+<button class="who-btn" id="wb-a" onclick="setWho('a')">🏰 Alexandre</button>
+<button class="who-btn" id="wb-k" onclick="setWho('k')">🐟 Klara</button>
+</div>
+<div id="content"></div>
 <div class="status" id="status"></div>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
@@ -69,74 +91,79 @@ var qs=[
 ["🍕","Manger que pizza","🍣","Manger que sushi"],
 ["🌅","Se lever tôt","🌙","Se coucher tard"],
 ["🎬","Soirée film","🎮","Soirée jeux vidéo"],
-["❄️","Vivre où il fait froid","☀️","Vivre où il fait chaud"],
-["🏠","Rester à la maison","✈️","Voyager tout le temps"],
+["❄️","Froid pour toujours","☀️","Chaud pour toujours"],
+["🏠","Rester à la maison","✈️","Voyager non-stop"],
 ["🐶","Avoir un chien","🐱","Avoir un chat"],
-["💰","Beaucoup d'argent mais pas de temps","⏰","Beaucoup de temps mais peu d'argent"],
+["💰","Riche sans temps","⏰","Temps libre sans argent"],
 ["🎤","Chanter en public","💃","Danser en public"],
-["📱","Plus de téléphone 1 mois","🍫","Plus de sucre 1 mois"],
-["🏝️","Île déserte avec wifi","🏙️","Grande ville sans wifi"],
-["🧠","Lire dans les pensées","⏱️","Arrêter le temps"],
+["📱","Sans téléphone 1 mois","🍫","Sans sucre 1 mois"],
+["🏝️","Île déserte + wifi","🏙️","Grande ville sans wifi"],
+["🧠","Lire les pensées","⏱️","Arrêter le temps"],
 ["🍽️","Cuisiner ensemble","🛋️","Commander et chiller"],
 ["🌊","Vacances plage","🗺️","Vacances road trip"],
 ["📚","Lire le livre","🎬","Regarder le film"],
-["🎁","Faire des cadeaux","💌","Recevoir des lettres d'amour"],
-["🌃","Dîner romantique en ville","🏕️","Camping sous les étoiles"],
-["🧳","1 long voyage par an","✈️","Plein de petits weekends"],
+["🎁","Offrir des cadeaux","💌","Recevoir des lettres"],
+["🌃","Dîner en ville","🏕️","Camping sous les étoiles"],
+["🧳","1 long voyage / an","✈️","Plein de weekends"],
 ["🍳","Petit-dej au lit","🌙","Dîner aux chandelles"],
 ["🎵","Vivre sans musique","🎨","Vivre sans couleurs"],
 ["🏋️","Sport le matin","🌙","Sport le soir"],
 ["📸","Photo souvenir","🎥","Vidéo souvenir"],
-["🗣️","Tout dire","🤫","Garder du mystère"],
-["🎂","Anniversaire surprise","🎉","Anniversaire planifié ensemble"],
+["🗣️","Tout se dire","🤫","Garder du mystère"],
+["🎂","Anniv surprise","🎉","Anniv planifié ensemble"],
 ["🏃","Marathon ensemble","🧘","Yoga ensemble"],
-["🌮","Street food","🍷","Restaurant gastronomique"],
+["🌮","Street food","🍷","Resto gastronomique"],
 ["🎪","Parc d'attractions","🏛️","Musée"],
-["👻","Film d'horreur ensemble","😂","Comédie romantique"],
-["🛏️","Grasse matinée","🌅","Lever de soleil ensemble"],
+["👻","Film d'horreur","😂","Comédie romantique"],
+["🛏️","Grasse matinée","🌅","Lever de soleil"],
 ["🎹","Apprendre le piano","🎸","Apprendre la guitare"],
-["🤿","Plongée sous-marine","🪂","Parachute"],
-["🏡","Maison à la campagne","🏢","Appart en ville"],
+["🤿","Plongée","🪂","Parachute"],
+["🏡","Maison campagne","🏢","Appart en ville"],
 ["🎄","Noël ensemble","🎆","Nouvel an ensemble"],
 ["🐎","Balade à cheval","🚴","Balade à vélo"],
 ["🍦","Glace","🧁","Gâteau"],
 ["📞","Appel surprise","💬","Long message écrit"],
-["🌺","Recevoir des fleurs","🧸","Recevoir un cadeau fait main"],
-["🎯","Être le meilleur dans 1 sport","🏅","Être bon dans 10 sports"]
+["🌺","Recevoir des fleurs","🧸","Cadeau fait main"],
+["🎯","Top 1 en 1 sport","🏅","Bon dans 10 sports"]
 ];
-var idx=0;
-var today=new Date().toISOString().slice(0,10);
+
+var me=null,idx=0,today=new Date().toISOString().slice(0,10);
 var scoreRef=db.collection('couple').doc('tpref-score');
 
 document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
 
 function dayIndex(){var d=new Date();return Math.floor((d-new Date(d.getFullYear(),0,0))/(1000*60*60*24))%qs.length}
+idx=dayIndex();
 
-function getDocRef(){return db.collection('couple').doc('tpref-'+today+'-'+idx)}
+function setWho(w){
+  me=w;
+  document.getElementById('wb-a').classList.toggle('s',w==='a');
+  document.getElementById('wb-k').classList.toggle('s',w==='k');
+  listen();
+}
 
-function buildUI(data,scoreData){
+function getRef(){return db.collection('couple').doc('tpref-'+today+'-'+idx)}
+
+function buildUI(data){
   var d=data||{};
   var q=qs[idx];
   var bothPicked=d.a&&d.k;
   var isMatch=bothPicked&&d.a===d.k;
-  var sc=scoreData||{match:0,total:0};
 
-  var html='<div class="score">Score : <b>'+sc.match+'</b> / '+sc.total+' en commun</div>';
-  html+='<div class="qnum">Question '+(idx+1)+' / '+qs.length+'</div>';
+  var html='<div class="qnum">Question '+(idx+1)+' / '+qs.length+'</div>';
   html+='<div class="opts">';
-
   ['A','B'].forEach(function(opt){
-    var ei=opt==='A'?0:2;
-    var ti=opt==='A'?1:3;
+    var ei=opt==='A'?0:2;var ti=opt==='A'?1:3;
     var cls='opt';
+    if(!me)cls+=' disabled';
     if(bothPicked){
-      if(d.a===opt&&d.k===opt)cls+=' win';
+      cls+=' disabled';
+      if(d.a===opt&&d.k===opt)cls+=' match';
       else if(d.a===opt||d.k===opt)cls+=' picked';
-      else cls+=' lose';
-    }
+      else cls+=' dim';
+    }else if(me&&d[me]===opt){cls+=' picked disabled'}
     html+='<div class="'+cls+'" onclick="pick(\''+opt+'\')">';
-    html+='<div class="emoji">'+q[ei]+'</div>';
-    html+='<div class="txt">'+q[ti]+'</div></div>';
+    html+='<div class="emoji">'+q[ei]+'</div><div class="txt">'+q[ti]+'</div></div>';
   });
   html+='</div>';
 
@@ -144,10 +171,9 @@ function buildUI(data,scoreData){
   [{w:'a',nm:'Alexandre',ic:'🏰'},{w:'k',nm:'Klara',ic:'🐟'}].forEach(function(p){
     html+='<div class="player"><div class="nm">'+p.ic+' '+p.nm+'</div>';
     if(bothPicked){
-      var picked=qs[idx][d[p.w]==='A'?0:2];
-      html+='<div class="pick">'+picked+'</div>';
+      html+='<div class="st">'+qs[idx][d[p.w]==='A'?0:2]+'</div>';
     }else if(d[p.w]){
-      html+='<div class="pick">✅</div>';
+      html+='<div class="st">✅</div>';
     }else{
       html+='<div class="wait">En attente...</div>';
     }
@@ -155,51 +181,73 @@ function buildUI(data,scoreData){
   });
   html+='</div>';
 
-  var res=document.createElement('div');
   if(bothPicked){
     html+='<div class="result v '+(isMatch?'match':'diff')+'">';
-    html+='<div class="rtxt">'+(isMatch?'🎉 Match parfait !':'😄 Pas d\'accord !')+'</div>';
-    html+='<div class="rsub">'+(isMatch?'Vous pensez pareil':'C\'est ça qui est marrant')+'</div></div>';
+    html+='<div class="rtxt">'+(isMatch?'🎉 Match !':'😄 Pas d\'accord !')+'</div>';
+    html+='<div class="rsub">'+(isMatch?'Vous pensez pareil !':'C\'est ça qui est fun')+'</div></div>';
+  }
+
+  if(me&&d[me]&&!d['why_'+me]){
+    html+='<div class="why v"><label>Pourquoi ce choix ?</label>';
+    html+='<textarea id="whyInput" placeholder="Parce que..."></textarea>';
+    html+='<button class="send" onclick="sendWhy()">Envoyer</button></div>';
+  }
+
+  if(d.why_a||d.why_k){
+    html+='<div class="whys v">';
+    if(d.why_a)html+='<div class="wbubble"><b>🏰 Alexandre :</b> '+d.why_a+'</div>';
+    if(d.why_k)html+='<div class="wbubble"><b>🐟 Klara :</b> '+d.why_k+'</div>';
+    html+='</div>';
   }
 
   html+='<div class="nav">';
   html+='<button class="btn" onclick="nav(-1)">←</button>';
   html+='<button class="btn" onclick="rand()">🎲 Aléatoire</button>';
   html+='<button class="btn" onclick="nav(1)">→</button>';
+  html+='<button class="btn reset" onclick="resetQ()">🔄 Reset</button>';
   html+='</div>';
 
   document.getElementById('content').innerHTML=html;
 }
 
 function pick(opt){
-  var ref=getDocRef();
+  if(!me)return;
+  var ref=getRef();
   ref.get().then(function(doc){
     var d=doc.exists?doc.data():{};
+    if(d[me])return;
     if(d.a&&d.k)return;
     var update={};
+    update[me]=opt;
     update['date']=today;
     update['q']=idx;
-
-    var who=prompt('Qui es-tu ?','Alexandre');
-    if(!who)return;
-    var key=who.toLowerCase().indexOf('klara')>=0||who.toLowerCase().indexOf('k')===0?'k':'a';
-    if(d[key])return;
-    update[key]=opt;
-    return ref.set(update,{merge:true}).then(function(){
-      return ref.get();
-    }).then(function(newDoc){
-      var nd=newDoc.data();
-      if(nd.a&&nd.k){
-        var isMatch=nd.a===nd.k;
-        scoreRef.get().then(function(sDoc){
-          var s=sDoc.exists?sDoc.data():{match:0,total:0};
-          var su={match:s.match+(isMatch?1:0),total:s.total+1};
-          scoreRef.set(su,{merge:true});
+    return ref.set(update,{merge:true}).then(function(){return ref.get()}).then(function(nd){
+      var ndd=nd.data();
+      if(ndd.a&&ndd.k){
+        scoreRef.get().then(function(s){
+          var sd=s.exists?s.data():{match:0,total:0};
+          scoreRef.set({match:sd.match+(ndd.a===ndd.k?1:0),total:sd.total+1},{merge:true});
         });
       }
     });
   }).then(function(){
     document.getElementById('status').textContent='✅ Choix enregistré !';
+    setTimeout(function(){document.getElementById('status').textContent=''},2000);
+  });
+}
+
+function sendWhy(){
+  if(!me)return;
+  var v=document.getElementById('whyInput').value.trim();
+  if(!v)return;
+  var update={};
+  update['why_'+me]=v;
+  getRef().set(update,{merge:true});
+}
+
+function resetQ(){
+  getRef().delete().then(function(){
+    document.getElementById('status').textContent='🔄 Reset !';
     setTimeout(function(){document.getElementById('status').textContent=''},2000);
   });
 }
@@ -210,10 +258,8 @@ function rand(){idx=Math.floor(Math.random()*qs.length);listen()}
 var unsub=null;
 function listen(){
   if(unsub)unsub();
-  unsub=getDocRef().onSnapshot(function(doc){
-    scoreRef.get().then(function(sDoc){
-      buildUI(doc.exists?doc.data():null,sDoc.exists?sDoc.data():null);
-    });
+  unsub=getRef().onSnapshot(function(doc){
+    buildUI(doc.exists?doc.data():null);
   });
 }
 
