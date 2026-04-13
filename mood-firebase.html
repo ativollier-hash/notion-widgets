@@ -25,6 +25,8 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .rm{font-size:32px}
 .rd{font-family:'Playfair Display',serif;font-size:13px;color:#2d2a26;margin-top:2px}
 .status{font-size:10px;color:#6bbd7b;margin-top:8px;font-weight:600}
+.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;margin-top:8px;font-family:'Nunito',sans-serif;font-weight:600}
+.rst:hover{color:#e07a5f;border-color:#e07a5f}
 .ft{margin-top:10px;font-size:9px;color:#c5c0b8}
 .loading{color:#9a958e;font-size:12px;padding:20px}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
@@ -37,22 +39,15 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <div id="content"><div class="loading">Chargement...</div></div>
 <div class="r" id="res"><div class="rm" id="rm"></div><div class="rd" id="rd"></div></div>
 <div class="status" id="status"></div>
+<button class="rst" onclick="resetMood()">🔄 Reset</button>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-firebase.initializeApp({
-  apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",
-  authDomain:"notion-bdd.firebaseapp.com",
-  projectId:"notion-bdd",
-  storageBucket:"notion-bdd.firebasestorage.app",
-  messagingSenderId:"641330827114",
-  appId:"1:641330827114:web:0bf5fc986540a4c9085f13"
-});
+firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
 var db=firebase.firestore();
-var emojis=['😍','😊','😴','💪','😢','🥳','😤','🤒'];
+var emojis=['😍','😊','😴','💪','😢','🥳','😤','🤒','🥰','😈','🫠','🤯'];
 var today=new Date().toISOString().slice(0,10);
 var docRef=db.collection('couple').doc('mood-'+today);
 
@@ -80,16 +75,24 @@ function buildUI(data){
     document.getElementById('rm').textContent=(d.a||'…')+' × '+(d.k||'…');
     document.getElementById('rd').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
     document.getElementById('res').classList.add('v');
+  }else{
+    document.getElementById('res').classList.remove('v');
   }
 }
 
 function pick(who,emoji){
-  var update={};
-  update[who]=emoji;
-  update['date']=today;
-  docRef.set(update,{merge:true}).then(function(){
+  var u={};u[who]=emoji;u['date']=today;
+  docRef.set(u,{merge:true}).then(function(){
     document.getElementById('status').textContent='✅ Sauvegardé !';
     setTimeout(function(){document.getElementById('status').textContent=''},2000);
+  });
+}
+
+function resetMood(){
+  docRef.delete().then(function(){
+    document.getElementById('status').textContent='🔄 Reset !';
+    document.getElementById('res').classList.remove('v');
+    setTimeout(function(){document.getElementById('status').textContent=''},1500);
   });
 }
 
