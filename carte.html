@@ -13,17 +13,17 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .map{position:relative;width:100%;border-radius:14px;overflow:hidden;margin-bottom:16px;border:2px solid #e8e2d8}
 .map img{width:100%;display:block}
 .map svg{position:absolute;top:0;left:0;width:100%;height:100%}
-@keyframes pulse{0%,100%{r:8;opacity:1}50%{r:14;opacity:.5}}
-.pulse{animation:pulse 1.8s ease-in-out infinite}
-@keyframes ring{0%{r:8;opacity:.7;stroke-width:3}100%{r:30;opacity:0;stroke-width:.5}}
-.ring{fill:none;stroke:#e07a5f;stroke-width:2;opacity:0;animation:ring 2s ease-out infinite}
-@keyframes dash{to{stroke-dashoffset:-30}}
-.flight{stroke:#e07a5f;stroke-width:3.5;fill:none;stroke-dasharray:12 8;animation:dash 1.2s linear infinite;filter:drop-shadow(0 0 6px rgba(224,122,95,.5))}
-.flight-bg{stroke:rgba(224,122,95,.15);stroke-width:12;fill:none}
+@keyframes pulse{0%,100%{r:14;opacity:1}50%{r:22;opacity:.4}}
+.pulse{animation:pulse 2.5s ease-in-out infinite}
+@keyframes ring{0%{r:14;opacity:.8;stroke-width:4}100%{r:50;opacity:0;stroke-width:1}}
+.ring{fill:none;stroke:#e07a5f;opacity:0;animation:ring 3s ease-out infinite}
+@keyframes dash{to{stroke-dashoffset:-40}}
+.flight{stroke:#e07a5f;stroke-width:5;fill:none;stroke-dasharray:16 10;animation:dash 3s linear infinite;filter:drop-shadow(0 0 8px rgba(224,122,95,.6))}
+.flight-bg{stroke:rgba(224,122,95,.12);stroke-width:20;fill:none}
 @keyframes fly{0%{offset-distance:0%}100%{offset-distance:100%}}
-.plane{font-size:28px;offset-rotate:auto;animation:fly 6s linear infinite;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+.plane{font-size:40px;offset-rotate:auto;animation:fly 12s linear infinite;filter:drop-shadow(0 3px 6px rgba(0,0,0,.35))}
 .tag{font-family:'Nunito',sans-serif;font-weight:700;fill:#2d2a26}
-.tag-bg{fill:rgba(255,255,255,.9);rx:6;filter:drop-shadow(0 1px 3px rgba(0,0,0,.1))}
+.tag-bg{fill:rgba(255,255,255,.92);rx:8;filter:drop-shadow(0 2px 4px rgba(0,0,0,.12))}
 .dist{background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;padding:16px 20px;display:flex;justify-content:center;gap:28px;flex-wrap:wrap;align-items:center}
 .stat{text-align:center}
 .val{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:#e07a5f;line-height:1}
@@ -41,32 +41,36 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <img src="https://ativollier-hash.github.io/notion-widgets/world-map-vintage.jpg" alt="Carte du monde vintage">
 <svg viewBox="0 0 3000 2000" xmlns="http://www.w3.org/2000/svg">
 
-<!-- La Rochelle, France -->
+<!-- La Rochelle -->
 <circle class="ring" cx="1310" cy="440" style="animation-delay:0s"/>
-<circle class="ring" cx="1310" cy="440" style="animation-delay:1s"/>
-<circle class="pulse" cx="1310" cy="440" r="8" fill="#e07a5f" filter="drop-shadow(0 0 6px rgba(224,122,95,.6))"/>
+<circle class="ring" cx="1310" cy="440" style="animation-delay:1.5s"/>
+<circle class="ring" cx="1310" cy="440" style="animation-delay:3s"/>
+<circle class="pulse" cx="1310" cy="440" r="14" fill="#e07a5f" filter="drop-shadow(0 0 10px rgba(224,122,95,.7))"/>
+<circle cx="1310" cy="440" r="5" fill="#fff"/>
 
-<!-- Nouvelle-Calédonie — east of Australia, aligned with top of NZ -->
-<circle class="ring" cx="2620" cy="1160" style="animation-delay:.5s"/>
-<circle class="ring" cx="2620" cy="1160" style="animation-delay:1.5s"/>
-<circle class="pulse" cx="2620" cy="1160" r="8" fill="#e07a5f" style="animation-delay:.6s" filter="drop-shadow(0 0 6px rgba(224,122,95,.6))"/>
+<!-- NC - east of Australia, aligned top of NZ -->
+<circle class="ring" cx="2620" cy="1130" style="animation-delay:.5s"/>
+<circle class="ring" cx="2620" cy="1130" style="animation-delay:2s"/>
+<circle class="ring" cx="2620" cy="1130" style="animation-delay:3.5s"/>
+<circle class="pulse" cx="2620" cy="1130" r="14" fill="#e07a5f" style="animation-delay:.6s" filter="drop-shadow(0 0 10px rgba(224,122,95,.7))"/>
+<circle cx="2620" cy="1130" r="5" fill="#fff"/>
 
-<!-- Flight path glow background -->
-<path class="flight-bg" d="M 1310 440 C 1800 150, 2300 350, 2620 1160"/>
+<!-- Flight path glow -->
+<path class="flight-bg" d="M 1310 440 C 1800 100, 2350 300, 2620 1130"/>
 
 <!-- Flight path dashed -->
-<path class="flight" d="M 1310 440 C 1800 150, 2300 350, 2620 1160"/>
+<path class="flight" d="M 1310 440 C 1800 100, 2350 300, 2620 1130"/>
 
-<!-- Plane along path -->
-<text class="plane" style="offset-path:path('M 1310 440 C 1800 150, 2300 350, 2620 1160')">✈️</text>
+<!-- Plane -->
+<text class="plane" style="offset-path:path('M 1310 440 C 1800 100, 2350 300, 2620 1130')">✈️</text>
 
 <!-- Label La Rochelle -->
-<rect class="tag-bg" x="1120" y="455" width="165" height="30"/>
-<text class="tag" x="1135" y="477" font-size="14">🇫🇷 La Rochelle</text>
+<rect class="tag-bg" x="1100" y="460" width="195" height="38"/>
+<text class="tag" x="1120" y="487" font-size="18">🇫🇷 La Rochelle</text>
 
-<!-- Label Nouvelle-Calédonie -->
-<rect class="tag-bg" x="2450" y="1175" width="185" height="30"/>
-<text class="tag" x="2465" y="1197" font-size="14">🇳🇨 N. Calédonie</text>
+<!-- Label NC -->
+<rect class="tag-bg" x="2420" y="1148" width="210" height="38"/>
+<text class="tag" x="2440" y="1175" font-size="18">🇳🇨 N. Calédonie</text>
 
 </svg>
 </div>
