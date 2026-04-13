@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
+.w{background:#fff;border-radius:20px;padding:20px 24px;max-width:700px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid #ece8e2}
+h2{font-family:'Playfair Display',serif;font-size:18px;text-align:center;color:#2d2a26;margin-bottom:16px}
+.row{display:flex;gap:24px;align-items:flex-start}
+.col{flex:1;min-width:0}
+.p{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.nm{font-size:13px;font-weight:700;color:#2d2a26}
+.lc{font-size:10px;color:#b0ab9f;font-weight:600}
+.ms{display:flex;flex-wrap:wrap;gap:5px}
+.m{width:40px;height:40px;border-radius:12px;border:2.5px solid transparent;background:#f5f2ed;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.m:hover{transform:scale(1.15);background:#ece8e2}
+.m.s{border-color:#e07a5f;background:rgba(224,122,95,.1);transform:scale(1.18);box-shadow:0 2px 10px rgba(224,122,95,.25)}
+.sep{width:1px;background:#ece8e2;align-self:stretch;margin:0 4px}
+.r{text-align:center;padding:10px;background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:14px;margin-top:14px;display:none}
+.r.v{display:block;animation:fi .4s ease}
+.rm{font-size:32px}
+.rd{font-family:'Playfair Display',serif;font-size:12px;color:#2d2a26;margin-top:2px}
+.ft{text-align:center;margin-top:10px;font-size:9px;color:#c5c0b8}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="w">
+<h2>mood du jour ✨</h2>
+<div class="row">
+<div class="col">
+<div class="p"><span style="font-size:18px">🏰❤️</span><div><div class="nm">Mon Prince</div><div class="lc">🇫🇷 France</div></div></div>
+<div class="ms" id="f"></div>
+</div>
+<div class="sep"></div>
+<div class="col">
+<div class="p"><span style="font-size:18px">🐟💕</span><div><div class="nm">PiranaFish</div><div class="lc">🇳🇨 N. Calédonie</div></div></div>
+<div class="ms" id="p"></div>
+</div>
+</div>
+<div class="r" id="res"><div class="rm" id="rm"></div><div class="rd" id="rd"></div></div>
+<div class="ft">🏰💕🐟 nous deux.</div>
+</div>
+<script>
+var e=['😍','😊','😴','💪','😢','🥳','😤','🤒'],sel={f:null,p:null};
+['f','p'].forEach(function(w){var d=document.getElementById(w);e.forEach(function(em){var b=document.createElement('button');b.className='m';b.textContent=em;b.onclick=function(){d.querySelectorAll('.m').forEach(function(x){x.classList.remove('s')});b.classList.add('s');sel[w]=em;up()};d.appendChild(b)})});
+function up(){var f=sel.f,p=sel.p;if(!f&&!p)return;var d=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});document.getElementById('rm').textContent=(f||'…')+' × '+(p||'…');document.getElementById('rd').textContent=d;var r=document.getElementById('res');r.classList.remove('v');void r.offsetWidth;r.classList.add('v')}
+</script>
+</body>
+</html>
