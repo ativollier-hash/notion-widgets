@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2}
+h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px;text-align:center}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;text-align:center;margin-bottom:6px}
+.tabs{display:flex;gap:4px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}
+.tab{padding:7px 14px;border:2px solid #ece8e2;border-radius:10px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;color:#9a958e;transition:all .15s}
+.tab:hover{border-color:#e07a5f;color:#e07a5f}
+.tab.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
+.who{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
+.wbtn{padding:8px 18px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
+.wbtn:hover{border-color:#e07a5f;color:#e07a5f}
+.wbtn.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
+.section{display:none}.section.v{display:block;animation:fi .3s ease}
+.progress{width:100%;height:10px;background:#f0f0ed;border-radius:8px;overflow:hidden;margin-bottom:12px}
+.pbar{height:100%;background:linear-gradient(90deg,#e07a5f,#e8956e);border-radius:8px;transition:width .5s ease}
+.ptext{font-size:11px;color:#9a958e;text-align:center;margin-bottom:10px;font-weight:600}
+.item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;margin-bottom:6px;background:#faf8f5;transition:all .2s}
+.item:hover{background:#f5f0ea}
+.item.done{background:rgba(107,189,123,.06)}
+.cb{width:24px;height:24px;border-radius:8px;border:2.5px solid #d4cfc6;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;flex-shrink:0}
+.cb:hover{border-color:#e07a5f}
+.cb.checked{border-color:#6bbd7b;background:#6bbd7b;color:#fff}
+.itxt{flex:1;font-size:13px;color:#2d2a26;font-weight:600}
+.item.done .itxt{text-decoration:line-through;color:#b0ab9f}
+.del{background:none;border:none;color:#d4cfc6;cursor:pointer;font-size:16px;padding:2px}
+.del:hover{color:#e07a5f}
+.addrow{display:flex;gap:6px;margin-top:10px}
+.addin{flex:1;padding:10px 14px;border:1.5px solid #ece8e2;border-radius:12px;font-family:'Nunito',sans-serif;font-size:12px;color:#2d2a26;background:#faf8f5;outline:none}
+.addin:focus{border-color:#e07a5f}
+.addbtn{padding:10px 16px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer}
+.addbtn:hover{background:#c9694f}
+.note{font-size:9px;color:#c5c0b8;margin-top:8px;text-align:center;font-style:italic}
+.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px;display:block;margin-left:auto;margin-right:auto}
+.rst:hover{color:#e07a5f;border-color:#e07a5f}
+.status{font-size:10px;color:#6bbd7b;text-align:center;margin-top:6px;font-weight:600}
+.ft{margin-top:12px;font-size:9px;color:#c5c0b8;text-align:center}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="w">
+<h2>To-Do List ✅</h2>
+<div class="day" id="day"></div>
+<div class="who">
+<button class="wbtn s" id="wa" onclick="setWho('a')">🏰 Alexandre</button>
+<button class="wbtn" id="wk" onclick="setWho('k')">🐟 Klara</button>
+</div>
+<div class="tabs">
+<button class="tab s" id="t0" onclick="setTab(0)">📋 Routines*</button>
+<button class="tab" id="t1" onclick="setTab(1)">📝 To-Do Libre</button>
+<button class="tab" id="t2" onclick="setTab(2)">🎯 Semaine*</button>
+<button class="tab" id="t3" onclick="setTab(3)">🏆 Mois*</button>
+</div>
+<div id="zone"></div>
+<div class="status" id="status"></div>
+<div class="note">* Se réinitialise automatiquement (routines = chaque jour, semaine = chaque lundi, mois = chaque 1er)</div>
+<div class="ft">🏰💕🐟 Nous Deux.</div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
+var db=firebase.firestore();
+var me='a',tab=0;
+var today=new Date().toISOString().slice(0,10);
+var d=new Date();
+var weekKey=d.getFullYear()+'-W'+Math.ceil(((d-new Date(d.getFullYear(),0,1))/86400000+new Date(d.getFullYear(),0,1).getDay()+1)/7);
+var monthKey=d.toISOString().slice(0,7);
+
+var defaultRoutines=[
+{id:'eau',txt:'💧 Boire assez d\'eau'},
+{id:'sport',txt:'💪 Faire du sport'},
+{id:'ranger',txt:'🛏️ Ranger sa chambre'},
+{id:'notion',txt:'📱 Répondre sur Notion'},
+{id:'soin',txt:'🧘 Moment pour soi'},
+{id:'repas',txt:'🍽️ Bien manger'}
+];
+
+document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+
+function setWho(w){me=w;
+document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
+document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
+listenCurrent();}
+
+function setTab(t){tab=t;
+for(var i=0;i<4;i++)document.getElementById('t'+i).className='tab'+(i===t?' s':'');
+listenCurrent();}
+
+function getRef(){
+var keys=['routine-'+me+'-'+today,'todo-'+me,'week-'+me+'-'+weekKey,'month-'+me+'-'+monthKey];
+return db.collection('couple').doc(keys[tab]);
+}
+
+function buildRoutines(data){
+var d=data||{};
+var items=defaultRoutines;
+var custom=d.custom||[];
+var allItems=items.concat(custom.map(function(c,i){return{id:'c'+i,txt:c}}));
+var checked=d.checked||{};
+var total=allItems.length;
+var doneCount=allItems.filter(function(it){return checked[it.id]}).length;
+var pct=total>0?Math.round(doneCount/total*100):0;
+
+var html='<div class="ptext">'+doneCount+' / '+total+' — '+pct+'%</div>';
+html+='<div class="progress"><div class="pbar" style="width:'+pct+'%"></div></div>';
+allItems.forEach(function(it){
+  var isDone=checked[it.id];
+  html+='<div class="item'+(isDone?' done':'')+'">';
+  html+='<div class="cb'+(isDone?' checked':'')+'" onclick="toggleRoutine(\''+it.id+'\')">'+(isDone?'✓':'')+'</div>';
+  html+='<div class="itxt">'+it.txt+'</div>';
+  if(it.id.startsWith('c'))html+='<button class="del" onclick="delCustomRoutine('+it.id.slice(1)+')">✕</button>';
+  html+='</div>';
+});
+html+='<div class="addrow"><input class="addin" id="addIn" placeholder="+ Ajouter une routine..." onkeydown="if(event.key===\'Enter\')addCustomRoutine()"><button class="addbtn" onclick="addCustomRoutine()">+</button></div>';
+html+='<button class="rst" onclick="resetCurrent()">🔄 Reset</button>';
+document.getElementById('zone').innerHTML=html;
+}
+
+function buildFreeList(data){
+var d=data||{};
+var items=d.items||[];
+var doneCount=items.filter(function(it){return it.done}).length;
+var total=items.length;
+var pct=total>0?Math.round(doneCount/total*100):0;
+
+var html='';
+if(total>0){
+  html+='<div class="ptext">'+doneCount+' / '+total+' — '+pct+'%</div>';
+  html+='<div class="progress"><div class="pbar" style="width:'+pct+'%"></div></div>';
+}
+items.forEach(function(it,i){
+  html+='<div class="item'+(it.done?' done':'')+'">';
+  html+='<div class="cb'+(it.done?' checked':'')+'" onclick="toggleFree('+i+')">'+(it.done?'✓':'')+'</div>';
+  html+='<div class="itxt">'+it.txt+'</div>';
+  html+='<button class="del" onclick="delFree('+i+')">✕</button>';
+  html+='</div>';
+});
+html+='<div class="addrow"><input class="addin" id="addIn" placeholder="+ Ajouter une tâche..." onkeydown="if(event.key===\'Enter\')addFree()"><button class="addbtn" onclick="addFree()">+</button></div>';
+html+='<button class="rst" onclick="resetCurrent()">🔄 Reset</button>';
+document.getElementById('zone').innerHTML=html;
+}
+
+function buildGoals(data,label){
+var d=data||{};
+var items=d.items||[];
+var doneCount=items.filter(function(it){return it.done}).length;
+var total=items.length;
+var pct=total>0?Math.round(doneCount/total*100):0;
+
+var html='';
+if(total>0){
+  html+='<div class="ptext">'+doneCount+' / '+total+' — '+pct+'%</div>';
+  html+='<div class="progress"><div class="pbar" style="width:'+pct+'%"></div></div>';
+}
+items.forEach(function(it,i){
+  html+='<div class="item'+(it.done?' done':'')+'">';
+  html+='<div class="cb'+(it.done?' checked':'')+'" onclick="toggleGoal('+i+')">'+(it.done?'✓':'')+'</div>';
+  html+='<div class="itxt">'+it.txt+'</div>';
+  html+='<button class="del" onclick="delGoal('+i+')">✕</button>';
+  html+='</div>';
+});
+html+='<div class="addrow"><input class="addin" id="addIn" placeholder="+ Ajouter un objectif '+label+'..." onkeydown="if(event.key===\'Enter\')addGoal()"><button class="addbtn" onclick="addGoal()">+</button></div>';
+html+='<button class="rst" onclick="resetCurrent()">🔄 Reset</button>';
+document.getElementById('zone').innerHTML=html;
+}
+
+function toggleRoutine(id){
+  getRef().get().then(function(doc){
+    var d=doc.exists?doc.data():{};
+    var checked=d.checked||{};
+    checked[id]=!checked[id];
+    return getRef().set({checked:checked,custom:d.custom||[]},{merge:true});
+  }).then(showStatus);
+}
+
+function addCustomRoutine(){
+  var el=document.getElementById('addIn');if(!el||!el.value.trim())return;
+  var v=el.value.trim();
+  getRef().get().then(function(doc){
+    var d=doc.exists?doc.data():{};
+    var custom=d.custom||[];
+    custom.push(v);
+    return getRef().set({custom:custom},{merge:true});
+  }).then(showStatus);
+}
+
+function delCustomRoutine(i){
+  getRef().get().then(function(doc){
+    var d=doc.exists?doc.data():{};
+    var custom=d.custom||[];
+    custom.splice(i,1);
+    return getRef().set({custom:custom},{merge:true});
+  });
+}
+
+function toggleFree(i){
+  getRef().get().then(function(doc){
+    var d=doc.exists?doc.data():{};
+    var items=d.items||[];
+    if(items[i])items[i].done=!items[i].done;
+    return getRef().set({items:items},{merge:true});
+  }).then(showStatus);
+}
+
+function addFree(){
+  var el=document.getElementById('addIn');if(!el||!el.value.trim())return;
+  var v=el.value.trim();
+  getRef().get().then(function(doc){
+    var d=doc.exists?doc.data():{};
+    var items=d.items||[];
+    items.push({txt:v,done:false});
+    return getRef().set({items:items},{merge:true});
+  }).then(showStatus);
+}
+
+function delFree(i){
+  getRef().get().then(function(doc){
+    var d=doc.exists?doc.data():{};
+    var items=d.items||[];
+    items.splice(i,1);
+    return getRef().set({items:items},{merge:true});
+  });
+}
+
+function toggleGoal(i){toggleFree(i)}
+function addGoal(){addFree()}
+function delGoal(i){delFree(i)}
+
+function resetCurrent(){
+  getRef().delete().then(function(){
+    document.getElementById('status').textContent='🔄 Reset !';
+    setTimeout(function(){document.getElementById('status').textContent=''},1500);
+  });
+}
+
+function showStatus(){
+  document.getElementById('status').textContent='✅ Sauvegardé !';
+  setTimeout(function(){document.getElementById('status').textContent=''},1500);
+}
+
+var unsub=null;
+function listenCurrent(){
+  if(unsub)unsub();
+  unsub=getRef().onSnapshot(function(doc){
+    var d=doc.exists?doc.data():null;
+    if(tab===0)buildRoutines(d);
+    else if(tab===1)buildFreeList(d);
+    else if(tab===2)buildGoals(d,'semaine');
+    else buildGoals(d,'mois');
+  });
+}
+
+listenCurrent();
+</script>
+</body>
+</html>
