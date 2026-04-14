@@ -15,46 +15,41 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .wbtn{padding:8px 18px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
 .wbtn:hover{border-color:#e07a5f;color:#e07a5f}
 .wbtn.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
-.word-box{background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;padding:16px;margin-bottom:14px;display:none}
-.word-box.v{display:block;animation:fi .4s ease}
-.word-label{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:4px}
-.word{font-family:'Playfair Display',serif;font-size:24px;font-weight:800;color:#e07a5f}
-.word-pick{margin-bottom:14px;display:none}
-.word-pick.v{display:block}
-.word-pick input{padding:10px 14px;border:1.5px solid #ece8e2;border-radius:12px;font-family:'Nunito',sans-serif;font-size:13px;color:#2d2a26;background:#faf8f5;outline:none;width:220px}
-.word-pick input:focus{border-color:#e07a5f}
-.word-pick button{padding:10px 18px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin-left:6px}
-.word-pick button:hover{background:#c9694f}
-.random-btn{padding:6px 14px;border:1.5px solid #ece8e2;border-radius:8px;background:#fff;font-family:'Nunito',sans-serif;font-weight:600;font-size:11px;cursor:pointer;color:#9a958e;margin-left:6px}
-.random-btn:hover{border-color:#e07a5f;color:#e07a5f}
-.canvas-wrap{position:relative;margin:0 auto 12px;border-radius:14px;overflow:hidden;border:2px solid #ece8e2;background:#fff;touch-action:none}
-canvas{display:block;cursor:crosshair}
-.tools{display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-.color{width:28px;height:28px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .15s}
-.color:hover{transform:scale(1.15)}
-.color.s{border-color:#2d2a26;transform:scale(1.15)}
-.size-btn{padding:4px 10px;border:1.5px solid #ece8e2;border-radius:8px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:10px;cursor:pointer;color:#9a958e}
-.size-btn:hover,.size-btn.s{border-color:#e07a5f;color:#e07a5f}
-.eraser{padding:4px 10px;border:1.5px solid #ece8e2;border-radius:8px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:10px;cursor:pointer;color:#9a958e}
-.eraser:hover,.eraser.s{border-color:#e07a5f;color:#e07a5f}
-.clear{padding:4px 10px;border:1.5px solid #ece8e2;border-radius:8px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:10px;cursor:pointer;color:#9a958e}
-.clear:hover{border-color:#e07a5f;color:#e07a5f}
-.save-btn{padding:10px 28px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin-bottom:10px;transition:all .2s}
-.save-btn:hover{background:#c9694f;transform:translateY(-1px)}
-.drawing-display{margin:10px auto;border-radius:14px;overflow:hidden;border:2px solid #ece8e2;display:none}
-.drawing-display.v{display:block;animation:fi .5s ease}
-.drawing-display img{width:100%;display:block}
-.guess-box{margin:10px auto;max-width:400px;display:none}
-.guess-box.v{display:block;animation:fi .3s ease}
-.guess-box input{padding:10px 14px;border:1.5px solid #ece8e2;border-radius:12px;font-family:'Nunito',sans-serif;font-size:13px;color:#2d2a26;background:#faf8f5;outline:none;width:200px}
-.guess-box input:focus{border-color:#e07a5f}
-.guess-box button{padding:10px 18px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin-left:6px}
-.result{padding:14px;border-radius:14px;margin:10px auto;display:none;max-width:400px}
-.result.v{display:block;animation:fi .5s ease}
-.result.win{background:linear-gradient(135deg,#f0faf2,#e8f5e9)}
-.result.lose{background:linear-gradient(135deg,#fff5f2,#fef9f0)}
-.result .rtxt{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26}
-.result .rsub{font-size:12px;color:#9a958e;margin-top:2px}
+.step-box{background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;padding:14px;margin-bottom:12px}
+.step-label{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:4px}
+.step-title{font-family:'Playfair Display',serif;font-size:16px;color:#2d2a26}
+.word-area{margin-bottom:12px}
+.word-area input{padding:10px 14px;border:1.5px solid #ece8e2;border-radius:12px;font-family:'Nunito',sans-serif;font-size:13px;color:#2d2a26;background:#faf8f5;outline:none;width:200px}
+.word-area input:focus{border-color:#e07a5f}
+.word-area button{padding:10px 16px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;margin-left:6px}
+.word-area button:hover{background:#c9694f}
+.rand{padding:6px 12px;border:1.5px solid #ece8e2;border-radius:8px;background:#fff;font-family:'Nunito',sans-serif;font-weight:600;font-size:10px;cursor:pointer;color:#9a958e;margin-left:4px}
+.rand:hover{border-color:#e07a5f;color:#e07a5f}
+.word-show{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:#e07a5f;margin:8px 0}
+.canvas-wrap{position:relative;margin:0 auto 10px;border-radius:14px;overflow:hidden;border:2px solid #ece8e2;background:#fff;touch-action:none;max-width:600px}
+canvas{display:block;cursor:crosshair;width:100%;height:auto}
+.tools{display:flex;gap:5px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.clr{width:26px;height:26px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .12s}
+.clr:hover{transform:scale(1.15)}.clr.s{border-color:#2d2a26;transform:scale(1.15)}
+.sz{padding:3px 8px;border:1.5px solid #ece8e2;border-radius:6px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:9px;cursor:pointer;color:#9a958e}
+.sz:hover,.sz.s{border-color:#e07a5f;color:#e07a5f}
+.er{padding:3px 8px;border:1.5px solid #ece8e2;border-radius:6px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:9px;cursor:pointer;color:#9a958e}
+.er:hover,.er.s{border-color:#e07a5f;color:#e07a5f}
+.cl-btn{padding:3px 8px;border:1.5px solid #ece8e2;border-radius:6px;background:#fff;font-size:9px;cursor:pointer;color:#9a958e;font-family:'Nunito',sans-serif;font-weight:700}
+.cl-btn:hover{border-color:#e07a5f;color:#e07a5f}
+.val-btn{padding:10px 28px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin:8px 0;transition:all .2s}
+.val-btn:hover{background:#c9694f;transform:translateY(-1px)}
+.gallery{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+.gcard{flex:1;min-width:240px;max-width:320px;border-radius:14px;overflow:hidden;border:2px solid #ece8e2;background:#faf8f5}
+.gcard img{width:100%;display:block}
+.gcard .gcap{padding:8px 10px;text-align:center}
+.gcard .gcwho{font-size:12px;font-weight:700;color:#2d2a26}
+.gcard .gcword{font-family:'Playfair Display',serif;font-size:14px;color:#e07a5f;margin-top:2px}
+.players{display:flex;gap:20px;justify-content:center;margin:10px 0}
+.player{text-align:center;min-width:80px}
+.player .nm{font-size:11px;font-weight:700;color:#2d2a26}
+.player .st{font-size:18px;margin-top:2px}
+.player .wait{font-size:10px;color:#b0ab9f;font-style:italic}
 .rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
 .note{font-size:9px;color:#c5c0b8;margin-top:6px;font-style:italic}
@@ -67,7 +62,7 @@ canvas{display:block;cursor:crosshair}
 <div class="w">
 <h2>Fais-moi un Dessin 🎨</h2>
 <div class="day" id="day"></div>
-<div class="info" id="info">L'un choisit le mot, l'autre dessine !</div>
+<div class="info" id="info">Chacun choisit un mot, chacun dessine, et on découvre ensemble !</div>
 <div class="who">
 <button class="wbtn" id="wa" onclick="toggleWho('a')">🏰 Alexandre</button>
 <button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara</button>
@@ -81,142 +76,127 @@ canvas{display:block;cursor:crosshair}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
-var db=firebase.firestore();
-var me=null,today=new Date().toISOString().slice(0,10);
+var db=firebase.firestore(),me=null,today=new Date().toISOString().slice(0,10);
 var docRef=db.collection('couple').doc('draw-'+today);
-var colors=['#2d2a26','#e07a5f','#4ba8e8','#6bbd7b','#f0c040','#9b59b6','#e74c3c','#ff9800','#f48fb1','#fff'];
-var brushSize=4,currentColor='#2d2a26',isEraser=false;
-var canvas,ctx,drawing=false;
-var randomWords=['Chat','Soleil','Maison','Avion','Fleur','Étoile','Coeur','Montagne','Poisson','Arbre','Lune','Voiture','Bateau','Nuage','Oiseau','Papillon','Pizza','Guitare','Ballon','Château','Robot','Dragon','Licorne','Palmier','Île','Valise','Parachute','Surf','Fusée','Dauphin','Arc-en-ciel','Igloo','Cactus','Hamburger','Glace','Vélo','Dinosaure','Sirène','Pirate','Couronne','Champignon','Tornade','Volcano','Méduse','Pieuvre','Pingouin','Koala','Panda','Éléphant','Lion'];
+var colors=['#2d2a26','#e07a5f','#4ba8e8','#6bbd7b','#f0c040','#9b59b6','#e74c3c','#ff9800','#f48fb1','#ffffff'];
+var brushSize=4,curColor='#2d2a26',isEraser=false,drawing=false,canvas,ctx;
+var words=['Chat','Soleil','Maison','Avion','Fleur','Étoile','Coeur','Montagne','Poisson','Arbre','Lune','Voiture','Bateau','Nuage','Oiseau','Papillon','Pizza','Guitare','Ballon','Château','Robot','Dragon','Licorne','Palmier','Île','Valise','Parachute','Surf','Fusée','Dauphin','Arc-en-ciel','Igloo','Cactus','Hamburger','Glace','Vélo','Dinosaure','Sirène','Pirate','Couronne','Champignon','Tornade','Volcan','Méduse','Pieuvre','Pingouin','Koala','Panda','Éléphant','Lion'];
 
 document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
 
 function toggleWho(w){me=me===w?null:w;
 document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
 document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
-document.getElementById('info').textContent=me?'C\'est parti !':'Sélectionne ton nom';
 listenDoc();}
 
-function buildUI(data){
-var d=data||{};
-var other=me==='a'?'k':'a';
-var html='';
+function other(){return me==='a'?'k':'a'}
+function nm(w){return w==='a'?'Alexandre':'Klara'}
 
+function buildUI(d){
+d=d||{};
+var o=me?other():null;
+var html='';
 if(!me){html='<div style="color:#9a958e;padding:20px">Sélectionne ton nom ↑</div>';document.getElementById('zone').innerHTML=html;return}
 
-if(!d.word){
-  html+='<div class="word-pick v"><div style="font-size:13px;color:#9a958e;margin-bottom:8px;font-weight:600">Choisis un mot à faire dessiner :</div>';
-  html+='<input id="wordIn" placeholder="Ex: Chat, Soleil..." onkeydown="if(event.key===\'Enter\')sendWord()">';
-  html+='<button onclick="sendWord()">Envoyer</button>';
-  html+='<button class="random-btn" onclick="randomWord()">🎲 Aléatoire</button></div>';
-}else{
-  if(d.word_by===me){
-    html+='<div class="word-box v"><div class="word-label">Tu as choisi le mot :</div><div class="word">'+d.word+'</div></div>';
-    if(d.drawing){
-      html+='<div class="drawing-display v"><img src="'+d.drawing+'" alt="Dessin"></div>';
-      if(!d.guess){
-        html+='<div style="color:#9a958e;font-size:12px;padding:10px">En attente de la devinette...</div>';
-      }
-    }else{
-      html+='<div style="color:#9a958e;font-size:12px;padding:10px">En attente du dessin...</div>';
-    }
-  }else{
-    if(!d.drawing){
-      html+='<div class="word-box v"><div class="word-label">Tu dois dessiner :</div><div class="word">'+d.word+'</div></div>';
-      html+=buildCanvas();
-      html+='<button class="save-btn" onclick="saveDrawing()">Envoyer mon dessin 🎨</button>';
-    }else{
-      html+='<div class="drawing-display v"><img src="'+d.drawing+'" alt="Dessin"></div>';
-    }
-  }
+var bothDone=d['drawing_a']&&d['drawing_k'];
 
-  if(d.drawing&&d.word_by!==me&&!d.guess){
-    html+='<div class="guess-box v"><div style="font-size:13px;color:#9a958e;margin-bottom:8px;font-weight:600">Devine ce que c\'est :</div>';
-    html+='<input id="guessIn" placeholder="Ta réponse..." onkeydown="if(event.key===\'Enter\')sendGuess()">';
-    html+='<button onclick="sendGuess()">Deviner !</button></div>';
-  }
-
-  if(d.guess){
-    var isCorrect=d.guess.toLowerCase().trim()===d.word.toLowerCase().trim();
-    html+='<div class="result v '+(isCorrect?'win':'lose')+'">';
-    html+='<div class="rtxt">'+(isCorrect?'🎉 Bravo, trouvé !':'🤔 Raté !')+'</div>';
-    html+='<div class="rsub">Le mot était : <b>'+d.word+'</b> — Réponse : <b>'+d.guess+'</b></div></div>';
-  }
+if(bothDone){
+  html+='<div class="step-box"><div class="step-title">🎉 Les deux dessins !</div></div>';
+  html+='<div class="gallery">';
+  ['a','k'].forEach(function(w){
+    html+='<div class="gcard"><img src="'+d['drawing_'+w]+'" alt="Dessin"><div class="gcap"><div class="gcwho">'+(w==='a'?'🏰 Alexandre':'🐟 Klara')+'</div><div class="gcword">« '+d['word_for_'+w]+' »</div></div></div>';
+  });
+  html+='</div>';
+  html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
+  document.getElementById('zone').innerHTML=html;return;
 }
 
+if(!d['word_for_'+o]){
+  html+='<div class="step-box"><div class="step-label">Étape 1</div><div class="step-title">Choisis un mot pour '+nm(o)+' 🎯</div></div>';
+  html+='<div class="word-area"><input id="wordIn" placeholder="Ex: Chat, Soleil..." onkeydown="if(event.key===\'Enter\')sendWord()"><button onclick="sendWord()">Envoyer</button><button class="rand" onclick="randWord()">🎲</button></div>';
+}else if(!d['drawing_'+me]){
+  html+='<div class="step-box"><div class="step-label">Étape 2</div><div class="step-title">Dessine : <span style="color:#e07a5f">'+d['word_for_'+me]+'</span></div></div>';
+  html+=buildCanvas();
+  html+='<button class="val-btn" onclick="saveDrawing()">Valider mon dessin ✓</button>';
+}else{
+  html+='<div class="step-box"><div class="step-title">✅ C\'est fait !</div></div>';
+  html+='<div style="color:#9a958e;font-size:12px;padding:10px">En attente de '+nm(o)+'...</div>';
+}
+
+html+='<div class="players">';
+['a','k'].forEach(function(w){
+  var done=d['drawing_'+w];
+  html+='<div class="player"><div class="nm">'+(w==='a'?'🏰 Alexandre':'🐟 Klara')+'</div>';
+  html+='<div class="st">'+(done?'✅':'⏳')+'</div></div>';
+});
+html+='</div>';
 html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
 document.getElementById('zone').innerHTML=html;
-if(!d.drawing&&d.word&&d.word_by!==me)initCanvas();
+if(!d['drawing_'+me]&&d['word_for_'+me])initCanvas();
 }
 
 function buildCanvas(){
-var html='<div class="tools">';
-colors.forEach(function(c){
-  html+='<div class="color'+(c===currentColor&&!isEraser?' s':'')+'" style="background:'+c+';'+(c==='#fff'?'border:2px solid #ece8e2':'border:3px solid transparent')+'" onclick="setColor(\''+c+'\')"></div>';
-});
-html+='<div class="eraser'+(isEraser?' s':'')+'" onclick="setEraser()">Gomme</div>';
-html+='<div class="size-btn'+(brushSize===2?' s':'')+'" onclick="setSize(2)">S</div>';
-html+='<div class="size-btn'+(brushSize===4?' s':'')+'" onclick="setSize(4)">M</div>';
-html+='<div class="size-btn'+(brushSize===8?' s':'')+'" onclick="setSize(8)">L</div>';
-html+='<div class="clear" onclick="clearCanvas()">🗑️</div>';
-html+='</div>';
-html+='<div class="canvas-wrap"><canvas id="drawCanvas" width="600" height="400"></canvas></div>';
-return html;}
+var h='<div class="tools">';
+colors.forEach(function(c){h+='<div class="clr'+(c===curColor&&!isEraser?' s':'')+'" style="background:'+c+';'+(c==='#ffffff'?'border:2px solid #ece8e2':'')+'" onclick="pickClr(\''+c+'\')"></div>'});
+h+='<div class="er'+(isEraser?' s':'')+'" onclick="toggleEr()">Gomme</div>';
+h+='<div class="sz'+(brushSize===2?' s':'')+'" onclick="pickSz(2)">S</div>';
+h+='<div class="sz'+(brushSize===4?' s':'')+'" onclick="pickSz(4)">M</div>';
+h+='<div class="sz'+(brushSize===8?' s':'')+'" onclick="pickSz(8)">L</div>';
+h+='<div class="cl-btn" onclick="clrCanvas()">🗑️</div>';
+h+='</div><div class="canvas-wrap"><canvas id="cv" width="600" height="400"></canvas></div>';
+return h;}
 
 function initCanvas(){
-canvas=document.getElementById('drawCanvas');
-if(!canvas)return;
-ctx=canvas.getContext('2d');
-ctx.fillStyle='#fff';ctx.fillRect(0,0,600,400);
+canvas=document.getElementById('cv');if(!canvas)return;
+ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,600,400);
 ctx.lineCap='round';ctx.lineJoin='round';
-canvas.addEventListener('mousedown',startDraw);
-canvas.addEventListener('mousemove',draw);
-canvas.addEventListener('mouseup',stopDraw);
-canvas.addEventListener('mouseleave',stopDraw);
-canvas.addEventListener('touchstart',function(e){e.preventDefault();startDraw(getTouchPos(e))});
-canvas.addEventListener('touchmove',function(e){e.preventDefault();draw(getTouchPos(e))});
-canvas.addEventListener('touchend',stopDraw);}
+canvas.onmousedown=sD;canvas.onmousemove=dD;canvas.onmouseup=eD;canvas.onmouseleave=eD;
+canvas.ontouchstart=function(e){e.preventDefault();sD(tP(e))};
+canvas.ontouchmove=function(e){e.preventDefault();dD(tP(e))};
+canvas.ontouchend=eD;}
 
-function getTouchPos(e){var r=canvas.getBoundingClientRect();var t=e.touches[0];return{offsetX:t.clientX-r.left,offsetY:t.clientY-r.top}}
-function startDraw(e){drawing=true;ctx.beginPath();ctx.moveTo(e.offsetX*(600/canvas.offsetWidth),e.offsetY*(400/canvas.offsetHeight))}
-function draw(e){if(!drawing)return;ctx.strokeStyle=isEraser?'#fff':currentColor;ctx.lineWidth=brushSize*(isEraser?3:1);ctx.lineTo(e.offsetX*(600/canvas.offsetWidth),e.offsetY*(400/canvas.offsetHeight));ctx.stroke()}
-function stopDraw(){drawing=false}
+function tP(e){var r=canvas.getBoundingClientRect();var t=e.touches[0];return{offsetX:t.clientX-r.left,offsetY:t.clientY-r.top}}
+function sD(e){drawing=true;ctx.beginPath();ctx.moveTo(e.offsetX*(600/canvas.offsetWidth),e.offsetY*(400/canvas.offsetHeight))}
+function dD(e){if(!drawing)return;ctx.strokeStyle=isEraser?'#fff':curColor;ctx.lineWidth=brushSize*(isEraser?3:1);ctx.lineTo(e.offsetX*(600/canvas.offsetWidth),e.offsetY*(400/canvas.offsetHeight));ctx.stroke()}
+function eD(){drawing=false}
+function pickClr(c){curColor=c;isEraser=false;buildFromCache()}
+function toggleEr(){isEraser=!isEraser;buildFromCache()}
+function pickSz(s){brushSize=s;buildFromCache()}
+function clrCanvas(){if(ctx){ctx.fillStyle='#fff';ctx.fillRect(0,0,600,400)}}
 
-function setColor(c){currentColor=c;isEraser=false;listenDoc()}
-function setEraser(){isEraser=!isEraser;listenDoc()}
-function setSize(s){brushSize=s;listenDoc()}
-function clearCanvas(){if(ctx){ctx.fillStyle='#fff';ctx.fillRect(0,0,600,400)}}
+var cachedData=null;
+function buildFromCache(){
+var imgData=canvas?canvas.toDataURL():null;
+buildUI(cachedData);
+if(imgData&&canvas){var img=new Image();img.onload=function(){ctx.drawImage(img,0,0)};img.src=imgData;}}
 
 function sendWord(){
 var el=document.getElementById('wordIn');if(!el||!el.value.trim())return;
-docRef.set({word:el.value.trim(),word_by:me,date:today},{merge:true}).then(showSt);}
+var o=other();var u={};u['word_for_'+o]=el.value.trim();u['date']=today;
+docRef.set(u,{merge:true}).then(showSt);}
 
-function randomWord(){
-var el=document.getElementById('wordIn');
-if(el)el.value=randomWords[Math.floor(Math.random()*randomWords.length)];}
+function randWord(){var el=document.getElementById('wordIn');if(el)el.value=words[Math.floor(Math.random()*words.length)]}
 
 function saveDrawing(){
-if(!canvas)return;
-var img=canvas.toDataURL('image/png');
-docRef.set({drawing:img},{merge:true}).then(function(){
+if(!canvas)return;var img=canvas.toDataURL('image/png');
+var u={};u['drawing_'+me]=img;
+docRef.set(u,{merge:true}).then(function(){
+  me=null;document.getElementById('wa').className='wbtn';document.getElementById('wk').className='wbtn';
   document.getElementById('status').textContent='✅ Dessin envoyé !';
   setTimeout(function(){document.getElementById('status').textContent=''},2000);
-});}
-
-function sendGuess(){
-var el=document.getElementById('guessIn');if(!el||!el.value.trim())return;
-docRef.set({guess:el.value.trim()},{merge:true}).then(showSt);}
+  listenDoc();});}
 
 function resetGame(){docRef.delete().then(function(){
-  document.getElementById('status').textContent='🔄 Reset !';
-  setTimeout(function(){document.getElementById('status').textContent=''},1500);})}
+document.getElementById('status').textContent='🔄 Reset !';
+setTimeout(function(){document.getElementById('status').textContent=''},1500)})}
 
 function showSt(){document.getElementById('status').textContent='✅ Sauvegardé !';
 setTimeout(function(){document.getElementById('status').textContent=''},1500)}
 
 var unsub=null;
-function listenDoc(){if(unsub)unsub();if(!me)return;
-unsub=docRef.onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)})}
+function listenDoc(){if(unsub)unsub();
+unsub=docRef.onSnapshot(function(doc){cachedData=doc.exists?doc.data():null;buildUI(cachedData)})}
+listenDoc();
 </script>
 </body>
 </html>
