@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:700px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
+h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
+.sub{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px}
+.who{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
+.wbtn{padding:8px 18px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
+.wbtn:hover{border-color:#e07a5f;color:#e07a5f}
+.wbtn.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
+.score-box{display:flex;gap:12px;justify-content:center;align-items:center;margin-bottom:14px}
+.sc{text-align:center;padding:8px 16px;background:#faf8f5;border-radius:12px;min-width:70px}
+.sc .sv{font-family:'Playfair Display',serif;font-size:24px;font-weight:800;color:#e07a5f}
+.sc .sl{font-size:10px;color:#9a958e;font-weight:600;margin-top:1px}
+.sc .sym{font-size:18px}
+.vs{font-family:'Playfair Display',serif;font-size:14px;color:#d4cfc6}
+.turn{font-size:13px;font-weight:700;margin-bottom:12px;min-height:20px;transition:color .3s}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:300px;margin:0 auto 14px}
+.cell{aspect-ratio:1;border-radius:14px;border:2.5px solid #ece8e2;background:#faf8f5;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;transition:all .2s;font-family:'Playfair Display',serif}
+.cell:hover{border-color:#e07a5f;background:#fff;transform:scale(1.03)}
+.cell.x{color:#e07a5f;border-color:rgba(224,122,95,.3);background:rgba(224,122,95,.04)}
+.cell.o{color:#4ba8e8;border-color:rgba(75,168,232,.3);background:rgba(75,168,232,.04)}
+.cell.win{animation:glow 1s ease infinite alternate}
+.cell.disabled{pointer-events:none}
+@keyframes glow{0%{box-shadow:0 0 0 0 transparent}100%{box-shadow:0 0 16px 4px rgba(224,122,95,.2)}}
+.result{padding:16px;border-radius:16px;margin-bottom:12px;display:none}
+.result.v{display:block;animation:fi .5s ease}
+.result.win-a{background:linear-gradient(135deg,#fff5f2,#fef0e8)}
+.result.win-k{background:linear-gradient(135deg,#e8f4fd,#f0f8ff)}
+.result.draw{background:linear-gradient(135deg,#faf8f5,#f5f2ed)}
+.result .rtxt{font-family:'Playfair Display',serif;font-size:22px;color:#2d2a26}
+.result .rsub{font-size:12px;color:#9a958e;margin-top:2px}
+.btn-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.btn{padding:8px 20px;border:2px solid #ece8e2;border-radius:10px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;transition:all .15s;color:#2d2a26}
+.btn:hover{border-color:#e07a5f;color:#e07a5f}
+.btn.primary{background:#e07a5f;color:#fff;border-color:#e07a5f}
+.btn.primary:hover{background:#c9694f}
+.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
+.rst:hover{color:#e07a5f;border-color:#e07a5f}
+.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
+.ft{margin-top:10px;font-size:9px;color:#c5c0b8}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.pop{animation:pop .3s ease}
+</style>
+</head>
+<body>
+<div class="w">
+<h2>Morpion ❌⭕</h2>
+<div class="sub">En temps réel — chaque coup est instantané !</div>
+<div class="who">
+<button class="wbtn" id="wa" onclick="toggleWho('a')">🏰 Alexandre (❌)</button>
+<button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara (⭕)</button>
+</div>
+<div class="score-box">
+<div class="sc"><div class="sym">❌</div><div class="sv" id="sca">0</div><div class="sl">Alexandre</div></div>
+<div class="vs">—</div>
+<div class="sc"><div class="sv" id="scd">0</div><div class="sl">Égalités</div></div>
+<div class="vs">—</div>
+<div class="sc"><div class="sym">⭕</div><div class="sv" id="sck">0</div><div class="sl">Klara</div></div>
+</div>
+<div class="turn" id="turn"></div>
+<div class="board" id="board"></div>
+<div class="result" id="result"><div class="rtxt" id="rtxt"></div><div class="rsub" id="rsub"></div></div>
+<div class="btn-row">
+<button class="btn primary" onclick="newGame()">🔄 Nouvelle partie</button>
+<button class="rst" onclick="resetScore()">Reset scores</button>
+</div>
+<div class="status" id="status"></div>
+<div class="ft">🏰💕🐟 Nous Deux.</div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
+var db=firebase.firestore(),me=null;
+var gameRef=db.collection('couple').doc('morpion-game');
+var scoreRef=db.collection('couple').doc('morpion-score');
+var wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+function toggleWho(w){me=me===w?null:w;
+document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
+document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
+listen();}
+
+function buildBoard(d){
+d=d||{board:Array(9).fill(''),turn:'a',winner:null,winCells:[]};
+var b=d.board||Array(9).fill('');
+var isOver=d.winner||d.winner==='draw';
+var myTurn=me&&d.turn===me&&!isOver;
+var turnEl=document.getElementById('turn');
+
+if(!me){turnEl.textContent='Sélectionne ton nom pour jouer ↑';turnEl.style.color='#9a958e'}
+else if(isOver){turnEl.textContent=''}
+else if(myTurn){turnEl.textContent='C\'est ton tour !';turnEl.style.color='#e07a5f'}
+else{turnEl.textContent='Tour de '+(d.turn==='a'?'Alexandre ❌':'Klara ⭕')+'...';turnEl.style.color='#9a958e'}
+
+var html='';
+for(var i=0;i<9;i++){
+  var v=b[i];
+  var cls='cell';
+  if(v==='X')cls+=' x';
+  if(v==='O')cls+=' o';
+  if(d.winCells&&d.winCells.indexOf(i)>=0)cls+=' win';
+  if(!myTurn||v)cls+=' disabled';
+  html+='<div class="'+cls+'" onclick="play('+i+')">'+(v||'')+'</div>';
+}
+document.getElementById('board').innerHTML=html;
+
+var r=document.getElementById('result');
+if(d.winner==='a'){
+  r.className='result v win-a';
+  document.getElementById('rtxt').textContent='🎉 Alexandre gagne !';
+  document.getElementById('rsub').textContent='❌ l\'emporte';
+}else if(d.winner==='k'){
+  r.className='result v win-k';
+  document.getElementById('rtxt').textContent='🎉 Klara gagne !';
+  document.getElementById('rsub').textContent='⭕ l\'emporte';
+}else if(d.winner==='draw'){
+  r.className='result v draw';
+  document.getElementById('rtxt').textContent='🤝 Égalité !';
+  document.getElementById('rsub').textContent='Personne ne gagne';
+}else{r.className='result'}
+}
+
+function play(i){
+if(!me)return;
+gameRef.get().then(function(doc){
+  var d=doc.exists?doc.data():{board:Array(9).fill(''),turn:'a',winner:null,winCells:[]};
+  if(d.winner)return;
+  if(d.turn!==me)return;
+  var b=d.board||Array(9).fill('');
+  if(b[i])return;
+  b[i]=me==='a'?'X':'O';
+
+  var winner=null,winCells=[];
+  for(var w=0;w<wins.length;w++){
+    var c=wins[w];
+    if(b[c[0]]&&b[c[0]]===b[c[1]]&&b[c[1]]===b[c[2]]){
+      winner=b[c[0]]==='X'?'a':'k';
+      winCells=c;break;
+    }
+  }
+  if(!winner&&b.indexOf('')===-1)winner='draw';
+
+  var nextTurn=me==='a'?'k':'a';
+  return gameRef.set({board:b,turn:winner?null:nextTurn,winner:winner,winCells:winCells}).then(function(){
+    if(winner&&winner!=='draw'){
+      scoreRef.get().then(function(s){
+        var sd=s.exists?s.data():{a:0,k:0,d:0};
+        var u={};u[winner]=(sd[winner]||0)+1;
+        scoreRef.set(u,{merge:true});
+      });
+    }else if(winner==='draw'){
+      scoreRef.get().then(function(s){
+        var sd=s.exists?s.data():{a:0,k:0,d:0};
+        scoreRef.set({d:(sd.d||0)+1},{merge:true});
+      });
+    }
+  });
+});}
+
+function newGame(){
+gameRef.set({board:Array(9).fill(''),turn:'a',winner:null,winCells:[]}).then(function(){
+  document.getElementById('status').textContent='🔄 Nouvelle partie !';
+  setTimeout(function(){document.getElementById('status').textContent=''},1500);
+});}
+
+function resetScore(){
+scoreRef.delete().then(function(){
+  newGame();
+  document.getElementById('status').textContent='🔄 Scores réinitialisés !';
+  setTimeout(function(){document.getElementById('status').textContent=''},1500);
+});}
+
+function updateScore(sc){
+sc=sc||{a:0,k:0,d:0};
+document.getElementById('sca').textContent=sc.a||0;
+document.getElementById('sck').textContent=sc.k||0;
+document.getElementById('scd').textContent=sc.d||0;
+}
+
+var unsub1=null,unsub2=null;
+function listen(){
+if(unsub1)unsub1();
+if(unsub2)unsub2();
+unsub1=gameRef.onSnapshot(function(doc){buildBoard(doc.exists?doc.data():null)});
+unsub2=scoreRef.onSnapshot(function(doc){updateScore(doc.exists?doc.data():null)});
+}
+listen();
+</script>
+</body>
+</html>
