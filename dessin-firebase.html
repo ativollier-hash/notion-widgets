@@ -25,7 +25,6 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .word-area button:hover{background:#c9694f}
 .rand{padding:6px 12px;border:1.5px solid #ece8e2;border-radius:8px;background:#fff;font-family:'Nunito',sans-serif;font-weight:600;font-size:10px;cursor:pointer;color:#9a958e;margin-left:4px}
 .rand:hover{border-color:#e07a5f;color:#e07a5f}
-.word-show{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:#e07a5f;margin:8px 0}
 .canvas-wrap{position:relative;margin:0 auto 10px;border-radius:14px;overflow:hidden;border:2px solid #ece8e2;background:#fff;touch-action:none;max-width:600px}
 canvas{display:block;cursor:crosshair;width:100%;height:auto}
 .tools{display:flex;gap:5px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:8px}
@@ -42,14 +41,20 @@ canvas{display:block;cursor:crosshair;width:100%;height:auto}
 .gallery{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:12px 0}
 .gcard{flex:1;min-width:240px;max-width:320px;border-radius:14px;overflow:hidden;border:2px solid #ece8e2;background:#faf8f5}
 .gcard img{width:100%;display:block}
-.gcard .gcap{padding:8px 10px;text-align:center}
-.gcard .gcwho{font-size:12px;font-weight:700;color:#2d2a26}
-.gcard .gcword{font-family:'Playfair Display',serif;font-size:14px;color:#e07a5f;margin-top:2px}
+.gcap{padding:10px;text-align:center}
+.gcwho{font-size:12px;font-weight:700;color:#2d2a26}
+.gcword{font-family:'Playfair Display',serif;font-size:14px;color:#e07a5f;margin-top:2px}
+.rate{margin-top:6px}
+.rate-label{font-size:10px;color:#9a958e;font-weight:600;margin-bottom:4px}
+.rate-emojis{display:flex;gap:4px;justify-content:center}
+.re{width:34px;height:34px;border-radius:10px;border:2px solid transparent;background:#f5f2ed;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.re:hover{transform:scale(1.15);background:#ece8e2}
+.re.s{border-color:#e07a5f;background:rgba(224,122,95,.1);transform:scale(1.18)}
+.rated{font-size:22px;margin-top:4px}
 .players{display:flex;gap:20px;justify-content:center;margin:10px 0}
 .player{text-align:center;min-width:80px}
 .player .nm{font-size:11px;font-weight:700;color:#2d2a26}
 .player .st{font-size:18px;margin-top:2px}
-.player .wait{font-size:10px;color:#b0ab9f;font-style:italic}
 .rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
 .note{font-size:9px;color:#c5c0b8;margin-top:6px;font-style:italic}
@@ -63,7 +68,7 @@ canvas{display:block;cursor:crosshair;width:100%;height:auto}
 <h2>Fais-moi un Dessin 🎨</h2>
 <div class="day" id="day"></div>
 <div class="info" id="info">Chacun choisit un mot, chacun dessine, et on découvre ensemble !</div>
-<div class="who">
+<div class="who" id="whoDiv">
 <button class="wbtn" id="wa" onclick="toggleWho('a')">🏰 Alexandre</button>
 <button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara</button>
 </div>
@@ -80,6 +85,7 @@ var db=firebase.firestore(),me=null,today=new Date().toISOString().slice(0,10);
 var docRef=db.collection('couple').doc('draw-'+today);
 var colors=['#2d2a26','#e07a5f','#4ba8e8','#6bbd7b','#f0c040','#9b59b6','#e74c3c','#ff9800','#f48fb1','#ffffff'];
 var brushSize=4,curColor='#2d2a26',isEraser=false,drawing=false,canvas,ctx;
+var rates=['🤩','😍','😂','👏','💀'];
 var words=['Chat','Soleil','Maison','Avion','Fleur','Étoile','Coeur','Montagne','Poisson','Arbre','Lune','Voiture','Bateau','Nuage','Oiseau','Papillon','Pizza','Guitare','Ballon','Château','Robot','Dragon','Licorne','Palmier','Île','Valise','Parachute','Surf','Fusée','Dauphin','Arc-en-ciel','Igloo','Cactus','Hamburger','Glace','Vélo','Dinosaure','Sirène','Pirate','Couronne','Champignon','Tornade','Volcan','Méduse','Pieuvre','Pingouin','Koala','Panda','Éléphant','Lion'];
 
 document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
@@ -90,27 +96,55 @@ document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
 listenDoc();}
 
 function other(){return me==='a'?'k':'a'}
-function nm(w){return w==='a'?'Alexandre':'Klara'}
+function nm(w){return w==='a'?'🏰 Alexandre':'🐟 Klara'}
 
 function buildUI(d){
 d=d||{};
-var o=me?other():null;
+var bothDone=d.drawing_a&&d.drawing_k;
 var html='';
-if(!me){html='<div style="color:#9a958e;padding:20px">Sélectionne ton nom ↑</div>';document.getElementById('zone').innerHTML=html;return}
-
-var bothDone=d['drawing_a']&&d['drawing_k'];
 
 if(bothDone){
-  html+='<div class="step-box"><div class="step-title">🎉 Les deux dessins !</div></div>';
+  document.getElementById('whoDiv').style.display='none';
+  document.getElementById('info').textContent='Les dessins du jour !';
   html+='<div class="gallery">';
   ['a','k'].forEach(function(w){
-    html+='<div class="gcard"><img src="'+d['drawing_'+w]+'" alt="Dessin"><div class="gcap"><div class="gcwho">'+(w==='a'?'🏰 Alexandre':'🐟 Klara')+'</div><div class="gcword">« '+d['word_for_'+w]+' »</div></div></div>';
+    var o=w==='a'?'k':'a';
+    html+='<div class="gcard"><img src="'+d['drawing_'+w]+'" alt="Dessin"><div class="gcap">';
+    html+='<div class="gcwho">'+nm(w)+'</div>';
+    html+='<div class="gcword">« '+d['word_for_'+w]+' »</div>';
+    if(d['rate_'+w]){
+      html+='<div class="rated">'+d['rate_'+w]+'</div>';
+    }else if(me===o){
+      html+='<div class="rate"><div class="rate-label">Note ce dessin !</div><div class="rate-emojis">';
+      rates.forEach(function(r){
+        html+='<div class="re" onclick="rateDraw(\''+w+'\',\''+r+'\')">'+r+'</div>';
+      });
+      html+='</div></div>';
+    }else if(!me){
+      html+='<div class="rate"><div class="rate-label">Sélectionne ton nom pour noter ↑</div></div>';
+    }
+    html+='</div></div>';
+  });
+  html+='</div>';
+  if(!me)document.getElementById('whoDiv').style.display='flex';
+  html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
+  document.getElementById('zone').innerHTML=html;
+  return;
+}
+
+document.getElementById('whoDiv').style.display='flex';
+if(!me){
+  html='<div style="color:#9a958e;padding:20px">Sélectionne ton nom pour jouer ↑</div>';
+  html+='<div class="players">';
+  ['a','k'].forEach(function(w){
+    html+='<div class="player"><div class="nm">'+nm(w)+'</div><div class="st">'+(d['drawing_'+w]?'✅':'⏳')+'</div></div>';
   });
   html+='</div>';
   html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
   document.getElementById('zone').innerHTML=html;return;
 }
 
+var o=other();
 if(!d['word_for_'+o]){
   html+='<div class="step-box"><div class="step-label">Étape 1</div><div class="step-title">Choisis un mot pour '+nm(o)+' 🎯</div></div>';
   html+='<div class="word-area"><input id="wordIn" placeholder="Ex: Chat, Soleil..." onkeydown="if(event.key===\'Enter\')sendWord()"><button onclick="sendWord()">Envoyer</button><button class="rand" onclick="randWord()">🎲</button></div>';
@@ -125,9 +159,7 @@ if(!d['word_for_'+o]){
 
 html+='<div class="players">';
 ['a','k'].forEach(function(w){
-  var done=d['drawing_'+w];
-  html+='<div class="player"><div class="nm">'+(w==='a'?'🏰 Alexandre':'🐟 Klara')+'</div>';
-  html+='<div class="st">'+(done?'✅':'⏳')+'</div></div>';
+  html+='<div class="player"><div class="nm">'+nm(w)+'</div><div class="st">'+(d['drawing_'+w]?'✅':'⏳')+'</div></div>';
 });
 html+='</div>';
 html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
@@ -159,13 +191,14 @@ function tP(e){var r=canvas.getBoundingClientRect();var t=e.touches[0];return{of
 function sD(e){drawing=true;ctx.beginPath();ctx.moveTo(e.offsetX*(600/canvas.offsetWidth),e.offsetY*(400/canvas.offsetHeight))}
 function dD(e){if(!drawing)return;ctx.strokeStyle=isEraser?'#fff':curColor;ctx.lineWidth=brushSize*(isEraser?3:1);ctx.lineTo(e.offsetX*(600/canvas.offsetWidth),e.offsetY*(400/canvas.offsetHeight));ctx.stroke()}
 function eD(){drawing=false}
-function pickClr(c){curColor=c;isEraser=false;buildFromCache()}
-function toggleEr(){isEraser=!isEraser;buildFromCache()}
-function pickSz(s){brushSize=s;buildFromCache()}
-function clrCanvas(){if(ctx){ctx.fillStyle='#fff';ctx.fillRect(0,0,600,400)}}
 
 var cachedData=null;
-function buildFromCache(){
+function pickClr(c){curColor=c;isEraser=false;rebuildKeepCanvas()}
+function toggleEr(){isEraser=!isEraser;rebuildKeepCanvas()}
+function pickSz(s){brushSize=s;rebuildKeepCanvas()}
+function clrCanvas(){if(ctx){ctx.fillStyle='#fff';ctx.fillRect(0,0,600,400)}}
+
+function rebuildKeepCanvas(){
 var imgData=canvas?canvas.toDataURL():null;
 buildUI(cachedData);
 if(imgData&&canvas){var img=new Image();img.onload=function(){ctx.drawImage(img,0,0)};img.src=imgData;}}
@@ -182,11 +215,17 @@ if(!canvas)return;var img=canvas.toDataURL('image/png');
 var u={};u['drawing_'+me]=img;
 docRef.set(u,{merge:true}).then(function(){
   me=null;document.getElementById('wa').className='wbtn';document.getElementById('wk').className='wbtn';
-  document.getElementById('status').textContent='✅ Dessin envoyé !';
-  setTimeout(function(){document.getElementById('status').textContent=''},2000);
-  listenDoc();});}
+  showSt();listenDoc();});}
+
+function rateDraw(who,emoji){
+var u={};u['rate_'+who]=emoji;
+docRef.set(u,{merge:true}).then(function(){
+  document.getElementById('status').textContent='✅ Note envoyée !';
+  setTimeout(function(){document.getElementById('status').textContent=''},1500);});}
 
 function resetGame(){docRef.delete().then(function(){
+me=null;document.getElementById('wa').className='wbtn';document.getElementById('wk').className='wbtn';
+document.getElementById('whoDiv').style.display='flex';
 document.getElementById('status').textContent='🔄 Reset !';
 setTimeout(function(){document.getElementById('status').textContent=''},1500)})}
 
