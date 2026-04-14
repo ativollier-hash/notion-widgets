@@ -15,47 +15,47 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .wbtn{padding:8px 18px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
 .wbtn:hover{border-color:#e07a5f;color:#e07a5f}
 .wbtn.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
-.step-box{background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;padding:16px;margin-bottom:12px}
+.step-box{background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;padding:14px;margin-bottom:12px}
 .step-label{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:4px}
 .step-title{font-family:'Playfair Display',serif;font-size:16px;color:#2d2a26}
-.number-display{font-family:'Playfair Display',serif;font-size:64px;font-weight:800;color:#e07a5f;margin:10px 0}
-.range{font-size:12px;color:#9a958e;font-weight:600;margin-bottom:10px}
 .input-area{margin:10px 0}
 .input-area input{padding:12px 16px;border:1.5px solid #ece8e2;border-radius:12px;font-family:'Playfair Display',serif;font-size:24px;font-weight:800;color:#2d2a26;background:#faf8f5;outline:none;width:120px;text-align:center}
 .input-area input:focus{border-color:#e07a5f}
-.input-area button{padding:12px 24px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin-left:8px;transition:all .2s}
-.input-area button:hover{background:#c9694f;transform:translateY(-1px)}
+.input-area button{padding:12px 24px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin-left:8px}
+.input-area button:hover{background:#c9694f}
 .hint{padding:12px;border-radius:12px;margin:10px auto;max-width:300px;font-weight:700;font-size:14px;display:none}
 .hint.v{display:block;animation:fi .4s ease}
 .hint.up{background:rgba(224,122,95,.08);color:#e07a5f}
 .hint.down{background:rgba(75,168,232,.08);color:#4ba8e8}
-.hint.win{background:linear-gradient(135deg,#f0faf2,#e8f5e9);color:#2d8a4e}
+.hint.win{background:linear-gradient(135deg,#f0faf2,#e8f5e9);color:#2d8a4e;font-size:16px}
 .history{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
 .htry{padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700}
 .htry.up{background:rgba(224,122,95,.08);color:#e07a5f}
 .htry.down{background:rgba(75,168,232,.08);color:#4ba8e8}
 .htry.win{background:rgba(107,189,123,.1);color:#2d8a4e}
 .attempts{font-size:12px;color:#9a958e;font-weight:600;margin:6px 0}
-.score-box{display:flex;gap:16px;justify-content:center;margin:12px 0}
+.number-big{font-family:'Playfair Display',serif;font-size:56px;font-weight:800;color:#e07a5f;margin:6px 0}
+.players{display:flex;gap:20px;justify-content:center;margin:10px 0}
+.player{text-align:center;min-width:80px}
+.player .nm{font-size:11px;font-weight:700;color:#2d2a26}
+.player .st{font-size:14px;margin-top:2px;color:#9a958e}
+.score-box{display:flex;gap:16px;justify-content:center;margin:10px 0}
 .sc{text-align:center;padding:10px 16px;background:#faf8f5;border-radius:12px}
 .sc .sv{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:#e07a5f}
 .sc .sl{font-size:10px;color:#9a958e;font-weight:600;margin-top:2px}
-.vs{font-family:'Playfair Display',serif;font-size:14px;color:#9a958e;margin:6px 0}
 .rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
 .note{font-size:9px;color:#c5c0b8;margin-top:6px;font-style:italic}
 .status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
 .ft{margin-top:10px;font-size:9px;color:#c5c0b8}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
-.pop{animation:pop .3s ease}
 </style>
 </head>
 <body>
 <div class="w">
 <h2>Plus ou Moins 🔢</h2>
 <div class="day" id="day"></div>
-<div class="info" id="info">L'un choisit un nombre, l'autre devine !</div>
+<div class="info" id="info">Chacun choisit un nombre pour l'autre !</div>
 <div class="who">
 <button class="wbtn" id="wa" onclick="toggleWho('a')">🏰 Alexandre</button>
 <button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara</button>
@@ -85,90 +85,107 @@ function other(){return me==='a'?'k':'a'}
 
 function buildUI(d,sc){
 d=d||{};sc=sc||{a:0,k:0};
+var o=me?other():null;
 var html='';
 
 html+='<div class="score-box">';
-html+='<div class="sc"><div class="sv">'+( sc.a||0)+'</div><div class="sl">🏰 Alexandre</div></div>';
-html+='<div class="vs">victoires</div>';
+html+='<div class="sc"><div class="sv">'+(sc.a||0)+'</div><div class="sl">🏰 Alexandre</div></div>';
+html+='<div class="sc" style="padding-top:16px"><div class="sl">victoires</div></div>';
 html+='<div class="sc"><div class="sv">'+(sc.k||0)+'</div><div class="sl">🐟 Klara</div></div>';
 html+='</div>';
 
-if(!me){
-  html+='<div style="color:#9a958e;padding:16px">Sélectionne ton nom pour jouer ↑</div>';
-  if(d.found){
-    html+='<div class="hint v win">🎉 '+nm(d.guesser)+' a trouvé <b>'+d.secret+'</b> en '+d.attempts.length+' essai(s) !</div>';
-  }
+var bothFound=d.found_a&&d.found_k;
+
+if(bothFound){
+  html+='<div class="hint v win">🎉 Partie terminée !</div>';
+  html+='<div class="players">';
+  ['a','k'].forEach(function(w){
+    var ow=w==='a'?'k':'a';
+    html+='<div class="player"><div class="nm">'+nm(w)+'</div>';
+    html+='<div class="st">A trouvé <b>'+d['secret_for_'+w]+'</b> en <b>'+(d['att_'+w]?d['att_'+w].length:'?')+'</b> essais</div></div>';
+  });
+  html+='</div>';
   html+='<button class="rst" onclick="resetGame()">🔄 Nouvelle partie</button>';
   document.getElementById('zone').innerHTML=html;return;
 }
 
-if(!d.secret){
-  html+='<div class="step-box"><div class="step-label">Étape 1</div><div class="step-title">Choisis un nombre entre 1 et 100</div></div>';
-  html+='<div class="input-area"><input type="number" id="numIn" min="1" max="100" placeholder="?" onkeydown="if(event.key===\'Enter\')sendNumber()"><button onclick="sendNumber()">Valider</button></div>';
-  html+='<div class="range">L\'autre devra le deviner !</div>';
-}
-else if(d.chooser===me){
-  html+='<div class="step-box"><div class="step-title">Tu as choisi : <span style="color:#e07a5f;font-size:24px">'+d.secret+'</span></div></div>';
-  if(d.found){
-    html+='<div class="hint v win">🎉 '+nm(d.guesser)+' a trouvé en '+d.attempts.length+' essai(s) !</div>';
-  }else if(d.attempts&&d.attempts.length>0){
-    var last=d.attempts[d.attempts.length-1];
-    html+='<div style="color:#9a958e;font-size:13px;padding:8px">'+nm(d.guesser)+' a proposé <b>'+last+'</b> — '+(last<d.secret?'C\'est plus !':'C\'est moins !')+'</div>';
-    html+='<div class="attempts">'+d.attempts.length+' essai(s)</div>';
-  }else{
-    html+='<div style="color:#9a958e;font-size:12px;padding:10px">En attente de '+nm(d.guesser)+'...</div>';
-  }
-  html+=buildHistory(d);
-}
-else{
-  html+='<div class="step-box"><div class="step-label">'+nm(d.chooser)+' a choisi un nombre</div><div class="step-title">Devine entre 1 et 100 !</div></div>';
-  if(d.found){
-    html+='<div class="number-display pop">'+d.secret+'</div>';
-    html+='<div class="hint v win">🎉 Trouvé en '+d.attempts.length+' essai(s) !</div>';
-  }else{
-    if(d.lastHint){
-      html+='<div class="hint v '+(d.lastHint==='up'?'up':'down')+'">'+(d.lastHint==='up'?'⬆️ C\'est PLUS !':'⬇️ C\'est MOINS !')+'</div>';
-    }
-    html+='<div class="input-area"><input type="number" id="guessIn" min="1" max="100" placeholder="?" onkeydown="if(event.key===\'Enter\')sendGuess()"><button onclick="sendGuess()">Deviner</button></div>';
-    html+='<div class="attempts">'+(d.attempts?d.attempts.length:0)+' essai(s)</div>';
-  }
-  html+=buildHistory(d);
+if(!me){
+  html+='<div style="color:#9a958e;padding:16px">Sélectionne ton nom pour jouer ↑</div>';
+  html+='<button class="rst" onclick="resetGame()">🔄 Nouvelle partie</button>';
+  document.getElementById('zone').innerHTML=html;return;
 }
 
+if(!d['secret_for_'+o]){
+  html+='<div class="step-box"><div class="step-label">Étape 1</div><div class="step-title">Choisis un nombre (1-100) que '+nm(o)+' devra deviner</div></div>';
+  html+='<div class="input-area"><input type="number" id="numIn" min="1" max="100" placeholder="?" onkeydown="if(event.key===\'Enter\')sendNumber()"><button onclick="sendNumber()">Valider</button></div>';
+}
+else if(!d['secret_for_'+me]){
+  html+='<div class="step-box"><div class="step-title">✅ Nombre envoyé ! En attente que '+nm(o)+' choisisse un nombre pour toi...</div></div>';
+}
+else if(!d['found_'+me]){
+  var att=d['att_'+me]||[];
+  var lastHint=d['hint_'+me];
+  html+='<div class="step-box"><div class="step-label">Étape 2</div><div class="step-title">Devine le nombre de '+nm(o)+' !</div></div>';
+  if(lastHint){
+    html+='<div class="hint v '+(lastHint==='up'?'up':'down')+'">'+(lastHint==='up'?'⬆️ C\'est PLUS !':'⬇️ C\'est MOINS !')+'</div>';
+  }
+  html+='<div class="input-area"><input type="number" id="guessIn" min="1" max="100" placeholder="?" onkeydown="if(event.key===\'Enter\')sendGuess()"><button onclick="sendGuess()">Deviner</button></div>';
+  html+='<div class="attempts">'+att.length+' essai(s)</div>';
+  if(att.length>0){
+    html+='<div class="history">';
+    att.forEach(function(a){
+      var secret=d['secret_for_'+me];
+      var cls=a===secret?'win':a<secret?'up':'down';
+      html+='<div class="htry '+cls+'">'+a+(cls==='win'?' ✓':cls==='up'?' ⬆':' ⬇')+'</div>';
+    });
+    html+='</div>';
+  }
+}
+else{
+  html+='<div class="hint v win">🎉 Tu as trouvé '+d['secret_for_'+me]+' en '+(d['att_'+me]?d['att_'+me].length:'?')+' essais !</div>';
+  html+='<div style="color:#9a958e;font-size:12px;padding:8px">En attente de '+nm(o)+'...</div>';
+}
+
+html+='<div class="players">';
+['a','k'].forEach(function(w){
+  html+='<div class="player"><div class="nm">'+nm(w)+'</div>';
+  if(d['found_'+w])html+='<div class="st">✅ Trouvé en '+(d['att_'+w]?d['att_'+w].length:'?')+' essais</div>';
+  else if(d['secret_for_'+w])html+='<div class="st">⏳ En train de deviner...</div>';
+  else html+='<div class="st">⏳ Choisit un nombre...</div>';
+  html+='</div>';
+});
+html+='</div>';
 html+='<button class="rst" onclick="resetGame()">🔄 Nouvelle partie</button>';
 document.getElementById('zone').innerHTML=html;
 }
 
-function buildHistory(d){
-if(!d.attempts||!d.attempts.length)return'';
-var html='<div class="history">';
-d.attempts.forEach(function(a){
-  var cls=a===d.secret?'win':a<d.secret?'up':'down';
-  html+='<div class="htry '+cls+'">'+a+(cls==='win'?' ✓':cls==='up'?' ⬆':' ⬇')+'</div>';
-});
-html+='</div>';return html;}
-
 function sendNumber(){
 var el=document.getElementById('numIn');if(!el)return;
-var n=parseInt(el.value);
-if(isNaN(n)||n<1||n>100)return;
-docRef.set({secret:n,chooser:me,guesser:other(),attempts:[],found:false,date:today},{merge:true}).then(function(){
+var n=parseInt(el.value);if(isNaN(n)||n<1||n>100)return;
+var o=other();
+var u={};u['secret_for_'+o]=n;u['date']=today;
+docRef.set(u,{merge:true}).then(function(){
   me=null;document.getElementById('wa').className='wbtn';document.getElementById('wk').className='wbtn';
+  document.getElementById('info').textContent='Nombre envoyé !';
   showSt();listenDoc();
 });}
 
 function sendGuess(){
 var el=document.getElementById('guessIn');if(!el)return;
-var g=parseInt(el.value);
-if(isNaN(g)||g<1||g>100)return;
+var g=parseInt(el.value);if(isNaN(g)||g<1||g>100)return;
 docRef.get().then(function(doc){
   var d=doc.exists?doc.data():{};
-  if(d.found)return;
-  var att=d.attempts||[];
+  if(d['found_'+me])return;
+  var secret=d['secret_for_'+me];
+  if(!secret)return;
+  var att=d['att_'+me]||[];
   att.push(g);
-  var found=g===d.secret;
-  var hint=g<d.secret?'up':'down';
-  var u={attempts:att,lastHint:found?'win':hint,found:found};
+  var found=g===secret;
+  var hint=g<secret?'up':'down';
+  var u={};
+  u['att_'+me]=att;
+  u['hint_'+me]=found?null:hint;
+  u['found_'+me]=found;
   return docRef.set(u,{merge:true}).then(function(){
     if(found){
       scoreRef.get().then(function(s){
@@ -182,6 +199,7 @@ docRef.get().then(function(doc){
 
 function resetGame(){docRef.delete().then(function(){
 me=null;document.getElementById('wa').className='wbtn';document.getElementById('wk').className='wbtn';
+document.getElementById('info').textContent='Chacun choisit un nombre pour l\'autre !';
 document.getElementById('status').textContent='🔄 Nouvelle partie !';
 setTimeout(function(){document.getElementById('status').textContent=''},1500);})}
 
