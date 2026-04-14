@@ -29,18 +29,14 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .tslot .ticon{font-size:16px;margin-bottom:2px}
 .tslot .tlabel{font-size:9px;font-weight:700;color:#9a958e;text-transform:uppercase;letter-spacing:.3px}
 .tslot .temoji{font-size:24px;margin-top:4px;min-height:30px}
-.row{display:flex;gap:16px;margin-bottom:12px}
-.col{flex:1;min-width:0}
-.name{font-size:13px;font-weight:700;color:#2d2a26;margin-bottom:6px}
-.sep{width:1px;background:#ece8e2;align-self:stretch}
+.slot-name{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:6px}
 .recap{padding:12px;background:#faf8f5;border-radius:14px;margin-top:10px;display:none}
 .recap.v{display:block;animation:fi .4s ease}
-.recap-title{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:6px}
-.recap-row{display:flex;gap:12px;justify-content:center}
+.recap-title{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:8px}
+.recap-row{display:flex;gap:20px;justify-content:center}
 .recap-col{text-align:center}
 .recap-name{font-size:10px;font-weight:700;color:#2d2a26;margin-bottom:4px}
-.recap-line{display:flex;gap:4px;align-items:center;font-size:14px}
-.recap-line .rl{font-size:8px;color:#b0ab9f}
+.recap-line{display:flex;gap:3px;align-items:center;font-size:18px}
 .rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
 .status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
@@ -69,7 +65,7 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
 var db=firebase.firestore(),me=null,activeSlot='now',today=new Date().toISOString().slice(0,10);
-var docRef=db.collection('couple').doc('mood-'+today);
+var docRef=db.collection('couple').doc('mood3-'+today);
 var emojis=['😍','😊','😴','💪','😢','🥳','😤','🤒','🥰','😈','🫠','🤯','😌','🥺','😎','🤗'];
 var slots=[
 {id:'now',icon:'⚡',label:'Actuel'},
@@ -86,20 +82,20 @@ document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
 document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
 listenDoc();}
 
+function key(who,slot){return who+'_'+slot}
+
 function buildUI(d){
 d=d||{};
 if(!me){document.getElementById('zone').innerHTML='<div style="color:#9a958e;padding:20px">Sélectionne ton nom ↑</div>';buildRecap(d);return}
 
-var myData=d[me]||{};
-var html='';
-
-html+='<div class="now-box"><div class="now-label">État actuel</div>';
-html+='<div class="now-emoji">'+(myData.now||'❓')+'</div>';
-html+='<div class="now-text">'+(myData.now?'Ton mood':'Pas encore défini')+'</div></div>';
+var curEmoji=d[key(me,'now')]||'';
+var html='<div class="now-box"><div class="now-label">État actuel</div>';
+html+='<div class="now-emoji">'+(curEmoji||'❓')+'</div>';
+html+='<div class="now-text">'+(curEmoji?'Ton mood du moment':'Pas encore défini')+'</div></div>';
 
 html+='<div class="timeline">';
 slots.forEach(function(s){
-  var val=myData[s.id]||'';
+  var val=d[key(me,s.id)]||'';
   html+='<div class="tslot'+(activeSlot===s.id?' active':'')+'" onclick="setSlot(\''+s.id+'\')">';
   html+='<div class="ticon">'+s.icon+'</div>';
   html+='<div class="tlabel">'+s.label+'</div>';
@@ -107,10 +103,12 @@ slots.forEach(function(s){
 });
 html+='</div>';
 
-html+='<div style="font-size:11px;color:#9a958e;font-weight:600;margin-bottom:6px">'+slots.find(function(s){return s.id===activeSlot}).icon+' '+slots.find(function(s){return s.id===activeSlot}).label+'</div>';
+var curSlot=slots.find(function(s){return s.id===activeSlot});
+html+='<div class="slot-name">'+curSlot.icon+' '+curSlot.label+'</div>';
 html+='<div class="emojis">';
+var curVal=d[key(me,activeSlot)]||'';
 emojis.forEach(function(e){
-  var sel=myData[activeSlot]===e?' s':'';
+  var sel=curVal===e?' s':'';
   html+='<div class="em'+sel+'" onclick="pickMood(\''+e+'\')">'+e+'</div>';
 });
 html+='</div>';
@@ -121,16 +119,17 @@ buildRecap(d);
 
 function buildRecap(d){
 d=d||{};
-var aData=d.a||{};
-var kData=d.k||{};
-var hasAny=(aData.now||kData.now);
-if(!hasAny){document.getElementById('recap').className='recap';return}
+var hasA=d[key('a','now')];
+var hasK=d[key('k','now')];
+if(!hasA&&!hasK){document.getElementById('recap').className='recap';return}
 
 var html='<div class="recap-title">Résumé du jour</div><div class="recap-row">';
-[{w:'a',nm:'🏰 Alexandre',data:aData},{w:'k',nm:'🐟 Klara',data:kData}].forEach(function(p){
-  html+='<div class="recap-col"><div class="recap-name">'+p.nm+'</div><div class="recap-line">';
+['a','k'].forEach(function(w){
+  var nm=w==='a'?'🏰 Alexandre':'🐟 Klara';
+  html+='<div class="recap-col"><div class="recap-name">'+nm+'</div><div class="recap-line">';
   slots.forEach(function(s){
-    html+='<span title="'+s.label+'">'+(p.data[s.id]||'·')+'</span>';
+    var v=d[key(w,s.id)]||'·';
+    html+='<span title="'+s.label+'">'+v+'</span>';
   });
   html+='</div></div>';
 });
@@ -143,8 +142,9 @@ function setSlot(s){activeSlot=s;listenDoc();}
 
 function pickMood(emoji){
 if(!me)return;
-var key=me+'.'+activeSlot;
-var u={};u[me+'.'+activeSlot]=emoji;
+var u={};
+u[key(me,activeSlot)]=emoji;
+u['date']=today;
 docRef.set(u,{merge:true}).then(function(){
   document.getElementById('status').textContent='✅ Sauvegardé !';
   setTimeout(function(){document.getElementById('status').textContent=''},1500);
