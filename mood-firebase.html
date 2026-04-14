@@ -7,28 +7,45 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
-.w{background:#fff;border-radius:20px;padding:20px 24px;max-width:700px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
 h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
-.day{font-size:11px;color:#b0ab9f;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
-.row{display:flex;gap:20px;align-items:flex-start}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px}
+.who{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
+.wbtn{padding:8px 18px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
+.wbtn:hover{border-color:#e07a5f;color:#e07a5f}
+.wbtn.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
+.now-box{background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;padding:14px;margin-bottom:14px}
+.now-label{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:6px}
+.now-emoji{font-size:36px;min-height:42px;margin-bottom:4px}
+.now-text{font-family:'Playfair Display',serif;font-size:14px;color:#2d2a26}
+.emojis{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:10px}
+.em{width:38px;height:38px;border-radius:10px;border:2.5px solid transparent;background:#f5f2ed;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.em:hover{transform:scale(1.15);background:#ece8e2}
+.em.s{border-color:#e07a5f;background:rgba(224,122,95,.1);transform:scale(1.15)}
+.timeline{display:flex;gap:6px;margin-bottom:14px}
+.tslot{flex:1;min-width:0;text-align:center;padding:10px 4px;border-radius:14px;border:1.5px solid #ece8e2;background:#faf8f5;transition:all .2s;cursor:pointer}
+.tslot:hover{border-color:#e07a5f}
+.tslot.active{border-color:#e07a5f;background:rgba(224,122,95,.04)}
+.tslot .ticon{font-size:16px;margin-bottom:2px}
+.tslot .tlabel{font-size:9px;font-weight:700;color:#9a958e;text-transform:uppercase;letter-spacing:.3px}
+.tslot .temoji{font-size:24px;margin-top:4px;min-height:30px}
+.row{display:flex;gap:16px;margin-bottom:12px}
 .col{flex:1;min-width:0}
-.p{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.nm{font-size:13px;font-weight:700;color:#2d2a26}
-.lc{font-size:10px;color:#b0ab9f;font-weight:600}
-.ms{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
-.m{width:42px;height:42px;border-radius:12px;border:2.5px solid transparent;background:#f5f2ed;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.m:hover{transform:scale(1.15);background:#ece8e2}
-.m.s{border-color:#e07a5f;background:rgba(224,122,95,.1);transform:scale(1.18);box-shadow:0 2px 10px rgba(224,122,95,.25)}
+.name{font-size:13px;font-weight:700;color:#2d2a26;margin-bottom:6px}
 .sep{width:1px;background:#ece8e2;align-self:stretch}
-.r{text-align:center;padding:10px;background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:14px;margin-top:12px;display:none}
-.r.v{display:block;animation:fi .4s ease}
-.rm{font-size:32px}
-.rd{font-family:'Playfair Display',serif;font-size:13px;color:#2d2a26;margin-top:2px}
-.status{font-size:10px;color:#6bbd7b;margin-top:8px;font-weight:600}
-.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;margin-top:8px;font-family:'Nunito',sans-serif;font-weight:600}
+.recap{padding:12px;background:#faf8f5;border-radius:14px;margin-top:10px;display:none}
+.recap.v{display:block;animation:fi .4s ease}
+.recap-title{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:6px}
+.recap-row{display:flex;gap:12px;justify-content:center}
+.recap-col{text-align:center}
+.recap-name{font-size:10px;font-weight:700;color:#2d2a26;margin-bottom:4px}
+.recap-line{display:flex;gap:4px;align-items:center;font-size:14px}
+.recap-line .rl{font-size:8px;color:#b0ab9f}
+.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
+.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
+.note{font-size:9px;color:#c5c0b8;margin-top:6px;font-style:italic}
 .ft{margin-top:10px;font-size:9px;color:#c5c0b8}
-.loading{color:#9a958e;font-size:12px;padding:20px}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
@@ -36,69 +53,114 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <div class="w">
 <h2>Mood du Jour ✨</h2>
 <div class="day" id="day"></div>
-<div id="content"><div class="loading">Chargement...</div></div>
-<div class="r" id="res"><div class="rm" id="rm"></div><div class="rd" id="rd"></div></div>
-<div class="status" id="status"></div>
+<div class="who">
+<button class="wbtn" id="wa" onclick="toggleWho('a')">🏰 Alexandre</button>
+<button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara</button>
+</div>
+<div id="zone"><div style="color:#9a958e;padding:20px">Sélectionne ton nom ↑</div></div>
+<div class="recap" id="recap"></div>
 <button class="rst" onclick="resetMood()">🔄 Reset</button>
+<div class="status" id="status"></div>
+<div class="note">* Se réinitialise chaque jour</div>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
-var db=firebase.firestore();
-var emojis=['😍','😊','😴','💪','😢','🥳','😤','🤒','🥰','😈','🫠','🤯'];
-var today=new Date().toISOString().slice(0,10);
+var db=firebase.firestore(),me=null,activeSlot='now',today=new Date().toISOString().slice(0,10);
 var docRef=db.collection('couple').doc('mood-'+today);
+var emojis=['😍','😊','😴','💪','😢','🥳','😤','🤒','🥰','😈','🫠','🤯','😌','🥺','😎','🤗'];
+var slots=[
+{id:'now',icon:'⚡',label:'Actuel'},
+{id:'matin',icon:'🌅',label:'Matin'},
+{id:'midi',icon:'☀️',label:'Midi'},
+{id:'aprem',icon:'🌤️',label:'Après-midi'},
+{id:'soir',icon:'🌙',label:'Soir'}
+];
 
-document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
 
-function buildUI(data){
-  var d=data||{a:null,k:null};
-  var html='<div class="row"><div class="col">';
-  html+='<div class="p"><span style="font-size:18px">🏰❤️</span><div><div class="nm">Alexandre</div><div class="lc">🇫🇷 La Rochelle</div></div></div>';
-  html+='<div class="ms">';
-  emojis.forEach(function(e){
-    var sel=d.a===e?' s':'';
-    html+='<button class="m'+sel+'" onclick="pick(\'a\',\''+e+'\')">'+e+'</button>';
-  });
-  html+='</div></div><div class="sep"></div><div class="col">';
-  html+='<div class="p"><span style="font-size:18px">🐟💕</span><div><div class="nm">Klara</div><div class="lc">🇳🇨 N. Calédonie</div></div></div>';
-  html+='<div class="ms">';
-  emojis.forEach(function(e){
-    var sel=d.k===e?' s':'';
-    html+='<button class="m'+sel+'" onclick="pick(\'k\',\''+e+'\')">'+e+'</button>';
-  });
-  html+='</div></div></div>';
-  document.getElementById('content').innerHTML=html;
-  if(d.a||d.k){
-    document.getElementById('rm').textContent=(d.a||'…')+' × '+(d.k||'…');
-    document.getElementById('rd').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
-    document.getElementById('res').classList.add('v');
-  }else{
-    document.getElementById('res').classList.remove('v');
-  }
-}
+function toggleWho(w){me=me===w?null:w;activeSlot='now';
+document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
+document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
+listenDoc();}
 
-function pick(who,emoji){
-  var u={};u[who]=emoji;u['date']=today;
-  docRef.set(u,{merge:true}).then(function(){
-    document.getElementById('status').textContent='✅ Sauvegardé !';
-    setTimeout(function(){document.getElementById('status').textContent=''},2000);
-  });
-}
+function buildUI(d){
+d=d||{};
+if(!me){document.getElementById('zone').innerHTML='<div style="color:#9a958e;padding:20px">Sélectionne ton nom ↑</div>';buildRecap(d);return}
 
-function resetMood(){
-  docRef.delete().then(function(){
-    document.getElementById('status').textContent='🔄 Reset !';
-    document.getElementById('res').classList.remove('v');
-    setTimeout(function(){document.getElementById('status').textContent=''},1500);
-  });
-}
+var myData=d[me]||{};
+var html='';
 
-docRef.onSnapshot(function(doc){
-  buildUI(doc.exists?doc.data():null);
+html+='<div class="now-box"><div class="now-label">État actuel</div>';
+html+='<div class="now-emoji">'+(myData.now||'❓')+'</div>';
+html+='<div class="now-text">'+(myData.now?'Ton mood':'Pas encore défini')+'</div></div>';
+
+html+='<div class="timeline">';
+slots.forEach(function(s){
+  var val=myData[s.id]||'';
+  html+='<div class="tslot'+(activeSlot===s.id?' active':'')+'" onclick="setSlot(\''+s.id+'\')">';
+  html+='<div class="ticon">'+s.icon+'</div>';
+  html+='<div class="tlabel">'+s.label+'</div>';
+  html+='<div class="temoji">'+(val||'·')+'</div></div>';
 });
+html+='</div>';
+
+html+='<div style="font-size:11px;color:#9a958e;font-weight:600;margin-bottom:6px">'+slots.find(function(s){return s.id===activeSlot}).icon+' '+slots.find(function(s){return s.id===activeSlot}).label+'</div>';
+html+='<div class="emojis">';
+emojis.forEach(function(e){
+  var sel=myData[activeSlot]===e?' s':'';
+  html+='<div class="em'+sel+'" onclick="pickMood(\''+e+'\')">'+e+'</div>';
+});
+html+='</div>';
+
+document.getElementById('zone').innerHTML=html;
+buildRecap(d);
+}
+
+function buildRecap(d){
+d=d||{};
+var aData=d.a||{};
+var kData=d.k||{};
+var hasAny=(aData.now||kData.now);
+if(!hasAny){document.getElementById('recap').className='recap';return}
+
+var html='<div class="recap-title">Résumé du jour</div><div class="recap-row">';
+[{w:'a',nm:'🏰 Alexandre',data:aData},{w:'k',nm:'🐟 Klara',data:kData}].forEach(function(p){
+  html+='<div class="recap-col"><div class="recap-name">'+p.nm+'</div><div class="recap-line">';
+  slots.forEach(function(s){
+    html+='<span title="'+s.label+'">'+(p.data[s.id]||'·')+'</span>';
+  });
+  html+='</div></div>';
+});
+html+='</div>';
+document.getElementById('recap').innerHTML=html;
+document.getElementById('recap').className='recap v';
+}
+
+function setSlot(s){activeSlot=s;listenDoc();}
+
+function pickMood(emoji){
+if(!me)return;
+var key=me+'.'+activeSlot;
+var u={};u[me+'.'+activeSlot]=emoji;
+docRef.set(u,{merge:true}).then(function(){
+  document.getElementById('status').textContent='✅ Sauvegardé !';
+  setTimeout(function(){document.getElementById('status').textContent=''},1500);
+});
+}
+
+function resetMood(){docRef.delete().then(function(){
+document.getElementById('recap').className='recap';
+document.getElementById('status').textContent='🔄 Reset !';
+setTimeout(function(){document.getElementById('status').textContent=''},1500);
+})}
+
+var unsub=null;
+function listenDoc(){if(unsub)unsub();
+unsub=docRef.onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)})}
+listenDoc();
 </script>
 </body>
 </html>
