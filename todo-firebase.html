@@ -11,16 +11,26 @@ body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
 h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px;text-align:center}
 .day{font-size:11px;color:#b0ab9f;font-weight:600;text-align:center;margin-bottom:6px}
 .tabs{display:flex;gap:4px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}
-.tab{padding:7px 14px;border:2px solid #ece8e2;border-radius:10px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;color:#9a958e;transition:all .15s}
+.tab{padding:7px 12px;border:2px solid #ece8e2;border-radius:10px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;color:#9a958e;transition:all .15s}
 .tab:hover{border-color:#e07a5f;color:#e07a5f}
 .tab.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
 .who{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
 .wbtn{padding:8px 18px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
 .wbtn:hover{border-color:#e07a5f;color:#e07a5f}
 .wbtn.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
-.section{display:none}.section.v{display:block;animation:fi .3s ease}
-.progress{width:100%;height:10px;background:#f0f0ed;border-radius:8px;overflow:hidden;margin-bottom:12px}
-.pbar{height:100%;background:linear-gradient(90deg,#e07a5f,#e8956e);border-radius:8px;transition:width .5s ease}
+.encourage{text-align:center;padding:10px;margin-bottom:12px;border-radius:14px;display:none;font-weight:700;font-size:13px;transition:all .3s}
+.encourage.v{display:block;animation:fi .5s ease}
+.encourage.l1{background:#fef9f0;color:#b0ab9f}
+.encourage.l2{background:#fff5f2;color:#e07a5f}
+.encourage.l3{background:#f0faf2;color:#3a8a4a}
+.encourage.l4{background:linear-gradient(135deg,#f0faf2,#e8f5e9);color:#2d8a4e;font-size:15px}
+.encourage .emj{font-size:24px;display:block;margin-bottom:2px}
+.progress{width:100%;height:12px;background:#f0f0ed;border-radius:8px;overflow:hidden;margin-bottom:4px}
+.pbar{height:100%;border-radius:8px;transition:width .6s ease}
+.pbar.l1{background:linear-gradient(90deg,#d4cfc6,#b0ab9f)}
+.pbar.l2{background:linear-gradient(90deg,#e8956e,#e07a5f)}
+.pbar.l3{background:linear-gradient(90deg,#7dcb8a,#4caf50)}
+.pbar.l4{background:linear-gradient(90deg,#ffd700,#ff8c00)}
 .ptext{font-size:11px;color:#9a958e;text-align:center;margin-bottom:10px;font-weight:600}
 .item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;margin-bottom:6px;background:#faf8f5;transition:all .2s}
 .item:hover{background:#f5f0ea}
@@ -37,12 +47,29 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .addin:focus{border-color:#e07a5f}
 .addbtn{padding:10px 16px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer}
 .addbtn:hover{background:#c9694f}
+.chart{margin:10px 0}
+.chart canvas{width:100%;height:200px}
+.bar-row{display:flex;align-items:flex-end;gap:6px;height:140px;justify-content:center;margin-bottom:6px;padding:0 10px}
+.bar-col{flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;max-width:60px}
+.bar{width:100%;border-radius:6px 6px 0 0;transition:height .5s ease;min-height:2px}
+.bar.good{background:linear-gradient(180deg,#7dcb8a,#4caf50)}
+.bar.mid{background:linear-gradient(180deg,#e8956e,#e07a5f)}
+.bar.low{background:linear-gradient(180deg,#d4cfc6,#b0ab9f)}
+.bar-label{font-size:9px;color:#b0ab9f;font-weight:600;margin-top:4px}
+.bar-pct{font-size:10px;font-weight:700;color:#2d2a26;margin-bottom:2px}
+.stat-box{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.stat{text-align:center;padding:12px 16px;background:#faf8f5;border-radius:12px;min-width:80px}
+.stat .sv{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:#e07a5f}
+.stat .sl{font-size:10px;color:#9a958e;font-weight:600;margin-top:2px}
 .note{font-size:9px;color:#c5c0b8;margin-top:8px;text-align:center;font-style:italic}
 .rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px;display:block;margin-left:auto;margin-right:auto}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
 .status{font-size:10px;color:#6bbd7b;text-align:center;margin-top:6px;font-weight:600}
 .ft{margin-top:12px;font-size:9px;color:#c5c0b8;text-align:center}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes confetti{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(-40px) rotate(360deg)}}
+.confetti{position:relative;display:inline-block}
+.confetti span{position:absolute;animation:confetti 1s ease forwards;font-size:16px}
 </style>
 </head>
 <body>
@@ -50,15 +77,17 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <h2>To-Do List ✅</h2>
 <div class="day" id="day"></div>
 <div class="who">
-<button class="wbtn s" id="wa" onclick="setWho('a')">🏰 Alexandre</button>
-<button class="wbtn" id="wk" onclick="setWho('k')">🐟 Klara</button>
+<button class="wbtn" id="wa" onclick="toggleWho('a')">🏰 Alexandre</button>
+<button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara</button>
 </div>
 <div class="tabs">
 <button class="tab s" id="t0" onclick="setTab(0)">📋 Routines*</button>
-<button class="tab" id="t1" onclick="setTab(1)">📝 To-Do Libre</button>
+<button class="tab" id="t1" onclick="setTab(1)">📝 To-Do</button>
 <button class="tab" id="t2" onclick="setTab(2)">🎯 Semaine*</button>
 <button class="tab" id="t3" onclick="setTab(3)">🏆 Mois*</button>
+<button class="tab" id="t4" onclick="setTab(4)">📊 Stats</button>
 </div>
+<div class="encourage" id="enc"></div>
 <div id="zone"></div>
 <div class="status" id="status"></div>
 <div class="note">* Se réinitialise automatiquement (routines = chaque jour, semaine = chaque lundi, mois = chaque 1er)</div>
@@ -69,11 +98,11 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
 var db=firebase.firestore();
-var me='a',tab=0;
-var today=new Date().toISOString().slice(0,10);
-var d=new Date();
+var me=null,tab=0;
+var d=new Date(),today=d.toISOString().slice(0,10);
 var weekKey=d.getFullYear()+'-W'+Math.ceil(((d-new Date(d.getFullYear(),0,1))/86400000+new Date(d.getFullYear(),0,1).getDay()+1)/7);
 var monthKey=d.toISOString().slice(0,7);
+var dayNames=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 
 var defaultRoutines=[
 {id:'eau',txt:'💧 Boire assez d\'eau'},
@@ -81,185 +110,182 @@ var defaultRoutines=[
 {id:'ranger',txt:'🛏️ Ranger sa chambre'},
 {id:'notion',txt:'📱 Répondre sur Notion'},
 {id:'soin',txt:'🧘 Moment pour soi'},
-{id:'repas',txt:'🍽️ Bien manger'}
+{id:'repas',txt:'🍽️ Bien manger'},
+{id:'sommeil',txt:'😴 8h de sommeil'}
+];
+
+var encouragements=[
+{min:0,max:0,emj:'😴',txt:'Allez, on commence !',cls:'l1'},
+{min:1,max:25,emj:'🌱',txt:'C\'est un début, continue !',cls:'l1'},
+{min:26,max:50,emj:'💪',txt:'T\'es sur la bonne voie !',cls:'l2'},
+{min:51,max:75,emj:'🔥',txt:'Plus de la moitié, lâche rien !',cls:'l2'},
+{min:76,max:99,emj:'🚀',txt:'Presque ! Dernier effort !',cls:'l3'},
+{min:100,max:100,emj:'🏆',txt:'TOUT COMPLÉTÉ ! T\'es un(e) champion(ne) !',cls:'l4'}
 ];
 
 document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
 
-function setWho(w){me=w;
+function toggleWho(w){me=me===w?null:w;
 document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
 document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
-listenCurrent();}
+if(me&&tab<4)listenCurrent();
+else if(tab===4)loadStats();
+else{document.getElementById('zone').innerHTML='<div style="text-align:center;color:#9a958e;padding:20px">Sélectionne ton nom ↑</div>';hideEnc()}}
 
 function setTab(t){tab=t;
-for(var i=0;i<4;i++)document.getElementById('t'+i).className='tab'+(i===t?' s':'');
-listenCurrent();}
+for(var i=0;i<5;i++)document.getElementById('t'+i).className='tab'+(i===t?' s':'');
+if(!me){document.getElementById('zone').innerHTML='<div style="text-align:center;color:#9a958e;padding:20px">Sélectionne ton nom ↑</div>';hideEnc();return}
+if(t===4)loadStats();else listenCurrent();}
+
+function hideEnc(){document.getElementById('enc').className='encourage';document.getElementById('enc').innerHTML=''}
+
+function showEnc(pct){
+var e=encouragements.find(function(x){return pct>=x.min&&pct<=x.max})||encouragements[0];
+var el=document.getElementById('enc');
+el.className='encourage v '+e.cls;
+var html='<span class="emj">'+e.emj+'</span>'+e.txt;
+if(pct===100)html+='<div class="confetti" id="conf"></div>';
+el.innerHTML=html;
+if(pct===100)launchConfetti();
+}
+
+function launchConfetti(){
+var c=document.getElementById('conf');if(!c)return;
+var emojis=['🎉','⭐','🏆','💪','🔥','✨'];
+for(var i=0;i<8;i++){
+  var s=document.createElement('span');
+  s.textContent=emojis[i%emojis.length];
+  s.style.left=(Math.random()*60-30)+'px';
+  s.style.animationDelay=(Math.random()*0.5)+'s';
+  c.appendChild(s);
+}}
 
 function getRef(){
 var keys=['routine-'+me+'-'+today,'todo-'+me,'week-'+me+'-'+weekKey,'month-'+me+'-'+monthKey];
-return db.collection('couple').doc(keys[tab]);
-}
+return db.collection('couple').doc(keys[tab]);}
 
-function buildRoutines(data){
+function calcPct(items,checked){
+if(!items||!items.length)return 0;
+var done=items.filter(function(it){return checked?checked[it.id]:it.done}).length;
+return Math.round(done/items.length*100);}
+
+function buildList(data,type,label){
 var d=data||{};
-var items=defaultRoutines;
-var custom=d.custom||[];
-var allItems=items.concat(custom.map(function(c,i){return{id:'c'+i,txt:c}}));
-var checked=d.checked||{};
-var total=allItems.length;
-var doneCount=allItems.filter(function(it){return checked[it.id]}).length;
+var items,checked;
+if(type==='routine'){
+  var custom=d.custom||[];
+  items=defaultRoutines.concat(custom.map(function(c,i){return{id:'c'+i,txt:c}}));
+  checked=d.checked||{};
+}else{items=d.items||[];checked=null}
+var total=items.length;
+var doneCount=type==='routine'?items.filter(function(it){return checked[it.id]}).length:items.filter(function(it){return it.done}).length;
 var pct=total>0?Math.round(doneCount/total*100):0;
+var lvl=pct<26?'l1':pct<51?'l2':pct<76?'l3':'l4';
+
+showEnc(pct);
 
 var html='<div class="ptext">'+doneCount+' / '+total+' — '+pct+'%</div>';
-html+='<div class="progress"><div class="pbar" style="width:'+pct+'%"></div></div>';
-allItems.forEach(function(it){
-  var isDone=checked[it.id];
+html+='<div class="progress"><div class="pbar '+lvl+'" style="width:'+pct+'%"></div></div>';
+items.forEach(function(it,i){
+  var isDone=type==='routine'?checked[it.id]:it.done;
   html+='<div class="item'+(isDone?' done':'')+'">';
-  html+='<div class="cb'+(isDone?' checked':'')+'" onclick="toggleRoutine(\''+it.id+'\')">'+(isDone?'✓':'')+'</div>';
+  if(type==='routine')html+='<div class="cb'+(isDone?' checked':'')+'" onclick="toggleR(\''+it.id+'\')">'+( isDone?'✓':'')+'</div>';
+  else html+='<div class="cb'+(isDone?' checked':'')+'" onclick="toggleI('+i+')">'+(isDone?'✓':'')+'</div>';
   html+='<div class="itxt">'+it.txt+'</div>';
-  if(it.id.startsWith('c'))html+='<button class="del" onclick="delCustomRoutine('+it.id.slice(1)+')">✕</button>';
+  if(type==='routine'&&it.id.startsWith('c'))html+='<button class="del" onclick="delCR('+it.id.slice(1)+')">✕</button>';
+  if(type!=='routine')html+='<button class="del" onclick="delI('+i+')">✕</button>';
   html+='</div>';
 });
-html+='<div class="addrow"><input class="addin" id="addIn" placeholder="+ Ajouter une routine..." onkeydown="if(event.key===\'Enter\')addCustomRoutine()"><button class="addbtn" onclick="addCustomRoutine()">+</button></div>';
+var ph=type==='routine'?'routine':type==='todo'?'tâche':'objectif '+label;
+html+='<div class="addrow"><input class="addin" id="addIn" placeholder="+ Ajouter une '+ph+'..." onkeydown="if(event.key===\'Enter\')addItem(\''+type+'\')"><button class="addbtn" onclick="addItem(\''+type+'\')">+</button></div>';
 html+='<button class="rst" onclick="resetCurrent()">🔄 Reset</button>';
-document.getElementById('zone').innerHTML=html;
-}
+document.getElementById('zone').innerHTML=html;}
 
-function buildFreeList(data){
-var d=data||{};
-var items=d.items||[];
-var doneCount=items.filter(function(it){return it.done}).length;
-var total=items.length;
-var pct=total>0?Math.round(doneCount/total*100):0;
+function toggleR(id){getRef().get().then(function(doc){
+var d=doc.exists?doc.data():{};var c=d.checked||{};c[id]=!c[id];
+return getRef().set({checked:c,custom:d.custom||[]},{merge:true})}).then(showSt)}
 
-var html='';
-if(total>0){
-  html+='<div class="ptext">'+doneCount+' / '+total+' — '+pct+'%</div>';
-  html+='<div class="progress"><div class="pbar" style="width:'+pct+'%"></div></div>';
-}
-items.forEach(function(it,i){
-  html+='<div class="item'+(it.done?' done':'')+'">';
-  html+='<div class="cb'+(it.done?' checked':'')+'" onclick="toggleFree('+i+')">'+(it.done?'✓':'')+'</div>';
-  html+='<div class="itxt">'+it.txt+'</div>';
-  html+='<button class="del" onclick="delFree('+i+')">✕</button>';
-  html+='</div>';
-});
-html+='<div class="addrow"><input class="addin" id="addIn" placeholder="+ Ajouter une tâche..." onkeydown="if(event.key===\'Enter\')addFree()"><button class="addbtn" onclick="addFree()">+</button></div>';
-html+='<button class="rst" onclick="resetCurrent()">🔄 Reset</button>';
-document.getElementById('zone').innerHTML=html;
-}
+function toggleI(i){getRef().get().then(function(doc){
+var d=doc.exists?doc.data():{};var items=d.items||[];
+if(items[i])items[i].done=!items[i].done;
+return getRef().set({items:items},{merge:true})}).then(showSt)}
 
-function buildGoals(data,label){
-var d=data||{};
-var items=d.items||[];
-var doneCount=items.filter(function(it){return it.done}).length;
-var total=items.length;
-var pct=total>0?Math.round(doneCount/total*100):0;
+function addItem(type){
+var el=document.getElementById('addIn');if(!el||!el.value.trim())return;var v=el.value.trim();
+getRef().get().then(function(doc){
+var d=doc.exists?doc.data():{};
+if(type==='routine'){var c=d.custom||[];c.push(v);return getRef().set({custom:c},{merge:true})}
+else{var items=d.items||[];items.push({txt:v,done:false});return getRef().set({items:items},{merge:true})}
+}).then(showSt)}
 
-var html='';
-if(total>0){
-  html+='<div class="ptext">'+doneCount+' / '+total+' — '+pct+'%</div>';
-  html+='<div class="progress"><div class="pbar" style="width:'+pct+'%"></div></div>';
-}
-items.forEach(function(it,i){
-  html+='<div class="item'+(it.done?' done':'')+'">';
-  html+='<div class="cb'+(it.done?' checked':'')+'" onclick="toggleGoal('+i+')">'+(it.done?'✓':'')+'</div>';
-  html+='<div class="itxt">'+it.txt+'</div>';
-  html+='<button class="del" onclick="delGoal('+i+')">✕</button>';
-  html+='</div>';
-});
-html+='<div class="addrow"><input class="addin" id="addIn" placeholder="+ Ajouter un objectif '+label+'..." onkeydown="if(event.key===\'Enter\')addGoal()"><button class="addbtn" onclick="addGoal()">+</button></div>';
-html+='<button class="rst" onclick="resetCurrent()">🔄 Reset</button>';
-document.getElementById('zone').innerHTML=html;
-}
+function delCR(i){getRef().get().then(function(doc){
+var d=doc.exists?doc.data():{};var c=d.custom||[];c.splice(i,1);
+return getRef().set({custom:c},{merge:true})})}
 
-function toggleRoutine(id){
-  getRef().get().then(function(doc){
-    var d=doc.exists?doc.data():{};
-    var checked=d.checked||{};
-    checked[id]=!checked[id];
-    return getRef().set({checked:checked,custom:d.custom||[]},{merge:true});
-  }).then(showStatus);
-}
+function delI(i){getRef().get().then(function(doc){
+var d=doc.exists?doc.data():{};var items=d.items||[];items.splice(i,1);
+return getRef().set({items:items},{merge:true})})}
 
-function addCustomRoutine(){
-  var el=document.getElementById('addIn');if(!el||!el.value.trim())return;
-  var v=el.value.trim();
-  getRef().get().then(function(doc){
-    var d=doc.exists?doc.data():{};
+function resetCurrent(){getRef().delete().then(function(){
+document.getElementById('status').textContent='🔄 Reset !';
+setTimeout(function(){document.getElementById('status').textContent=''},1500)})}
+
+function showSt(){document.getElementById('status').textContent='✅ Sauvegardé !';
+setTimeout(function(){document.getElementById('status').textContent=''},1500)}
+
+function loadStats(){
+if(!me){document.getElementById('zone').innerHTML='<div style="text-align:center;color:#9a958e;padding:20px">Sélectionne ton nom ↑</div>';return}
+hideEnc();
+var promises=[];var labels=[];
+for(var i=6;i>=0;i--){
+  var dt=new Date();dt.setDate(dt.getDate()-i);
+  var key='routine-'+me+'-'+dt.toISOString().slice(0,10);
+  labels.push(dayNames[dt.getDay()]+' '+dt.getDate());
+  promises.push(db.collection('couple').doc(key).get());
+}
+Promise.all(promises).then(function(docs){
+var pcts=[];var totalDone=0;var totalTasks=0;
+docs.forEach(function(doc){
+  if(doc.exists){
+    var d=doc.data();var checked=d.checked||{};
     var custom=d.custom||[];
-    custom.push(v);
-    return getRef().set({custom:custom},{merge:true});
-  }).then(showStatus);
-}
+    var items=defaultRoutines.concat(custom.map(function(c,i){return{id:'c'+i}}));
+    var done=items.filter(function(it){return checked[it.id]}).length;
+    pcts.push(Math.round(done/items.length*100));
+    totalDone+=done;totalTasks+=items.length;
+  }else{pcts.push(0);totalTasks+=defaultRoutines.length}
+});
+var avg=totalTasks>0?Math.round(totalDone/totalTasks*100):0;
+var streak=0;for(var j=pcts.length-1;j>=0;j--){if(pcts[j]>=80)streak++;else break}
+var best=Math.max.apply(null,pcts);
 
-function delCustomRoutine(i){
-  getRef().get().then(function(doc){
-    var d=doc.exists?doc.data():{};
-    var custom=d.custom||[];
-    custom.splice(i,1);
-    return getRef().set({custom:custom},{merge:true});
-  });
-}
-
-function toggleFree(i){
-  getRef().get().then(function(doc){
-    var d=doc.exists?doc.data():{};
-    var items=d.items||[];
-    if(items[i])items[i].done=!items[i].done;
-    return getRef().set({items:items},{merge:true});
-  }).then(showStatus);
-}
-
-function addFree(){
-  var el=document.getElementById('addIn');if(!el||!el.value.trim())return;
-  var v=el.value.trim();
-  getRef().get().then(function(doc){
-    var d=doc.exists?doc.data():{};
-    var items=d.items||[];
-    items.push({txt:v,done:false});
-    return getRef().set({items:items},{merge:true});
-  }).then(showStatus);
-}
-
-function delFree(i){
-  getRef().get().then(function(doc){
-    var d=doc.exists?doc.data():{};
-    var items=d.items||[];
-    items.splice(i,1);
-    return getRef().set({items:items},{merge:true});
-  });
-}
-
-function toggleGoal(i){toggleFree(i)}
-function addGoal(){addFree()}
-function delGoal(i){delFree(i)}
-
-function resetCurrent(){
-  getRef().delete().then(function(){
-    document.getElementById('status').textContent='🔄 Reset !';
-    setTimeout(function(){document.getElementById('status').textContent=''},1500);
-  });
-}
-
-function showStatus(){
-  document.getElementById('status').textContent='✅ Sauvegardé !';
-  setTimeout(function(){document.getElementById('status').textContent=''},1500);
-}
+var html='<div class="bar-row">';
+pcts.forEach(function(p,i){
+  var h=Math.max(4,p*1.2);
+  var cls=p>=80?'good':p>=40?'mid':'low';
+  html+='<div class="bar-col"><div class="bar-pct">'+p+'%</div><div class="bar '+cls+'" style="height:'+h+'px"></div><div class="bar-label">'+labels[i]+'</div></div>';
+});
+html+='</div>';
+html+='<div class="stat-box">';
+html+='<div class="stat"><div class="sv">'+avg+'%</div><div class="sl">Moyenne</div></div>';
+html+='<div class="stat"><div class="sv">'+streak+'</div><div class="sl">Jours de suite 🔥</div></div>';
+html+='<div class="stat"><div class="sv">'+best+'%</div><div class="sl">Meilleur jour</div></div>';
+html+='<div class="stat"><div class="sv">'+totalDone+'</div><div class="sl">Tâches faites</div></div>';
+html+='</div>';
+document.getElementById('zone').innerHTML=html;
+})}
 
 var unsub=null;
 function listenCurrent(){
-  if(unsub)unsub();
-  unsub=getRef().onSnapshot(function(doc){
-    var d=doc.exists?doc.data():null;
-    if(tab===0)buildRoutines(d);
-    else if(tab===1)buildFreeList(d);
-    else if(tab===2)buildGoals(d,'semaine');
-    else buildGoals(d,'mois');
-  });
-}
-
-listenCurrent();
+if(!me)return;
+if(unsub)unsub();
+unsub=getRef().onSnapshot(function(doc){
+var d=doc.exists?doc.data():null;
+if(tab===0)buildList(d,'routine','');
+else if(tab===1)buildList(d,'todo','');
+else if(tab===2)buildList(d,'goal','semaine');
+else if(tab===3)buildList(d,'goal','mois');
+})}
 </script>
 </body>
 </html>
