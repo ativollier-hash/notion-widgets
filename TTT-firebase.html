@@ -90,7 +90,7 @@ document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
 listen();}
 
 function buildBoard(d){
-d=d||{board:Array(9).fill(''),turn:'a',winner:null,winCells:[]};
+d=d||{board:Array(9).fill(''),turn:Math.random()<0.5?'a':'k',winner:null,winCells:[]};
 var b=d.board||Array(9).fill('');
 var isOver=d.winner||d.winner==='draw';
 var myTurn=me&&d.turn===me&&!isOver;
@@ -167,7 +167,8 @@ gameRef.get().then(function(doc){
 });}
 
 function newGame(){
-gameRef.set({board:Array(9).fill(''),turn:'a',winner:null,winCells:[]}).then(function(){
+var first=Math.random()<0.5?'a':'k';
+gameRef.set({board:Array(9).fill(''),turn:first,winner:null,winCells:[]}).then(function(){
   document.getElementById('status').textContent='🔄 Nouvelle partie !';
   setTimeout(function(){document.getElementById('status').textContent=''},1500);
 });}
