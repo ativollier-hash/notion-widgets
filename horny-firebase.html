@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:700px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
+h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px}
+.row{display:flex;gap:20px;align-items:flex-start}
+.col{flex:1;min-width:0;text-align:center}
+.name{font-size:14px;font-weight:700;color:#2d2a26;margin-bottom:10px}
+.emj{font-size:48px;margin-bottom:6px;transition:all .3s;min-height:56px}
+.level{font-family:'Playfair Display',serif;font-size:36px;font-weight:800;transition:color .3s;margin-bottom:4px}
+.label{font-size:12px;font-weight:700;margin-bottom:10px;transition:color .3s}
+.bar-wrap{width:100%;height:16px;background:#f0f0ed;border-radius:10px;overflow:hidden;margin-bottom:10px}
+.bar-fill{height:100%;border-radius:10px;transition:width .5s ease,background .5s ease}
+.btns{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+.b{width:32px;height:32px;border-radius:10px;border:2px solid #ece8e2;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;color:#2d2a26;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.b:hover{transform:scale(1.1)}
+.b.s{color:#fff}
+.sep{width:1px;background:#ece8e2;align-self:stretch}
+.match{padding:14px;border-radius:16px;margin-top:14px;display:none;animation:fi .5s ease}
+.match.v{display:block}
+.match .mtxt{font-family:'Playfair Display',serif;font-size:20px;color:#2d2a26}
+.match .msub{font-size:12px;color:#9a958e;margin-top:2px}
+.match .memj{font-size:36px;margin-bottom:4px}
+.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
+.rst:hover{color:#e07a5f;border-color:#e07a5f}
+.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
+.ft{margin-top:10px;font-size:9px;color:#c5c0b8}
+.note{font-size:9px;color:#c5c0b8;margin-top:6px;font-style:italic}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+.hot{animation:shake .3s ease infinite}
+</style>
+</head>
+<body>
+<div class="w">
+<h2>Horny Meter 🔥</h2>
+<div class="day" id="day"></div>
+<div id="zone"><div style="color:#9a958e;padding:20px">Chargement...</div></div>
+<div class="match" id="match"><div class="memj" id="memj"></div><div class="mtxt" id="mtxt"></div><div class="msub" id="msub"></div></div>
+<button class="rst" onclick="resetMeter()">🔄 Reset</button>
+<div class="status" id="status"></div>
+<div class="note">* Se réinitialise chaque jour</div>
+<div class="ft">🏰💕🐟 Nous Deux.</div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
+var db=firebase.firestore(),today=new Date().toISOString().slice(0,10);
+var docRef=db.collection('couple').doc('horny-'+today);
+
+var levels=[
+{emj:'😴',lbl:'Dodo mode',color:'#b0ab9f',bg:'#e8e6e2'},
+{emj:'😐',lbl:'Tranquille',color:'#9a958e',bg:'#d4d0ca'},
+{emj:'🙂',lbl:'Ça va',color:'#8ab06e',bg:'#c5ddb5'},
+{emj:'😏',lbl:'Hmm...',color:'#7dba5a',bg:'#b4d89f'},
+{emj:'😈',lbl:'Intéressé(e)',color:'#d4a03c',bg:'#f0d48a'},
+{emj:'🥵',lbl:'Ça monte',color:'#e88a3c',bg:'#f5b97a'},
+{emj:'🔥',lbl:'Chaud !',color:'#e07a5f',bg:'#f0997b'},
+{emj:'🔥🔥',lbl:'Très chaud !!',color:'#d45a3a',bg:'#ee8060'},
+{emj:'🔥🔥🔥',lbl:'EN FEU !!!',color:'#c43a2a',bg:'#e86050'},
+{emj:'💥🔥💥',lbl:'ALERTE MAXIMUM',color:'#b02020',bg:'#e04040'}
+];
+
+var matchMsgs=[
+{min:0,max:2,emj:'😴💤',txt:'On est calmes ce soir',bg:'#faf8f5'},
+{min:3,max:4,emj:'😏',txt:'Ça commence à chauffer...',bg:'#fef9f0'},
+{min:5,max:6,emj:'🥵🔥',txt:'La température monte !',bg:'#fff0e8'},
+{min:7,max:8,emj:'🔥🔥🔥',txt:'C\'EST CHAUD LÀ',bg:'#ffe8e0'},
+{min:9,max:10,emj:'💥🔥💥🔥💥',txt:'ALERTE ROUGE !!!',bg:'#ffe0d8'}
+];
+
+document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+
+function buildUI(d){
+d=d||{a:0,k:0};
+var html='<div class="row">';
+[{w:'a',nm:'Alexandre'},{w:'k',nm:'Klara'}].forEach(function(p,idx){
+  if(idx===1)html+='<div class="sep"></div>';
+  var v=d[p.w]||0;
+  var lv=levels[Math.max(0,v-1)]||levels[0];
+  var pct=v*10;
+  var isHot=v>=8;
+  html+='<div class="col"><div class="name">'+p.nm+'</div>';
+  html+='<div class="emj'+(isHot?' hot':'')+'">'+( v>0?lv.emj:'❄️')+'</div>';
+  html+='<div class="level" style="color:'+(v>0?lv.color:'#d4cfc6')+'">'+v+'</div>';
+  html+='<div class="label" style="color:'+(v>0?lv.color:'#b0ab9f')+'">'+(v>0?lv.lbl:'Pas encore')+'</div>';
+  html+='<div class="bar-wrap"><div class="bar-fill" style="width:'+pct+'%;background:'+(v>0?lv.bg:'#e8e6e2')+'"></div></div>';
+  html+='<div class="btns">';
+  for(var i=1;i<=10;i++){
+    var bc=levels[i-1];
+    var sel=v===i;
+    html+='<div class="b'+(sel?' s':'')+'" style="'+(sel?'background:'+bc.color+';border-color:'+bc.color:'border-color:#ece8e2')+'" onclick="pick(\''+p.w+'\','+i+')">'+i+'</div>';
+  }
+  html+='</div></div>';
+});
+html+='</div>';
+document.getElementById('zone').innerHTML=html;
+
+var m=document.getElementById('match');
+if(d.a>0&&d.k>0){
+  var avg=Math.round((d.a+d.k)/2);
+  var mm=matchMsgs.find(function(x){return avg>=x.min&&avg<=x.max})||matchMsgs[0];
+  document.getElementById('memj').textContent=mm.emj;
+  document.getElementById('mtxt').textContent=mm.txt;
+  document.getElementById('msub').textContent='Moyenne : '+avg+'/10';
+  m.style.background=mm.bg;
+  m.classList.add('v');
+}else{m.classList.remove('v')}
+}
+
+function pick(who,val){
+var u={};u[who]=val;u['date']=today;
+docRef.set(u,{merge:true}).then(function(){
+  document.getElementById('status').textContent='✅ Sauvegardé !';
+  setTimeout(function(){document.getElementById('status').textContent=''},1500);
+});}
+
+function resetMeter(){docRef.delete().then(function(){
+document.getElementById('status').textContent='🔄 Reset !';
+document.getElementById('match').classList.remove('v');
+setTimeout(function(){document.getElementById('status').textContent=''},1500);})}
+
+docRef.onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)});
+</script>
+</body>
+</html>
