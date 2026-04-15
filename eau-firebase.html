@@ -52,8 +52,7 @@ firebase.initializeApp({
   appId:"1:641330827114:web:0bf5fc986540a4c9085f13"
 });
 var db=firebase.firestore();
-var today=new Date().toISOString().slice(0,10);
-var docRef=db.collection('couple').doc('eau-'+today);
+var now=new Date();var today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');var docRef=db.collection('couple').doc('eau-'+today);
 var goals={a:3.5,k:2.5};
 
 document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
