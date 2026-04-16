@@ -100,8 +100,8 @@ firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDom
 var db=firebase.firestore();
 var me=null,tab=0;
 var now=new Date();var today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
-var weekKey=d.getFullYear()+'-W'+Math.ceil(((d-new Date(d.getFullYear(),0,1))/86400000+new Date(d.getFullYear(),0,1).getDay()+1)/7);
-var monthKey=d.toISOString().slice(0,7);
+var weekKey=now.getFullYear()+'-W'+Math.ceil(((now-new Date(now.getFullYear(),0,1))/86400000+new Date(now.getFullYear(),0,1).getDay()+1)/7);
+var monthKey=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
 var dayNames=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 
 var defaultRoutines=[
