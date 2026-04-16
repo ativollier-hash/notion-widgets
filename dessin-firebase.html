@@ -7,9 +7,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
-.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
-h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
-.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center;position:relative}
+.settings{position:absolute;top:12px;right:14px;font-size:14px;color:#c5c0b8;text-decoration:none;cursor:pointer;transition:color .2s}
+.settings:hover{color:#e07a5f}
+h2{font-family:'Playfair Display',serif;font-size:19px;color:#2d2a26;margin-bottom:2px}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px;text-transform:capitalize}
 .info{font-size:12px;color:#9a958e;margin-bottom:12px;font-style:italic}
 .who{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
 .wbtn{padding:8px 18px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
@@ -29,13 +31,10 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 canvas{display:block;cursor:crosshair;width:100%;height:auto}
 .tools{display:flex;gap:5px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:8px}
 .clr{width:26px;height:26px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .12s}
-.clr:hover{transform:scale(1.15)}.clr.s{border-color:#2d2a26;transform:scale(1.15)}
-.sz{padding:3px 8px;border:1.5px solid #ece8e2;border-radius:6px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:9px;cursor:pointer;color:#9a958e}
-.sz:hover,.sz.s{border-color:#e07a5f;color:#e07a5f}
-.er{padding:3px 8px;border:1.5px solid #ece8e2;border-radius:6px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:9px;cursor:pointer;color:#9a958e}
-.er:hover,.er.s{border-color:#e07a5f;color:#e07a5f}
-.cl-btn{padding:3px 8px;border:1.5px solid #ece8e2;border-radius:6px;background:#fff;font-size:9px;cursor:pointer;color:#9a958e;font-family:'Nunito',sans-serif;font-weight:700}
-.cl-btn:hover{border-color:#e07a5f;color:#e07a5f}
+.clr:hover{transform:scale(1.15)}
+.clr.s{border-color:#2d2a26;transform:scale(1.15)}
+.sz,.er,.cl-btn{padding:3px 8px;border:1.5px solid #ece8e2;border-radius:6px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:9px;cursor:pointer;color:#9a958e}
+.sz:hover,.sz.s,.er:hover,.er.s,.cl-btn:hover{border-color:#e07a5f;color:#e07a5f}
 .val-btn{padding:10px 28px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin:8px 0;transition:all .2s}
 .val-btn:hover{background:#c9694f;transform:translateY(-1px)}
 .gallery{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:12px 0}
@@ -44,27 +43,32 @@ canvas{display:block;cursor:crosshair;width:100%;height:auto}
 .gcap{padding:10px;text-align:center}
 .gcwho{font-size:12px;font-weight:700;color:#2d2a26}
 .gcword{font-family:'Playfair Display',serif;font-size:14px;color:#e07a5f;margin-top:2px}
-.rate{margin-top:6px}
-.rate-label{font-size:10px;color:#9a958e;font-weight:600;margin-bottom:4px}
+.rate{margin-top:8px;padding-top:8px;border-top:1px dashed #ece8e2}
+.rate-row{display:flex;justify-content:center;gap:12px;margin-top:6px;flex-wrap:wrap}
+.rate-item{display:flex;flex-direction:column;align-items:center;gap:3px}
+.rate-who{font-size:9px;color:#9a958e;font-weight:600}
+.rate-val{font-size:20px}
+.rate-val.empty{font-size:11px;color:#c5c0b8;font-style:italic}
+.rate-label{font-size:10px;color:#9a958e;font-weight:600;margin-top:6px;margin-bottom:4px}
 .rate-emojis{display:flex;gap:4px;justify-content:center}
-.re{width:34px;height:34px;border-radius:10px;border:2px solid transparent;background:#f5f2ed;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.re{width:32px;height:32px;border-radius:10px;border:2px solid transparent;background:#f5f2ed;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .re:hover{transform:scale(1.15);background:#ece8e2}
-.re.s{border-color:#e07a5f;background:rgba(224,122,95,.1);transform:scale(1.18)}
-.rated{font-size:22px;margin-top:4px}
+.re.s{border-color:#e07a5f;background:rgba(224,122,95,.1);transform:scale(1.15)}
 .players{display:flex;gap:20px;justify-content:center;margin:10px 0}
 .player{text-align:center;min-width:80px}
 .player .nm{font-size:11px;font-weight:700;color:#2d2a26}
 .player .st{font-size:18px;margin-top:2px}
-.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
+.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:12px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
-.note{font-size:9px;color:#c5c0b8;margin-top:6px;font-style:italic}
-.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
-.ft{margin-top:10px;font-size:9px;color:#c5c0b8}
+.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600;min-height:14px}
+.lastmaj{font-size:10px;color:#b0ab9f;margin-top:10px;font-style:italic}
+.ft{margin-top:8px;font-size:9px;color:#c5c0b8}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 <div class="w">
+<a class="settings" href="https://ativollier-hash.github.io/notion-widgets/reset-center.html">⚙️</a>
 <h2>Fais-moi un Dessin 🎨</h2>
 <div class="day" id="day"></div>
 <div class="info" id="info">Chacun choisit un mot, chacun dessine, et on découvre ensemble !</div>
@@ -73,60 +77,88 @@ canvas{display:block;cursor:crosshair;width:100%;height:auto}
 <button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara</button>
 </div>
 <div id="zone"></div>
+<button class="rst" onclick="resetGame()">🔄 Reset ce widget</button>
 <div class="status" id="status"></div>
-<div class="note">* Se réinitialise chaque jour</div>
+<div class="lastmaj" id="lastmaj"></div>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
-var db=firebase.firestore(),me=null,now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+var db=firebase.firestore(),me=null;
+var docRef=db.collection('couple').doc('draw');
 var colors=['#2d2a26','#e07a5f','#4ba8e8','#6bbd7b','#f0c040','#9b59b6','#e74c3c','#ff9800','#f48fb1','#ffffff'];
 var brushSize=4,curColor='#2d2a26',isEraser=false,drawing=false,canvas,ctx;
 var rates=['🤩','😍','😂','👏','💀'];
-var words=['Chat','Soleil','Maison','Avion','Fleur','Étoile','Coeur','Montagne','Poisson','Arbre','Lune','Voiture','Bateau','Nuage','Oiseau','Papillon','Pizza','Guitare','Ballon','Château','Robot','Dragon','Licorne','Palmier','Île','Valise','Parachute','Surf','Fusée','Dauphin','Arc-en-ciel','Igloo','Cactus','Hamburger','Glace','Vélo','Dinosaure','Sirène','Pirate','Couronne','Champignon','Tornade','Volcan','Méduse','Pieuvre','Pingouin','Koala','Panda','Éléphant','Lion'];
+var words=['Chat','Soleil','Maison','Avion','Fleur','Étoile','Coeur','Montagne','Poisson','Arbre','Lune','Voiture','Bateau','Nuage','Oiseau','Papillon','Pizza','Guitare','Ballon','Château','Robot','Dragon','Licorne','Palmier','Île','Valise','Parachute','Surf','Fusée','Dauphin','Arc-en-ciel','Igloo','Cactus','Hamburger','Glace','Vélo','Dinosaure','Sirène','Pirate','Couronne'];
 
-document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+function timeAgo(ts){
+if(!ts)return'';
+var diff=(Date.now()-ts)/1000;
+if(diff<60)return'à l\'instant';
+if(diff<3600)return'il y a '+Math.floor(diff/60)+' min';
+if(diff<86400)return'il y a '+Math.floor(diff/3600)+'h';
+return'il y a '+Math.floor(diff/86400)+' j';
+}
 
 function toggleWho(w){me=me===w?null:w;
 document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
 document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
-listenDoc();}
+render();}
 
 function other(){return me==='a'?'k':'a'}
 function nm(w){return w==='a'?'🏰 Alexandre':'🐟 Klara'}
 
-function buildUI(d){
-d=d||{};
+var cachedData=null;
+function buildUI(d){cachedData=d||{};render();updateLastMaj();}
+
+function render(){
+var d=cachedData||{};
 var bothDone=d.drawing_a&&d.drawing_k;
 var html='';
 
 if(bothDone){
-  document.getElementById('whoDiv').style.display='none';
-  document.getElementById('info').textContent='Les dessins du jour !';
+  document.getElementById('whoDiv').style.display='flex';
+  document.getElementById('info').textContent='Les dessins sont prêts ! Notez-vous mutuellement 🎨';
   html+='<div class="gallery">';
   ['a','k'].forEach(function(w){
-    var o=w==='a'?'k':'a';
+    // For each drawing, show ratings from BOTH people (a rates k, k rates a, etc.)
     html+='<div class="gcard"><img src="'+d['drawing_'+w]+'" alt="Dessin"><div class="gcap">';
     html+='<div class="gcwho">'+nm(w)+'</div>';
     html+='<div class="gcword">« '+d['word_for_'+w]+' »</div>';
-    if(d['rate_'+w]){
-      html+='<div class="rated">'+d['rate_'+w]+'</div>';
-    }else if(me===o){
-      html+='<div class="rate"><div class="rate-label">Note ce dessin !</div><div class="rate-emojis">';
+    
+    // Show existing ratings
+    html+='<div class="rate"><div class="rate-row">';
+    ['a','k'].forEach(function(rater){
+      if(rater===w)return; // Can't rate your own drawing
+      var rating=d['rate_'+w+'_by_'+rater];
+      html+='<div class="rate-item">';
+      html+='<div class="rate-who">Note de '+nm(rater)+'</div>';
+      if(rating){
+        html+='<div class="rate-val">'+rating+'</div>';
+      }else{
+        html+='<div class="rate-val empty">en attente</div>';
+      }
+      html+='</div>';
+    });
+    html+='</div>';
+    
+    // Rating buttons - only show if ME is not the owner AND ME hasn't rated yet
+    if(me&&me!==w&&!d['rate_'+w+'_by_'+me]){
+      html+='<div class="rate-label">Ton avis sur ce dessin :</div><div class="rate-emojis">';
       rates.forEach(function(r){
         html+='<div class="re" onclick="rateDraw(\''+w+'\',\''+r+'\')">'+r+'</div>';
       });
-      html+='</div></div>';
-    }else if(!me){
-      html+='<div class="rate"><div class="rate-label">Sélectionne ton nom pour noter ↑</div></div>';
+      html+='</div>';
+    } else if(!me){
+      html+='<div class="rate-label" style="font-style:italic">Sélectionne ton nom pour noter ↑</div>';
     }
-    html+='</div></div>';
+    html+='</div></div></div>';
   });
   html+='</div>';
-  if(!me)document.getElementById('whoDiv').style.display='flex';
-  html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
   document.getElementById('zone').innerHTML=html;
   return;
 }
@@ -139,7 +171,6 @@ if(!me){
     html+='<div class="player"><div class="nm">'+nm(w)+'</div><div class="st">'+(d['drawing_'+w]?'✅':'⏳')+'</div></div>';
   });
   html+='</div>';
-  html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
   document.getElementById('zone').innerHTML=html;return;
 }
 
@@ -152,7 +183,7 @@ if(!d['word_for_'+o]){
   html+=buildCanvas();
   html+='<button class="val-btn" onclick="saveDrawing()">Valider mon dessin ✓</button>';
 }else{
-  html+='<div class="step-box"><div class="step-title">✅ C\'est fait !</div></div>';
+  html+='<div class="step-box"><div class="step-title">✅ Dessin envoyé !</div></div>';
   html+='<div style="color:#9a958e;font-size:12px;padding:10px">En attente de '+nm(o)+'...</div>';
 }
 
@@ -161,7 +192,6 @@ html+='<div class="players">';
   html+='<div class="player"><div class="nm">'+nm(w)+'</div><div class="st">'+(d['drawing_'+w]?'✅':'⏳')+'</div></div>';
 });
 html+='</div>';
-html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
 document.getElementById('zone').innerHTML=html;
 if(!d['drawing_'+me]&&d['word_for_'+me])initCanvas();
 }
@@ -191,7 +221,6 @@ function sD(e){drawing=true;ctx.beginPath();ctx.moveTo(e.offsetX*(600/canvas.off
 function dD(e){if(!drawing)return;ctx.strokeStyle=isEraser?'#fff':curColor;ctx.lineWidth=brushSize*(isEraser?3:1);ctx.lineTo(e.offsetX*(600/canvas.offsetWidth),e.offsetY*(400/canvas.offsetHeight));ctx.stroke()}
 function eD(){drawing=false}
 
-var cachedData=null;
 function pickClr(c){curColor=c;isEraser=false;rebuildKeepCanvas()}
 function toggleEr(){isEraser=!isEraser;rebuildKeepCanvas()}
 function pickSz(s){brushSize=s;rebuildKeepCanvas()}
@@ -199,42 +228,77 @@ function clrCanvas(){if(ctx){ctx.fillStyle='#fff';ctx.fillRect(0,0,600,400)}}
 
 function rebuildKeepCanvas(){
 var imgData=canvas?canvas.toDataURL():null;
-buildUI(cachedData);
+render();
 if(imgData&&canvas){var img=new Image();img.onload=function(){ctx.drawImage(img,0,0)};img.src=imgData;}}
 
 function sendWord(){
+if(!me){document.getElementById('status').textContent='❌ Sélectionne ton nom';return}
 var el=document.getElementById('wordIn');if(!el||!el.value.trim())return;
-var o=other();var u={};u['word_for_'+o]=el.value.trim();u['date']=today;
-docRef.set(u,{merge:true}).then(showSt);}
+var o=other();var u={};
+u['word_for_'+o]=el.value.trim();
+u['last_'+me]=Date.now();
+docRef.set(u,{merge:true}).then(showSt).catch(function(e){
+document.getElementById('status').textContent='❌ '+e.message;
+console.error(e);
+});}
 
 function randWord(){var el=document.getElementById('wordIn');if(el)el.value=words[Math.floor(Math.random()*words.length)]}
 
 function saveDrawing(){
-if(!canvas)return;var img=canvas.toDataURL('image/png');
-var u={};u['drawing_'+me]=img;
+if(!canvas){document.getElementById('status').textContent='❌ Canvas introuvable';return}
+// Compress to stay under Firestore 1MB limit
+var tmp=document.createElement('canvas');
+tmp.width=400;tmp.height=267;
+var tctx=tmp.getContext('2d');
+tctx.fillStyle='#fff';tctx.fillRect(0,0,400,267);
+tctx.drawImage(canvas,0,0,400,267);
+var img=tmp.toDataURL('image/jpeg',0.6);
+if(img.length>900000){
+document.getElementById('status').textContent='❌ Dessin trop gros ! Réessaye plus simple';
+setTimeout(function(){document.getElementById('status').textContent=''},3000);
+return;
+}
+var u={};u['drawing_'+me]=img;u['last_'+me]=Date.now();
 docRef.set(u,{merge:true}).then(function(){
   me=null;document.getElementById('wa').className='wbtn';document.getElementById('wk').className='wbtn';
-  showSt();listenDoc();});}
+  showSt();
+}).catch(function(e){
+  document.getElementById('status').textContent='❌ Erreur : '+e.message;
+  console.error('Save drawing error',e);
+});}
 
-function rateDraw(who,emoji){
-var u={};u['rate_'+who]=emoji;
+function rateDraw(drawingOwner,emoji){
+if(!me)return;
+var u={};
+u['rate_'+drawingOwner+'_by_'+me]=emoji;
+u['last_'+me]=Date.now();
 docRef.set(u,{merge:true}).then(function(){
   document.getElementById('status').textContent='✅ Note envoyée !';
-  setTimeout(function(){document.getElementById('status').textContent=''},1500);});}
+  setTimeout(function(){document.getElementById('status').textContent=''},1500);
+});}
 
-function resetGame(){docRef.delete().then(function(){
+function resetGame(){
+if(!confirm('Reset le Dessin ?'))return;
+docRef.delete().then(function(){
 me=null;document.getElementById('wa').className='wbtn';document.getElementById('wk').className='wbtn';
 document.getElementById('whoDiv').style.display='flex';
 document.getElementById('status').textContent='🔄 Reset !';
-setTimeout(function(){document.getElementById('status').textContent=''},1500)})}
+setTimeout(function(){document.getElementById('status').textContent=''},1500);
+});}
 
 function showSt(){document.getElementById('status').textContent='✅ Sauvegardé !';
 setTimeout(function(){document.getElementById('status').textContent=''},1500)}
 
-var unsub=null;
-function listenDoc(){if(unsub)unsub();
-unsub=docRef.onSnapshot(function(doc){cachedData=doc.exists?doc.data():null;buildUI(cachedData)})}
-listenDoc();
+function updateLastMaj(){
+var d=cachedData||{};
+var parts=[];
+if(d.last_a)parts.push('🏰 '+timeAgo(d.last_a));
+if(d.last_k)parts.push('🐟 '+timeAgo(d.last_k));
+document.getElementById('lastmaj').textContent=parts.length?'Dernière MAJ : '+parts.join(' · '):'';
+}
+
+docRef.onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)});
+setInterval(updateLastMaj,60000);
 </script>
 </body>
 </html>
