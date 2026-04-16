@@ -7,9 +7,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
-.w{background:#fff;border-radius:22px;padding:24px;max-width:700px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
-h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
-.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:700px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center;position:relative}
+.settings{position:absolute;top:12px;right:14px;font-size:14px;color:#c5c0b8;text-decoration:none;cursor:pointer;transition:color .2s}
+.settings:hover{color:#e07a5f}
+h2{font-family:'Playfair Display',serif;font-size:19px;color:#2d2a26;margin-bottom:2px}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:14px;text-transform:capitalize}
 .row{display:flex;gap:20px;align-items:flex-start}
 .col{flex:1;min-width:0;text-align:center}
 .name{font-size:14px;font-weight:700;color:#2d2a26;margin-bottom:10px}
@@ -28,11 +30,11 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .match .mtxt{font-family:'Playfair Display',serif;font-size:20px;color:#2d2a26}
 .match .msub{font-size:12px;color:#9a958e;margin-top:2px}
 .match .memj{font-size:36px;margin-bottom:4px}
-.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
+.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:12px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
-.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
-.ft{margin-top:10px;font-size:9px;color:#c5c0b8}
-.note{font-size:9px;color:#c5c0b8;margin-top:6px;font-style:italic}
+.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600;min-height:14px}
+.lastmaj{font-size:10px;color:#b0ab9f;margin-top:10px;font-style:italic}
+.ft{margin-top:8px;font-size:9px;color:#c5c0b8}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
 .hot{animation:shake .3s ease infinite}
@@ -40,21 +42,22 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 </head>
 <body>
 <div class="w">
+<a class="settings" href="https://ativollier-hash.github.io/notion-widgets/reset-center.html">⚙️</a>
 <h2>Horny Meter 🔥</h2>
 <div class="day" id="day"></div>
 <div id="zone"><div style="color:#9a958e;padding:20px">Chargement...</div></div>
 <div class="match" id="match"><div class="memj" id="memj"></div><div class="mtxt" id="mtxt"></div><div class="msub" id="msub"></div></div>
-<button class="rst" onclick="resetMeter()">🔄 Reset</button>
+<button class="rst" onclick="resetMeter()">🔄 Reset ce widget</button>
 <div class="status" id="status"></div>
-<div class="note">* Se réinitialise chaque jour</div>
+<div class="lastmaj" id="lastmaj"></div>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
-var db=firebase.firestore(),now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
-var docRef=db.collection('couple').doc('horny-'+today);
+var db=firebase.firestore();
+var docRef=db.collection('couple').doc('horny');
 
 var levels=[
 {emj:'😴',lbl:'Dodo mode',color:'#b0ab9f',bg:'#e8e6e2'},
@@ -77,10 +80,21 @@ var matchMsgs=[
 {min:9,max:10,emj:'💥🔥💥🔥💥',txt:'ALERTE ROUGE !!!',bg:'#ffe0d8'}
 ];
 
-document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
+function timeAgo(ts){
+if(!ts)return'';
+var diff=(Date.now()-ts)/1000;
+if(diff<60)return'à l\'instant';
+if(diff<3600)return'il y a '+Math.floor(diff/60)+' min';
+if(diff<86400)return'il y a '+Math.floor(diff/3600)+'h';
+return'il y a '+Math.floor(diff/86400)+' j';
+}
+
+var cached=null;
 function buildUI(d){
-d=d||{a:0,k:0};
+cached=d||{a:0,k:0};
+d=cached;
 var html='<div class="row">';
 [{w:'a',nm:'Alexandre'},{w:'k',nm:'Klara'}].forEach(function(p,idx){
   if(idx===1)html+='<div class="sep"></div>';
@@ -89,7 +103,7 @@ var html='<div class="row">';
   var pct=v*10;
   var isHot=v>=8;
   html+='<div class="col"><div class="name">'+p.nm+'</div>';
-  html+='<div class="emj'+(isHot?' hot':'')+'">'+( v>0?lv.emj:'❄️')+'</div>';
+  html+='<div class="emj'+(isHot?' hot':'')+'">'+(v>0?lv.emj:'❄️')+'</div>';
   html+='<div class="level" style="color:'+(v>0?lv.color:'#d4cfc6')+'">'+v+'</div>';
   html+='<div class="label" style="color:'+(v>0?lv.color:'#b0ab9f')+'">'+(v>0?lv.lbl:'Pas encore')+'</div>';
   html+='<div class="bar-wrap"><div class="bar-fill" style="width:'+pct+'%;background:'+(v>0?lv.bg:'#e8e6e2')+'"></div></div>';
@@ -114,21 +128,36 @@ if(d.a>0&&d.k>0){
   m.style.background=mm.bg;
   m.classList.add('v');
 }else{m.classList.remove('v')}
+updateLastMaj();
+}
+
+function updateLastMaj(){
+var d=cached||{};
+var parts=[];
+if(d.last_a)parts.push('🏰 '+timeAgo(d.last_a));
+if(d.last_k)parts.push('🐟 '+timeAgo(d.last_k));
+document.getElementById('lastmaj').textContent=parts.length?'Dernière MAJ : '+parts.join(' · '):'';
 }
 
 function pick(who,val){
-var u={};u[who]=val;u['date']=today;
+var u={};u[who]=val;u['last_'+who]=Date.now();
 docRef.set(u,{merge:true}).then(function(){
-  document.getElementById('status').textContent='✅ Sauvegardé !';
-  setTimeout(function(){document.getElementById('status').textContent=''},1500);
-});}
+document.getElementById('status').textContent='✅ Sauvegardé !';
+setTimeout(function(){document.getElementById('status').textContent=''},1500);
+});
+}
 
-function resetMeter(){docRef.delete().then(function(){
+function resetMeter(){
+if(!confirm('Reset le Horny Meter ?'))return;
+docRef.delete().then(function(){
 document.getElementById('status').textContent='🔄 Reset !';
 document.getElementById('match').classList.remove('v');
-setTimeout(function(){document.getElementById('status').textContent=''},1500);})}
+setTimeout(function(){document.getElementById('status').textContent=''},1500);
+});
+}
 
 docRef.onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)});
+setInterval(updateLastMaj,60000);
 </script>
 </body>
 </html>
