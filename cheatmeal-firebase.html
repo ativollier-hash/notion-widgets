@@ -7,9 +7,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
-.w{background:#fff;border-radius:22px;padding:22px;max-width:700px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
-h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:2px}
-.month{font-size:11px;color:#b0ab9f;font-weight:600;text-transform:uppercase;margin-bottom:14px}
+.w{background:#fff;border-radius:22px;padding:22px;max-width:700px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center;position:relative}
+.settings{position:absolute;top:12px;right:14px;font-size:14px;color:#c5c0b8;text-decoration:none;cursor:pointer;transition:color .2s}
+.settings:hover{color:#e07a5f}
+h2{font-family:'Playfair Display',serif;font-size:19px;color:#2d2a26;margin-bottom:2px}
+.month{font-size:11px;color:#b0ab9f;font-weight:600;text-transform:capitalize;margin-bottom:14px}
 .row{display:flex;gap:20px}
 .col{flex:1;min-width:0;text-align:center}
 .name{font-size:14px;font-weight:700;color:#2d2a26;margin-bottom:10px}
@@ -24,72 +26,96 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .b.sub:hover{border-color:#9a958e}
 .msg{font-size:11px;color:#9a958e;margin-top:8px;min-height:16px;font-style:italic}
 .sep{width:1px;background:#ece8e2;align-self:stretch}
-.status{font-size:10px;color:#6bbd7b;margin-top:8px;font-weight:600}
-.ft{margin-top:12px;font-size:9px;color:#c5c0b8}
-.loading{color:#9a958e;font-size:12px;padding:20px}
+.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:12px}
+.rst:hover{color:#e07a5f;border-color:#e07a5f}
+.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600;min-height:14px}
+.lastmaj{font-size:10px;color:#b0ab9f;margin-top:10px;font-style:italic}
+.ft{margin-top:8px;font-size:9px;color:#c5c0b8}
 </style>
 </head>
 <body>
 <div class="w">
+<a class="settings" href="https://ativollier-hash.github.io/notion-widgets/reset-center.html">⚙️</a>
 <h2>Cheat Meal Counter 🍔</h2>
 <div class="month" id="month"></div>
-<div id="content"><div class="loading">Chargement...</div></div>
+<div id="content"><div style="color:#9a958e;padding:20px">Chargement...</div></div>
+<button class="rst" onclick="resetCheat()">🔄 Reset ce widget</button>
 <div class="status" id="status"></div>
+<div class="lastmaj" id="lastmaj"></div>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-firebase.initializeApp({
-  apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",
-  authDomain:"notion-bdd.firebaseapp.com",
-  projectId:"notion-bdd",
-  storageBucket:"notion-bdd.firebasestorage.app",
-  messagingSenderId:"641330827114",
-  appId:"1:641330827114:web:0bf5fc986540a4c9085f13"
-});
+firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
 var db=firebase.firestore();
-var monthKey=new Date().toISOString().slice(0,7);
-var docRef=db.collection('couple').doc('cheat-'+monthKey);
+var docRef=db.collection('couple').doc('cheat');
 var msgs=['Parfait, 0 écart ! 🏆','1 petit écart 😌','2, ça commence 🤔','3, attention 😅','Hmm... 🍔🍔🍔🍔','Mode yolo 🤣'];
 
 document.getElementById('month').textContent=new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
 
+function timeAgo(ts){
+if(!ts)return'';
+var diff=(Date.now()-ts)/1000;
+if(diff<60)return'à l\'instant';
+if(diff<3600)return'il y a '+Math.floor(diff/60)+' min';
+if(diff<86400)return'il y a '+Math.floor(diff/3600)+'h';
+return'il y a '+Math.floor(diff/86400)+' j';
+}
+
+var cached=null;
 function buildUI(data){
-  var d=data||{a:0,k:0};
-  var html='<div class="row">';
-  [{w:'a',nm:'Alexandre'},{w:'k',nm:'Klara'}].forEach(function(p,i){
-    if(i===1)html+='<div class="sep"></div>';
-    var v=d[p.w]||0;
-    html+='<div class="col"><div class="name">'+p.nm+'</div>';
-    html+='<div class="counter">'+v+'</div>';
-    html+='<div class="label">cheat meals ce mois</div>';
-    html+='<div class="btns">';
-    html+='<button class="b sub" onclick="ch(\''+p.w+'\',-1)">-</button>';
-    html+='<button class="b add" onclick="ch(\''+p.w+'\',1)">🍔</button>';
-    html+='</div>';
-    html+='<div class="msg">'+( msgs[Math.min(v,msgs.length-1)]||'')+'</div></div>';
-  });
-  html+='</div>';
-  document.getElementById('content').innerHTML=html;
+cached=data||{a:0,k:0};
+var d=cached;
+var html='<div class="row">';
+[{w:'a',nm:'Alexandre'},{w:'k',nm:'Klara'}].forEach(function(p,i){
+if(i===1)html+='<div class="sep"></div>';
+var v=d[p.w]||0;
+html+='<div class="col"><div class="name">'+p.nm+'</div>';
+html+='<div class="counter">'+v+'</div>';
+html+='<div class="label">cheat meals</div>';
+html+='<div class="btns">';
+html+='<button class="b sub" onclick="ch(\''+p.w+'\',-1)">−</button>';
+html+='<button class="b add" onclick="ch(\''+p.w+'\',1)">🍔</button>';
+html+='</div>';
+html+='<div class="msg">'+(msgs[Math.min(v,msgs.length-1)]||'')+'</div></div>';
+});
+html+='</div>';
+document.getElementById('content').innerHTML=html;
+updateLastMaj();
+}
+
+function updateLastMaj(){
+var d=cached||{};
+var parts=[];
+if(d.last_a)parts.push('🏰 '+timeAgo(d.last_a));
+if(d.last_k)parts.push('🐟 '+timeAgo(d.last_k));
+document.getElementById('lastmaj').textContent=parts.length?'Dernière MAJ : '+parts.join(' · '):'';
 }
 
 function ch(w,v){
-  docRef.get().then(function(doc){
-    var d=doc.exists?doc.data():{a:0,k:0};
-    var update={};
-    update[w]=Math.max(0,(d[w]||0)+v);
-    update['month']=monthKey;
-    return docRef.set(update,{merge:true});
-  }).then(function(){
-    document.getElementById('status').textContent='✅ Sauvegardé !';
-    setTimeout(function(){document.getElementById('status').textContent=''},2000);
-  });
+docRef.get().then(function(doc){
+var d=doc.exists?doc.data():{a:0,k:0};
+var u={};
+u[w]=Math.max(0,(d[w]||0)+v);
+u['last_'+w]=Date.now();
+return docRef.set(u,{merge:true});
+}).then(function(){
+document.getElementById('status').textContent='✅ Sauvegardé !';
+setTimeout(function(){document.getElementById('status').textContent=''},1500);
+});
 }
 
-docRef.onSnapshot(function(doc){
-  buildUI(doc.exists?doc.data():null);
+function resetCheat(){
+if(!confirm('Reset le Cheat Meal Counter ?'))return;
+docRef.delete().then(function(){
+document.getElementById('status').textContent='🔄 Reset !';
+setTimeout(function(){document.getElementById('status').textContent=''},1500);
 });
+}
+
+docRef.onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)});
+setInterval(updateLastMaj,60000);
 </script>
 </body>
 </html>
