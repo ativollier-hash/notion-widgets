@@ -7,9 +7,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
-.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
-h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
-.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center;position:relative}
+.settings{position:absolute;top:12px;right:14px;font-size:14px;color:#c5c0b8;text-decoration:none;cursor:pointer;transition:color .2s}
+.settings:hover{color:#e07a5f}
+h2{font-family:'Playfair Display',serif;font-size:19px;color:#2d2a26;margin-bottom:2px}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px;text-transform:capitalize}
 .info{font-size:12px;color:#9a958e;margin-bottom:12px;font-style:italic}
 .who{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
 .wbtn{padding:8px 18px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
@@ -52,16 +54,17 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .player{text-align:center;min-width:80px}
 .player .nm{font-size:11px;font-weight:700;color:#2d2a26}
 .player .st{font-size:18px;margin-top:2px}
-.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
+.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:12px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
-.note{font-size:9px;color:#c5c0b8;margin-top:6px;font-style:italic}
-.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
-.ft{margin-top:10px;font-size:9px;color:#c5c0b8}
+.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600;min-height:14px}
+.lastmaj{font-size:10px;color:#b0ab9f;margin-top:10px;font-style:italic}
+.ft{margin-top:8px;font-size:9px;color:#c5c0b8}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 <div class="w">
+<a class="settings" href="https://ativollier-hash.github.io/notion-widgets/reset-center.html">⚙️</a>
 <h2>2 Vérités 1 Mensonge 🤥</h2>
 <div class="day" id="day"></div>
 <div class="info" id="info">Écris 2 vérités et 1 mensonge — l'autre doit trouver le mensonge !</div>
@@ -70,8 +73,9 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara</button>
 </div>
 <div id="zone"></div>
+<button class="rst" onclick="resetGame()">🔄 Reset ce widget</button>
 <div class="status" id="status"></div>
-<div class="note">* Se réinitialise chaque jour</div>
+<div class="lastmaj" id="lastmaj"></div>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -79,15 +83,23 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
 var db=firebase.firestore(),me=null,myGuess=null;
-var now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
-var docRef=db.collection('couple').doc('2v1m-'+today);
-  
-document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+var docRef=db.collection('couple').doc('2v1m');
+
+document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+function timeAgo(ts){
+if(!ts)return'';
+var diff=(Date.now()-ts)/1000;
+if(diff<60)return'à l\'instant';
+if(diff<3600)return'il y a '+Math.floor(diff/60)+' min';
+if(diff<86400)return'il y a '+Math.floor(diff/3600)+'h';
+return'il y a '+Math.floor(diff/86400)+' j';
+}
 
 function toggleWho(w){me=me===w?null:w;myGuess=null;
 document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
 document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
-listenDoc();}
+render();}
 
 function nm(w){return w==='a'?'🏰 Alexandre':'🐟 Klara'}
 function other(){return me==='a'?'k':'a'}
@@ -97,21 +109,23 @@ var a=arr.slice();
 for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}
 return a;}
 
-function buildUI(d){
-d=d||{};var html='';
+var cached=null;
+function buildUI(d){cached=d||{};render();updateLastMaj();}
+
+function render(){
+var d=cached||{};
+var html='';
 var bothWrote=d.stmts_a&&d.stmts_k;
 var bothGuessed=d.guess_a!==undefined&&d.guess_k!==undefined;
 
 if(bothWrote&&bothGuessed){
   html+=buildResults(d);
-  html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
   document.getElementById('zone').innerHTML=html;return;
 }
 
 if(!me){
   html='<div style="color:#9a958e;padding:20px">Sélectionne ton nom pour jouer ↑</div>';
   html+=buildPlayers(d);
-  html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
   document.getElementById('zone').innerHTML=html;return;
 }
 
@@ -144,7 +158,6 @@ else{
 }
 
 html+=buildPlayers(d);
-html+='<button class="rst" onclick="resetGame()">🔄 Reset</button>';
 document.getElementById('zone').innerHTML=html;
 }
 
@@ -181,12 +194,10 @@ var html='';
 });
 return html;}
 
-function selectGuess(i){myGuess=i;listenDoc();}
+function selectGuess(i){myGuess=i;render();}
 
 function sendStatements(){
-var v1=document.getElementById('v1');
-var v2=document.getElementById('v2');
-var lie=document.getElementById('lie');
+var v1=document.getElementById('v1'),v2=document.getElementById('v2'),lie=document.getElementById('lie');
 if(!v1||!v2||!lie||!v1.value.trim()||!v2.value.trim()||!lie.value.trim())return;
 var stmts=[v1.value.trim(),v2.value.trim(),lie.value.trim()];
 var lieIdx=2;
@@ -196,38 +207,47 @@ var u={};
 u['stmts_'+me]=stmts;
 u['lie_idx_'+me]=lieIdx;
 u['order_'+other()]=ordered;
-u['date']=today;
+u['last_'+me]=Date.now();
 docRef.set(u,{merge:true}).then(function(){
   me=null;myGuess=null;
   document.getElementById('wa').className='wbtn';
   document.getElementById('wk').className='wbtn';
-  showSt();listenDoc();
+  showSt();
 });}
 
 function sendGuess(){
 if(myGuess===null||!me)return;
-var u={};u['guess_'+me]=myGuess;
+var u={};u['guess_'+me]=myGuess;u['last_'+me]=Date.now();
 docRef.set(u,{merge:true}).then(function(){
   me=null;myGuess=null;
   document.getElementById('wa').className='wbtn';
   document.getElementById('wk').className='wbtn';
-  showSt();listenDoc();
+  showSt();
 });}
 
-function resetGame(){docRef.delete().then(function(){
+function resetGame(){
+if(!confirm('Reset le 2V1M ?'))return;
+docRef.delete().then(function(){
 me=null;myGuess=null;
 document.getElementById('wa').className='wbtn';
 document.getElementById('wk').className='wbtn';
 document.getElementById('status').textContent='🔄 Reset !';
-setTimeout(function(){document.getElementById('status').textContent=''},1500)})}
+setTimeout(function(){document.getElementById('status').textContent=''},1500);
+});}
 
 function showSt(){document.getElementById('status').textContent='✅ Sauvegardé !';
 setTimeout(function(){document.getElementById('status').textContent=''},1500)}
 
-var unsub=null;
-function listenDoc(){if(unsub)unsub();
-unsub=docRef.onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)})}
-listenDoc();
+function updateLastMaj(){
+var d=cached||{};
+var parts=[];
+if(d.last_a)parts.push('🏰 '+timeAgo(d.last_a));
+if(d.last_k)parts.push('🐟 '+timeAgo(d.last_k));
+document.getElementById('lastmaj').textContent=parts.length?'Dernière MAJ : '+parts.join(' · '):'';
+}
+
+docRef.onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)});
+setInterval(updateLastMaj,60000);
 </script>
 </body>
 </html>
