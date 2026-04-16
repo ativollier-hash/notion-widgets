@@ -7,16 +7,18 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
-.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
-h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px}
-.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:10px}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center;position:relative}
+.settings{position:absolute;top:12px;right:14px;font-size:14px;color:#c5c0b8;text-decoration:none;cursor:pointer;transition:color .2s}
+.settings:hover{color:#e07a5f}
+h2{font-family:'Playfair Display',serif;font-size:19px;color:#2d2a26;margin-bottom:2px}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;margin-bottom:14px;text-transform:capitalize}
 .who{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
 .wbtn{padding:8px 18px;border:2.5px solid #ece8e2;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;color:#2d2a26}
 .wbtn:hover{border-color:#e07a5f;color:#e07a5f}
 .wbtn.s{border-color:#e07a5f;background:#e07a5f;color:#fff}
 .now-box{background:linear-gradient(135deg,#fff5f2,#fef9f0);border-radius:16px;padding:14px;margin-bottom:14px}
 .now-label{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:6px}
-.now-emoji{font-size:36px;min-height:42px;margin-bottom:4px}
+.now-emoji{font-size:40px;min-height:46px;margin-bottom:4px}
 .now-text{font-family:'Playfair Display',serif;font-size:14px;color:#2d2a26}
 .emojis{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:10px}
 .em{width:38px;height:38px;border-radius:10px;border:2.5px solid transparent;background:#f5f2ed;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s}
@@ -33,20 +35,21 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .recap{padding:12px;background:#faf8f5;border-radius:14px;margin-top:10px;display:none}
 .recap.v{display:block;animation:fi .4s ease}
 .recap-title{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:8px}
-.recap-row{display:flex;gap:20px;justify-content:center}
+.recap-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
 .recap-col{text-align:center}
 .recap-name{font-size:10px;font-weight:700;color:#2d2a26;margin-bottom:4px}
-.recap-line{display:flex;gap:3px;align-items:center;font-size:18px}
-.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px}
+.recap-line{display:flex;gap:3px;align-items:center;font-size:18px;justify-content:center}
+.rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:10px}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
-.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600}
-.note{font-size:9px;color:#c5c0b8;margin-top:6px;font-style:italic}
-.ft{margin-top:10px;font-size:9px;color:#c5c0b8}
+.status{font-size:10px;color:#6bbd7b;margin-top:6px;font-weight:600;min-height:14px}
+.lastmaj{font-size:10px;color:#b0ab9f;margin-top:10px;font-style:italic}
+.ft{margin-top:8px;font-size:9px;color:#c5c0b8}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 <div class="w">
+<a class="settings" href="https://ativollier-hash.github.io/notion-widgets/reset-center.html" title="Centre de Contrôle">⚙️</a>
 <h2>Mood du Jour ✨</h2>
 <div class="day" id="day"></div>
 <div class="who">
@@ -55,54 +58,60 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 </div>
 <div id="zone"><div style="color:#9a958e;padding:20px">Sélectionne ton nom ↑</div></div>
 <div class="recap" id="recap"></div>
-<button class="rst" onclick="resetMood()">🔄 Reset</button>
+<button class="rst" onclick="resetMood()">🔄 Reset ce widget</button>
 <div class="status" id="status"></div>
-<div class="note">* Se réinitialise chaque jour</div>
+<div class="lastmaj" id="lastmaj"></div>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
-var db=firebase.firestore(),me=null,activeSlot='now',now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
-var docRef=db.collection('couple').doc('mood3-'+today);
+var db=firebase.firestore(),me=null,activeSlot='now';
+var docRef=db.collection('couple').doc('mood3');
 var emojis=['😍','😊','😴','💪','😢','🥳','😤','🤒','🥰','😈','🫠','🤯','😌','🥺','😎','🤗'];
-var slots=[
-{id:'now',icon:'⚡',label:'Actuel'},
-{id:'matin',icon:'🌅',label:'Matin'},
-{id:'midi',icon:'☀️',label:'Midi'},
-{id:'aprem',icon:'🌤️',label:'Après-midi'},
-{id:'soir',icon:'🌙',label:'Soir'}
-];
+var slots=[{id:'now',icon:'⚡',label:'Actuel'},{id:'matin',icon:'🌅',label:'Matin'},{id:'midi',icon:'☀️',label:'Midi'},{id:'aprem',icon:'🌤️',label:'Après-midi'},{id:'soir',icon:'🌙',label:'Soir'}];
 
-document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+function timeAgo(ts){
+if(!ts)return'';
+var diff=(Date.now()-ts)/1000;
+if(diff<60)return'à l\'instant';
+if(diff<3600)return'il y a '+Math.floor(diff/60)+' min';
+if(diff<86400)return'il y a '+Math.floor(diff/3600)+'h';
+return'il y a '+Math.floor(diff/86400)+' j';
+}
 
 function toggleWho(w){me=me===w?null:w;activeSlot='now';
 document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
 document.getElementById('wk').className='wbtn'+(me==='k'?' s':'');
-listenDoc();}
+render();}
 
 function key(who,slot){return who+'_'+slot}
 
+var cached=null;
 function buildUI(d){
-d=d||{};
-if(!me){document.getElementById('zone').innerHTML='<div style="color:#9a958e;padding:20px">Sélectionne ton nom ↑</div>';buildRecap(d);return}
+cached=d||{};
+render();
+updateLastMaj();
+}
 
+function render(){
+var d=cached||{};
+if(!me){document.getElementById('zone').innerHTML='<div style="color:#9a958e;padding:20px">Sélectionne ton nom ↑</div>';buildRecap(d);return}
 var curEmoji=d[key(me,'now')]||'';
 var html='<div class="now-box"><div class="now-label">État actuel</div>';
 html+='<div class="now-emoji">'+(curEmoji||'❓')+'</div>';
 html+='<div class="now-text">'+(curEmoji?'Ton mood du moment':'Pas encore défini')+'</div></div>';
-
 html+='<div class="timeline">';
 slots.forEach(function(s){
   var val=d[key(me,s.id)]||'';
   html+='<div class="tslot'+(activeSlot===s.id?' active':'')+'" onclick="setSlot(\''+s.id+'\')">';
-  html+='<div class="ticon">'+s.icon+'</div>';
-  html+='<div class="tlabel">'+s.label+'</div>';
+  html+='<div class="ticon">'+s.icon+'</div><div class="tlabel">'+s.label+'</div>';
   html+='<div class="temoji">'+(val||'·')+'</div></div>';
 });
 html+='</div>';
-
 var curSlot=slots.find(function(s){return s.id===activeSlot});
 html+='<div class="slot-name">'+curSlot.icon+' '+curSlot.label+'</div>';
 html+='<div class="emojis">';
@@ -112,25 +121,20 @@ emojis.forEach(function(e){
   html+='<div class="em'+sel+'" onclick="pickMood(\''+e+'\')">'+e+'</div>';
 });
 html+='</div>';
-
 document.getElementById('zone').innerHTML=html;
 buildRecap(d);
 }
 
 function buildRecap(d){
 d=d||{};
-var hasA=d[key('a','now')];
-var hasK=d[key('k','now')];
+var hasA=d[key('a','now')]||d[key('a','matin')]||d[key('a','midi')]||d[key('a','aprem')]||d[key('a','soir')];
+var hasK=d[key('k','now')]||d[key('k','matin')]||d[key('k','midi')]||d[key('k','aprem')]||d[key('k','soir')];
 if(!hasA&&!hasK){document.getElementById('recap').className='recap';return}
-
-var html='<div class="recap-title">Résumé du jour</div><div class="recap-row">';
+var html='<div class="recap-title">Résumé</div><div class="recap-row">';
 ['a','k'].forEach(function(w){
   var nm=w==='a'?'🏰 Alexandre':'🐟 Klara';
   html+='<div class="recap-col"><div class="recap-name">'+nm+'</div><div class="recap-line">';
-  slots.forEach(function(s){
-    var v=d[key(w,s.id)]||'·';
-    html+='<span title="'+s.label+'">'+v+'</span>';
-  });
+  slots.forEach(function(s){var v=d[key(w,s.id)]||'·';html+='<span title="'+s.label+'">'+v+'</span>';});
   html+='</div></div>';
 });
 html+='</div>';
@@ -138,29 +142,38 @@ document.getElementById('recap').innerHTML=html;
 document.getElementById('recap').className='recap v';
 }
 
-function setSlot(s){activeSlot=s;listenDoc();}
+function updateLastMaj(){
+var d=cached||{};
+var parts=[];
+if(d.last_a)parts.push('🏰 '+timeAgo(d.last_a));
+if(d.last_k)parts.push('🐟 '+timeAgo(d.last_k));
+document.getElementById('lastmaj').textContent=parts.length?'Dernière MAJ : '+parts.join(' · '):'';
+}
+
+function setSlot(s){activeSlot=s;render();}
 
 function pickMood(emoji){
 if(!me)return;
 var u={};
 u[key(me,activeSlot)]=emoji;
-u['date']=today;
+u['last_'+me]=Date.now();
 docRef.set(u,{merge:true}).then(function(){
   document.getElementById('status').textContent='✅ Sauvegardé !';
   setTimeout(function(){document.getElementById('status').textContent=''},1500);
 });
 }
 
-function resetMood(){docRef.delete().then(function(){
+function resetMood(){
+if(!confirm('Reset le Mood ? (efface tout)'))return;
+docRef.delete().then(function(){
 document.getElementById('recap').className='recap';
 document.getElementById('status').textContent='🔄 Reset !';
 setTimeout(function(){document.getElementById('status').textContent=''},1500);
-})}
+});
+}
 
-var unsub=null;
-function listenDoc(){if(unsub)unsub();
-unsub=docRef.onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)})}
-listenDoc();
+docRef.onSnapshot(function(doc){buildUI(doc.exists?doc.data():null)});
+setInterval(updateLastMaj,60000);
 </script>
 </body>
 </html>
