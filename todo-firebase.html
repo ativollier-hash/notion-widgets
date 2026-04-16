@@ -7,9 +7,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
-.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2}
-h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:4px;text-align:center}
-.day{font-size:11px;color:#b0ab9f;font-weight:600;text-align:center;margin-bottom:6px}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;position:relative}
+.settings{position:absolute;top:12px;right:14px;font-size:14px;color:#c5c0b8;text-decoration:none;cursor:pointer;transition:color .2s}
+.settings:hover{color:#e07a5f}
+h2{font-family:'Playfair Display',serif;font-size:19px;color:#2d2a26;margin-bottom:2px;text-align:center}
+.day{font-size:11px;color:#b0ab9f;font-weight:600;text-align:center;margin-bottom:6px;text-transform:capitalize}
 .tabs{display:flex;gap:4px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}
 .tab{padding:7px 12px;border:2px solid #ece8e2;border-radius:10px;background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;color:#9a958e;transition:all .15s}
 .tab:hover{border-color:#e07a5f;color:#e07a5f}
@@ -47,8 +49,6 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .addin:focus{border-color:#e07a5f}
 .addbtn{padding:10px 16px;border:none;border-radius:12px;background:#e07a5f;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer}
 .addbtn:hover{background:#c9694f}
-.chart{margin:10px 0}
-.chart canvas{width:100%;height:200px}
 .bar-row{display:flex;align-items:flex-end;gap:6px;height:140px;justify-content:center;margin-bottom:6px;padding:0 10px}
 .bar-col{flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;max-width:60px}
 .bar{width:100%;border-radius:6px 6px 0 0;transition:height .5s ease;min-height:2px}
@@ -61,19 +61,17 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 .stat{text-align:center;padding:12px 16px;background:#faf8f5;border-radius:12px;min-width:80px}
 .stat .sv{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:#e07a5f}
 .stat .sl{font-size:10px;color:#9a958e;font-weight:600;margin-top:2px}
-.note{font-size:9px;color:#c5c0b8;margin-top:8px;text-align:center;font-style:italic}
 .rst{font-size:9px;color:#c5c0b8;border:1.5px solid #f0ebe4;border-radius:8px;padding:4px 12px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;margin-top:8px;display:block;margin-left:auto;margin-right:auto}
 .rst:hover{color:#e07a5f;border-color:#e07a5f}
-.status{font-size:10px;color:#6bbd7b;text-align:center;margin-top:6px;font-weight:600}
-.ft{margin-top:12px;font-size:9px;color:#c5c0b8;text-align:center}
+.status{font-size:10px;color:#6bbd7b;text-align:center;margin-top:6px;font-weight:600;min-height:14px}
+.lastmaj{font-size:10px;color:#b0ab9f;margin-top:10px;font-style:italic;text-align:center}
+.ft{margin-top:8px;font-size:9px;color:#c5c0b8;text-align:center}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-@keyframes confetti{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(-40px) rotate(360deg)}}
-.confetti{position:relative;display:inline-block}
-.confetti span{position:absolute;animation:confetti 1s ease forwards;font-size:16px}
 </style>
 </head>
 <body>
 <div class="w">
+<a class="settings" href="https://ativollier-hash.github.io/notion-widgets/reset-center.html">⚙️</a>
 <h2>To-Do List ✅</h2>
 <div class="day" id="day"></div>
 <div class="who">
@@ -81,16 +79,17 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 <button class="wbtn" id="wk" onclick="toggleWho('k')">🐟 Klara</button>
 </div>
 <div class="tabs">
-<button class="tab s" id="t0" onclick="setTab(0)">📋 Routines*</button>
+<button class="tab s" id="t0" onclick="setTab(0)">📋 Routines</button>
 <button class="tab" id="t1" onclick="setTab(1)">📝 To-Do</button>
-<button class="tab" id="t2" onclick="setTab(2)">🎯 Semaine*</button>
-<button class="tab" id="t3" onclick="setTab(3)">🏆 Mois*</button>
+<button class="tab" id="t2" onclick="setTab(2)">🎯 Semaine</button>
+<button class="tab" id="t3" onclick="setTab(3)">🏆 Mois</button>
 <button class="tab" id="t4" onclick="setTab(4)">📊 Stats</button>
 </div>
 <div class="encourage" id="enc"></div>
 <div id="zone"></div>
+<button class="rst" onclick="resetCurrent()">🔄 Reset cet onglet</button>
 <div class="status" id="status"></div>
-<div class="note">* Se réinitialise automatiquement (routines = chaque jour, semaine = chaque lundi, mois = chaque 1er)</div>
+<div class="lastmaj" id="lastmaj"></div>
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -99,7 +98,8 @@ h2{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bott
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
 var db=firebase.firestore();
 var me=null,tab=0;
-var now=new Date();var today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+var now=new Date();
+var today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
 var weekKey=now.getFullYear()+'-W'+Math.ceil(((now-new Date(now.getFullYear(),0,1))/86400000+new Date(now.getFullYear(),0,1).getDay()+1)/7);
 var monthKey=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
 var dayNames=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
@@ -120,10 +120,19 @@ var encouragements=[
 {min:26,max:50,emj:'💪',txt:'T\'es sur la bonne voie !',cls:'l2'},
 {min:51,max:75,emj:'🔥',txt:'Plus de la moitié, lâche rien !',cls:'l2'},
 {min:76,max:99,emj:'🚀',txt:'Presque ! Dernier effort !',cls:'l3'},
-{min:100,max:100,emj:'🏆',txt:'TOUT COMPLÉTÉ ! T\'es un(e) champion(ne) !',cls:'l4'}
+{min:100,max:100,emj:'🏆',txt:'TOUT COMPLÉTÉ ! 🎉',cls:'l4'}
 ];
 
-document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+document.getElementById('day').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+function timeAgo(ts){
+if(!ts)return'';
+var diff=(Date.now()-ts)/1000;
+if(diff<60)return'à l\'instant';
+if(diff<3600)return'il y a '+Math.floor(diff/60)+' min';
+if(diff<86400)return'il y a '+Math.floor(diff/3600)+'h';
+return'il y a '+Math.floor(diff/86400)+' j';
+}
 
 function toggleWho(w){me=me===w?null:w;
 document.getElementById('wa').className='wbtn'+(me==='a'?' s':'');
@@ -143,31 +152,12 @@ function showEnc(pct){
 var e=encouragements.find(function(x){return pct>=x.min&&pct<=x.max})||encouragements[0];
 var el=document.getElementById('enc');
 el.className='encourage v '+e.cls;
-var html='<span class="emj">'+e.emj+'</span>'+e.txt;
-if(pct===100)html+='<div class="confetti" id="conf"></div>';
-el.innerHTML=html;
-if(pct===100)launchConfetti();
+el.innerHTML='<span class="emj">'+e.emj+'</span>'+e.txt;
 }
-
-function launchConfetti(){
-var c=document.getElementById('conf');if(!c)return;
-var emojis=['🎉','⭐','🏆','💪','🔥','✨'];
-for(var i=0;i<8;i++){
-  var s=document.createElement('span');
-  s.textContent=emojis[i%emojis.length];
-  s.style.left=(Math.random()*60-30)+'px';
-  s.style.animationDelay=(Math.random()*0.5)+'s';
-  c.appendChild(s);
-}}
 
 function getRef(){
 var keys=['routine-'+me+'-'+today,'todo-'+me,'week-'+me+'-'+weekKey,'month-'+me+'-'+monthKey];
 return db.collection('couple').doc(keys[tab]);}
-
-function calcPct(items,checked){
-if(!items||!items.length)return 0;
-var done=items.filter(function(it){return checked?checked[it.id]:it.done}).length;
-return Math.round(done/items.length*100);}
 
 function buildList(data,type,label){
 var d=data||{};
@@ -189,33 +179,35 @@ html+='<div class="progress"><div class="pbar '+lvl+'" style="width:'+pct+'%"></
 items.forEach(function(it,i){
   var isDone=type==='routine'?checked[it.id]:it.done;
   html+='<div class="item'+(isDone?' done':'')+'">';
-  if(type==='routine')html+='<div class="cb'+(isDone?' checked':'')+'" onclick="toggleR(\''+it.id+'\')">'+( isDone?'✓':'')+'</div>';
+  if(type==='routine')html+='<div class="cb'+(isDone?' checked':'')+'" onclick="toggleR(\''+it.id+'\')">'+(isDone?'✓':'')+'</div>';
   else html+='<div class="cb'+(isDone?' checked':'')+'" onclick="toggleI('+i+')">'+(isDone?'✓':'')+'</div>';
   html+='<div class="itxt">'+it.txt+'</div>';
-  if(type==='routine'&&it.id.startsWith('c'))html+='<button class="del" onclick="delCR('+it.id.slice(1)+')">✕</button>';
+  if(type==='routine'&&it.id.indexOf('c')===0)html+='<button class="del" onclick="delCR('+it.id.slice(1)+')">✕</button>';
   if(type!=='routine')html+='<button class="del" onclick="delI('+i+')">✕</button>';
   html+='</div>';
 });
 var ph=type==='routine'?'routine':type==='todo'?'tâche':'objectif '+label;
 html+='<div class="addrow"><input class="addin" id="addIn" placeholder="+ Ajouter une '+ph+'..." onkeydown="if(event.key===\'Enter\')addItem(\''+type+'\')"><button class="addbtn" onclick="addItem(\''+type+'\')">+</button></div>';
-html+='<button class="rst" onclick="resetCurrent()">🔄 Reset</button>';
 document.getElementById('zone').innerHTML=html;}
 
 function toggleR(id){getRef().get().then(function(doc){
 var d=doc.exists?doc.data():{};var c=d.checked||{};c[id]=!c[id];
-return getRef().set({checked:c,custom:d.custom||[]},{merge:true})}).then(showSt)}
+var u={checked:c,custom:d.custom||[]};
+u['last_'+me]=Date.now();
+return getRef().set(u,{merge:true})}).then(showSt)}
 
 function toggleI(i){getRef().get().then(function(doc){
 var d=doc.exists?doc.data():{};var items=d.items||[];
 if(items[i])items[i].done=!items[i].done;
-return getRef().set({items:items},{merge:true})}).then(showSt)}
+var u={items:items};u['last_'+me]=Date.now();
+return getRef().set(u,{merge:true})}).then(showSt)}
 
 function addItem(type){
 var el=document.getElementById('addIn');if(!el||!el.value.trim())return;var v=el.value.trim();
 getRef().get().then(function(doc){
 var d=doc.exists?doc.data():{};
-if(type==='routine'){var c=d.custom||[];c.push(v);return getRef().set({custom:c},{merge:true})}
-else{var items=d.items||[];items.push({txt:v,done:false});return getRef().set({items:items},{merge:true})}
+if(type==='routine'){var c=d.custom||[];c.push(v);var u={custom:c};u['last_'+me]=Date.now();return getRef().set(u,{merge:true})}
+else{var items=d.items||[];items.push({txt:v,done:false});var u={items:items};u['last_'+me]=Date.now();return getRef().set(u,{merge:true})}
 }).then(showSt)}
 
 function delCR(i){getRef().get().then(function(doc){
@@ -226,9 +218,12 @@ function delI(i){getRef().get().then(function(doc){
 var d=doc.exists?doc.data():{};var items=d.items||[];items.splice(i,1);
 return getRef().set({items:items},{merge:true})})}
 
-function resetCurrent(){getRef().delete().then(function(){
+function resetCurrent(){
+if(!me)return;
+if(!confirm('Reset cet onglet ?'))return;
+getRef().delete().then(function(){
 document.getElementById('status').textContent='🔄 Reset !';
-setTimeout(function(){document.getElementById('status').textContent=''},1500)})}
+setTimeout(function(){document.getElementById('status').textContent=''},1500);})}
 
 function showSt(){document.getElementById('status').textContent='✅ Sauvegardé !';
 setTimeout(function(){document.getElementById('status').textContent=''},1500)}
@@ -239,7 +234,9 @@ hideEnc();
 var promises=[];var labels=[];
 for(var i=6;i>=0;i--){
   var dt=new Date();dt.setDate(dt.getDate()-i);
-var key='routine-'+me+'-'+dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+  var dateStr=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+  var key='routine-'+me+'-'+dateStr;
+  labels.push(dayNames[dt.getDay()]+' '+dt.getDate());
   promises.push(db.collection('couple').doc(key).get());
 }
 Promise.all(promises).then(function(docs){
@@ -267,12 +264,21 @@ pcts.forEach(function(p,i){
 html+='</div>';
 html+='<div class="stat-box">';
 html+='<div class="stat"><div class="sv">'+avg+'%</div><div class="sl">Moyenne</div></div>';
-html+='<div class="stat"><div class="sv">'+streak+'</div><div class="sl">Jours de suite 🔥</div></div>';
+html+='<div class="stat"><div class="sv">'+streak+'</div><div class="sl">Streak 🔥</div></div>';
 html+='<div class="stat"><div class="sv">'+best+'%</div><div class="sl">Meilleur jour</div></div>';
 html+='<div class="stat"><div class="sv">'+totalDone+'</div><div class="sl">Tâches faites</div></div>';
 html+='</div>';
 document.getElementById('zone').innerHTML=html;
 })}
+
+var cachedDoc=null;
+function updateLastMaj(){
+var d=cachedDoc||{};
+var parts=[];
+if(d.last_a)parts.push('🏰 '+timeAgo(d.last_a));
+if(d.last_k)parts.push('🐟 '+timeAgo(d.last_k));
+document.getElementById('lastmaj').textContent=parts.length?'Dernière MAJ : '+parts.join(' · '):'';
+}
 
 var unsub=null;
 function listenCurrent(){
@@ -280,11 +286,14 @@ if(!me)return;
 if(unsub)unsub();
 unsub=getRef().onSnapshot(function(doc){
 var d=doc.exists?doc.data():null;
+cachedDoc=d;
 if(tab===0)buildList(d,'routine','');
 else if(tab===1)buildList(d,'todo','');
 else if(tab===2)buildList(d,'goal','semaine');
 else if(tab===3)buildList(d,'goal','mois');
+updateLastMaj();
 })}
+setInterval(updateLastMaj,60000);
 </script>
 </body>
 </html>
