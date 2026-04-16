@@ -7,9 +7,35 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
-.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
-h2{font-family:'Playfair Display',serif;font-size:20px;color:#2d2a26;margin-bottom:4px}
-.sub{font-size:12px;color:#9a958e;margin-bottom:18px;font-style:italic}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:800px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
+h2{font-family:'Playfair Display',serif;font-size:22px;color:#2d2a26;margin-bottom:4px}
+.sub{font-size:12px;color:#9a958e;margin-bottom:20px;font-style:italic}
+
+/* DONE SECTION */
+.done-section{background:linear-gradient(135deg,#fef9f0,#fff5f2);border-radius:18px;padding:18px;margin-bottom:20px}
+.done-title{font-family:'Playfair Display',serif;font-size:16px;color:#2d2a26;margin-bottom:14px}
+.done-row{display:flex;gap:14px;justify-content:center}
+.done-card{flex:1;max-width:280px;background:#fff;border-radius:14px;padding:14px;border:2.5px solid #ece8e2;cursor:pointer;transition:all .2s;position:relative}
+.done-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.done-card.done{border-color:#6bbd7b;background:rgba(107,189,123,.06)}
+.done-card.done .cb{background:#6bbd7b;border-color:#6bbd7b;color:#fff}
+.done-name{font-family:'Playfair Display',serif;font-size:15px;color:#2d2a26;margin-bottom:4px}
+.done-icon{font-size:28px;margin-bottom:6px}
+.done-label{font-size:11px;color:#9a958e;font-weight:600;margin-bottom:10px}
+.cb-wrap{display:flex;align-items:center;justify-content:center;gap:8px}
+.cb{width:26px;height:26px;border-radius:8px;border:3px solid #d4cfc6;background:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;transition:all .2s;flex-shrink:0}
+.cb-lbl{font-size:12px;font-weight:700;color:#2d2a26}
+.celebration{background:linear-gradient(135deg,#f0faf2,#e8f5e9,#fff5f2);border-radius:18px;padding:20px;margin-bottom:20px;display:none;position:relative;overflow:hidden}
+.celebration.v{display:block;animation:fi .5s ease}
+.celebration .cel-emj{font-size:44px;margin-bottom:4px;display:inline-block;animation:bounce 1s ease infinite}
+.celebration .cel-txt{font-family:'Playfair Display',serif;font-size:20px;color:#2d2a26;margin-bottom:4px}
+.celebration .cel-sub{font-size:12px;color:#9a958e}
+.conf{position:absolute;font-size:20px;pointer-events:none;animation:fall 2s ease-in forwards}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(200px) rotate(720deg);opacity:0}}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESET SECTION */
 .bigbtns{display:flex;gap:12px;margin-bottom:22px}
 .big{flex:1;padding:18px 14px;border:2.5px solid #ece8e2;border-radius:18px;background:#fff;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif}
 .big:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
@@ -20,15 +46,17 @@ h2{font-family:'Playfair Display',serif;font-size:20px;color:#2d2a26;margin-bott
 .big .ico{font-size:28px;margin-bottom:4px}
 .big .nm{font-family:'Playfair Display',serif;font-size:16px;color:#2d2a26;font-weight:700}
 .big .lbl{font-size:11px;color:#9a958e;font-weight:600;margin-top:2px}
+
 .section{background:#faf8f5;border-radius:16px;padding:16px;margin-bottom:14px}
 .section-title{font-size:12px;color:#9a958e;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;text-align:left}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
 .item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff;border:1.5px solid #ece8e2;border-radius:12px;transition:all .15s}
 .item:hover{border-color:#e07a5f}
 .item .emj{font-size:18px;flex-shrink:0}
 .item .name{flex:1;text-align:left;font-size:12px;font-weight:700;color:#2d2a26}
 .item button{padding:5px 10px;border:1.5px solid #ece8e2;border-radius:8px;background:#fff;cursor:pointer;font-size:10px;font-weight:700;color:#9a958e;font-family:'Nunito',sans-serif;transition:all .15s}
 .item button:hover{border-color:#e07a5f;color:#e07a5f}
+
 .confirm-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(45,42,38,.5);display:none;align-items:center;justify-content:center;z-index:100}
 .confirm-overlay.v{display:flex;animation:fi .2s ease}
 .confirm-box{background:#fff;border-radius:18px;padding:24px;max-width:360px;width:90%;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.15)}
@@ -40,16 +68,49 @@ h2{font-family:'Playfair Display',serif;font-size:20px;color:#2d2a26;margin-bott
 .cbtn.cancel:hover{background:#d4d0ca}
 .cbtn.confirm{background:#e07a5f;color:#fff}
 .cbtn.confirm:hover{background:#c9694f}
+
 .status{font-size:11px;color:#6bbd7b;margin-top:10px;font-weight:600;min-height:16px}
 .ft{margin-top:14px;font-size:9px;color:#c5c0b8}
-@keyframes fi{from{opacity:0}to{opacity:1}}
 </style>
 </head>
 <body>
 <div class="w">
 <h2>Centre de Contrôle 🎛️</h2>
-<div class="sub">Nouvelle journée ? Reset ce que tu veux en un clic</div>
+<div class="sub">Tout gérer depuis un seul endroit</div>
 
+<!-- Celebration banner -->
+<div class="celebration" id="celeb">
+<div class="cel-emj">🎉</div>
+<div class="cel-txt">Journée complète !</div>
+<div class="cel-sub">Vous avez tous les deux rempli vos widgets 💕</div>
+</div>
+
+<!-- DONE section -->
+<div class="done-section">
+<div class="done-title">✨ J'ai tout rempli aujourd'hui</div>
+<div class="done-row">
+<div class="done-card" id="doneA" onclick="toggleDone('a')">
+<div class="done-icon">🏰❤️</div>
+<div class="done-name">Alexandre</div>
+<div class="done-label">La Rochelle</div>
+<div class="cb-wrap">
+<div class="cb" id="cbA"></div>
+<div class="cb-lbl" id="lblA">À remplir</div>
+</div>
+</div>
+<div class="done-card" id="doneK" onclick="toggleDone('k')">
+<div class="done-icon">🐟💕</div>
+<div class="done-name">Klara</div>
+<div class="done-label">Nouvelle-Calédonie</div>
+<div class="cb-wrap">
+<div class="cb" id="cbK"></div>
+<div class="cb-lbl" id="lblK">À remplir</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Big reset buttons -->
 <div class="bigbtns">
 <button class="big a" onclick="confirmReset('a')">
 <div class="ico">🏰❤️</div>
@@ -63,8 +124,9 @@ h2{font-family:'Playfair Display',serif;font-size:20px;color:#2d2a26;margin-bott
 </button>
 </div>
 
+<!-- Widget-level reset -->
 <div class="section">
-<div class="section-title">🎯 Reset ciblé (pour les deux)</div>
+<div class="section-title">🎯 Reset par widget (pour les deux)</div>
 <div class="grid" id="grid"></div>
 </div>
 
@@ -72,6 +134,7 @@ h2{font-family:'Playfair Display',serif;font-size:20px;color:#2d2a26;margin-bott
 <div class="ft">🏰💕🐟 Nous Deux.</div>
 </div>
 
+<!-- Confirmation modal -->
 <div class="confirm-overlay" id="confirm">
 <div class="confirm-box">
 <div class="confirm-title" id="ctitle">Sûr ?</div>
@@ -88,19 +151,21 @@ h2{font-family:'Playfair Display',serif;font-size:20px;color:#2d2a26;margin-bott
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
 var db=firebase.firestore();
+var statusRef=db.collection('couple').doc('daily-status');
 
 var widgets=[
-{id:'mood3',emj:'✨',name:'Mood du Jour',personal:true},
-{id:'eau',emj:'💧',name:'Tracker Eau',personal:true},
-{id:'sport',emj:'💪',name:'Sport du Jour',personal:true},
-{id:'horny',emj:'🔥',name:'Horny Meter',personal:true},
-{id:'message',emj:'💌',name:'Petit Mot',personal:true},
-{id:'draw',emj:'🎨',name:'Dessin du Jour',shared:true},
-{id:'2v1m',emj:'🤥',name:'2V1M',shared:true},
-{id:'pom',emj:'🔢',name:'Plus ou Moins',shared:true},
-{id:'qdj',emj:'💭',name:'Question Jour',shared:true},
-{id:'tp',emj:'🎮',name:'Tu Préfères',shared:true}
+{id:'mood3',emj:'✨',name:'Mood'},
+{id:'eau',emj:'💧',name:'Eau'},
+{id:'sport',emj:'💪',name:'Sport'},
+{id:'horny',emj:'🔥',name:'Horny'},
+{id:'message',emj:'💌',name:'Message'},
+{id:'draw',emj:'🎨',name:'Dessin'},
+{id:'2v1m',emj:'🤥',name:'2V1M'},
+{id:'pom',emj:'🔢',name:'Plus ou Moins'},
+{id:'cheat',emj:'🍔',name:'Cheat Meal'}
 ];
+
+var personalWidgets=['mood3','eau','sport','horny','message'];
 
 function buildGrid(){
 var html='';
@@ -123,7 +188,7 @@ document.getElementById('confirm').classList.add('v');
 
 function confirmResetWidget(id,name){
 document.getElementById('ctitle').textContent='Reset '+name+' ?';
-document.getElementById('ctext').textContent='Ça va effacer TOUT ce widget (pour les deux). Sûr ?';
+document.getElementById('ctext').textContent='Ça va effacer TOUT ce widget (pour les deux).';
 pendingAction=function(){resetWidget(id)};
 document.getElementById('confirm').classList.add('v');
 }
@@ -139,27 +204,34 @@ pendingAction=null;
 }
 
 function resetPerson(who){
-var personalWidgets=['mood3','eau','sport','horny','message'];
 var promises=[];
+var del=firebase.firestore.FieldValue.delete();
 personalWidgets.forEach(function(id){
   var ref=db.collection('couple').doc(id);
   if(id==='mood3'){
-    // mood uses flat keys like a_now, a_matin, etc
     var slots=['now','matin','midi','aprem','soir'];
-    var updates={};
-    slots.forEach(function(s){updates[who+'_'+s]=firebase.firestore.FieldValue.delete()});
-    promises.push(ref.update(updates).catch(function(){}));
+    var u={};
+    slots.forEach(function(s){u[who+'_'+s]=del});
+    u['last_'+who]=del;
+    promises.push(ref.set(u,{merge:true}).catch(function(e){console.log('mood err',e)}));
   } else if(id==='message'){
+    var u={};u['msg_'+who]=del;u['time_'+who]=del;u['last_'+who]=del;
+    promises.push(ref.set(u,{merge:true}).catch(function(e){console.log('msg err',e)}));
+  } else if(id==='sport'){
+    var days=['lun','mar','mer','jeu','ven','sam','dim'];
     var u={};
-    u['msg_'+who]=firebase.firestore.FieldValue.delete();
-    u['time_'+who]=firebase.firestore.FieldValue.delete();
-    promises.push(ref.update(u).catch(function(){}));
+    days.forEach(function(day){u[who+'_'+day]=del});
+    u['last_'+who]=del;
+    promises.push(ref.set(u,{merge:true}).catch(function(e){console.log('sport err',e)}));
   } else {
-    var u={};
-    u[who]=firebase.firestore.FieldValue.delete();
-    promises.push(ref.update(u).catch(function(){}));
+    var u={};u[who]=del;u['last_'+who]=del;
+    promises.push(ref.set(u,{merge:true}).catch(function(e){console.log(id+' err',e)}));
   }
 });
+// Also reset the done checkbox
+var u2={};u2['done_'+who]=del;
+promises.push(statusRef.set(u2,{merge:true}).catch(function(){}));
+
 Promise.all(promises).then(function(){
   var nm=who==='a'?'Alexandre':'Klara';
   showStatus('✅ Reset '+nm+' terminé !');
@@ -172,12 +244,72 @@ db.collection('couple').doc(id).delete().then(function(){
 });
 }
 
+function toggleDone(who){
+statusRef.get().then(function(doc){
+var d=doc.exists?doc.data():{};
+var u={};
+u['done_'+who]=!d['done_'+who];
+return statusRef.set(u,{merge:true});
+}).then(function(){
+showStatus(who==='a'?'✅ Alexandre : statut mis à jour':'✅ Klara : statut mis à jour');
+});
+}
+
+function renderStatus(d){
+d=d||{};
+['a','k'].forEach(function(w){
+var card=document.getElementById('done'+w.toUpperCase());
+var cb=document.getElementById('cb'+w.toUpperCase());
+var lbl=document.getElementById('lbl'+w.toUpperCase());
+if(d['done_'+w]){
+  card.classList.add('done');
+  cb.textContent='✓';
+  lbl.textContent='Terminé !';
+}else{
+  card.classList.remove('done');
+  cb.textContent='';
+  lbl.textContent='À remplir';
+}
+});
+var celeb=document.getElementById('celeb');
+if(d.done_a&&d.done_k){
+  celeb.classList.add('v');
+  launchConfetti();
+}else{
+  celeb.classList.remove('v');
+}
+}
+
+var confettiActive=false;
+function launchConfetti(){
+if(confettiActive)return;
+confettiActive=true;
+var emojis=['🎉','⭐','🏆','💪','🔥','✨','💕','🎊'];
+var celeb=document.getElementById('celeb');
+for(var i=0;i<20;i++){
+  var s=document.createElement('span');
+  s.className='conf';
+  s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  s.style.left=(Math.random()*100)+'%';
+  s.style.animationDelay=(Math.random()*1.5)+'s';
+  celeb.appendChild(s);
+}
+setTimeout(function(){
+var confs=celeb.querySelectorAll('.conf');
+confs.forEach(function(c){c.remove()});
+confettiActive=false;
+},3000);
+}
+
 function showStatus(msg){
 document.getElementById('status').textContent=msg;
 setTimeout(function(){document.getElementById('status').textContent=''},2500);
 }
 
 buildGrid();
+statusRef.onSnapshot(function(doc){
+renderStatus(doc.exists?doc.data():null);
+});
 </script>
 </body>
 </html>
