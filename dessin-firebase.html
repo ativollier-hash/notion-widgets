@@ -81,8 +81,7 @@ canvas{display:block;cursor:crosshair;width:100%;height:auto}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
-var db=firebase.firestore(),me=null,today=new Date().toISOString().slice(0,10);
-var docRef=db.collection('couple').doc('draw-'+today);
+var db=firebase.firestore(),me=null,now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
 var colors=['#2d2a26','#e07a5f','#4ba8e8','#6bbd7b','#f0c040','#9b59b6','#e74c3c','#ff9800','#f48fb1','#ffffff'];
 var brushSize=4,curColor='#2d2a26',isEraser=false,drawing=false,canvas,ctx;
 var rates=['🤩','😍','😂','👏','💀'];
