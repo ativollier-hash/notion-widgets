@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#faf8f5;padding:14px}
+.w{background:#fff;border-radius:22px;padding:24px;max-width:750px;margin:0 auto;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #ece8e2;text-align:center}
+h2{font-family:'Playfair Display',serif;font-size:20px;color:#2d2a26;margin-bottom:4px}
+.sub{font-size:12px;color:#9a958e;margin-bottom:18px;font-style:italic}
+.bigbtns{display:flex;gap:12px;margin-bottom:22px}
+.big{flex:1;padding:18px 14px;border:2.5px solid #ece8e2;border-radius:18px;background:#fff;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif}
+.big:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.big.a{border-color:#e07a5f}
+.big.a:hover{background:rgba(224,122,95,.04)}
+.big.k{border-color:#4ba8e8}
+.big.k:hover{background:rgba(75,168,232,.04)}
+.big .ico{font-size:28px;margin-bottom:4px}
+.big .nm{font-family:'Playfair Display',serif;font-size:16px;color:#2d2a26;font-weight:700}
+.big .lbl{font-size:11px;color:#9a958e;font-weight:600;margin-top:2px}
+.section{background:#faf8f5;border-radius:16px;padding:16px;margin-bottom:14px}
+.section-title{font-size:12px;color:#9a958e;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;text-align:left}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff;border:1.5px solid #ece8e2;border-radius:12px;transition:all .15s}
+.item:hover{border-color:#e07a5f}
+.item .emj{font-size:18px;flex-shrink:0}
+.item .name{flex:1;text-align:left;font-size:12px;font-weight:700;color:#2d2a26}
+.item button{padding:5px 10px;border:1.5px solid #ece8e2;border-radius:8px;background:#fff;cursor:pointer;font-size:10px;font-weight:700;color:#9a958e;font-family:'Nunito',sans-serif;transition:all .15s}
+.item button:hover{border-color:#e07a5f;color:#e07a5f}
+.confirm-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(45,42,38,.5);display:none;align-items:center;justify-content:center;z-index:100}
+.confirm-overlay.v{display:flex;animation:fi .2s ease}
+.confirm-box{background:#fff;border-radius:18px;padding:24px;max-width:360px;width:90%;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.confirm-title{font-family:'Playfair Display',serif;font-size:18px;color:#2d2a26;margin-bottom:8px}
+.confirm-text{font-size:13px;color:#9a958e;margin-bottom:18px;line-height:1.4}
+.confirm-btns{display:flex;gap:8px;justify-content:center}
+.cbtn{padding:10px 24px;border-radius:12px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;transition:all .15s}
+.cbtn.cancel{background:#ece8e2;color:#2d2a26}
+.cbtn.cancel:hover{background:#d4d0ca}
+.cbtn.confirm{background:#e07a5f;color:#fff}
+.cbtn.confirm:hover{background:#c9694f}
+.status{font-size:11px;color:#6bbd7b;margin-top:10px;font-weight:600;min-height:16px}
+.ft{margin-top:14px;font-size:9px;color:#c5c0b8}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+<body>
+<div class="w">
+<h2>Centre de Contrôle 🎛️</h2>
+<div class="sub">Nouvelle journée ? Reset ce que tu veux en un clic</div>
+
+<div class="bigbtns">
+<button class="big a" onclick="confirmReset('a')">
+<div class="ico">🏰❤️</div>
+<div class="nm">Reset Alexandre</div>
+<div class="lbl">Efface mes données perso</div>
+</button>
+<button class="big k" onclick="confirmReset('k')">
+<div class="ico">🐟💕</div>
+<div class="nm">Reset Klara</div>
+<div class="lbl">Efface mes données perso</div>
+</button>
+</div>
+
+<div class="section">
+<div class="section-title">🎯 Reset ciblé (pour les deux)</div>
+<div class="grid" id="grid"></div>
+</div>
+
+<div class="status" id="status"></div>
+<div class="ft">🏰💕🐟 Nous Deux.</div>
+</div>
+
+<div class="confirm-overlay" id="confirm">
+<div class="confirm-box">
+<div class="confirm-title" id="ctitle">Sûr ?</div>
+<div class="confirm-text" id="ctext"></div>
+<div class="confirm-btns">
+<button class="cbtn cancel" onclick="closeConfirm()">Annuler</button>
+<button class="cbtn confirm" id="cok">Confirmer</button>
+</div>
+</div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyDywRXlDSyFgI2BlmMCMXAMc2uZKUWJY54",authDomain:"notion-bdd.firebaseapp.com",projectId:"notion-bdd",storageBucket:"notion-bdd.firebasestorage.app",messagingSenderId:"641330827114",appId:"1:641330827114:web:0bf5fc986540a4c9085f13"});
+var db=firebase.firestore();
+
+var widgets=[
+{id:'mood3',emj:'✨',name:'Mood du Jour',personal:true},
+{id:'eau',emj:'💧',name:'Tracker Eau',personal:true},
+{id:'sport',emj:'💪',name:'Sport du Jour',personal:true},
+{id:'horny',emj:'🔥',name:'Horny Meter',personal:true},
+{id:'message',emj:'💌',name:'Petit Mot',personal:true},
+{id:'draw',emj:'🎨',name:'Dessin du Jour',shared:true},
+{id:'2v1m',emj:'🤥',name:'2V1M',shared:true},
+{id:'pom',emj:'🔢',name:'Plus ou Moins',shared:true},
+{id:'qdj',emj:'💭',name:'Question Jour',shared:true},
+{id:'tp',emj:'🎮',name:'Tu Préfères',shared:true}
+];
+
+function buildGrid(){
+var html='';
+widgets.forEach(function(w){
+  html+='<div class="item"><span class="emj">'+w.emj+'</span><span class="name">'+w.name+'</span>';
+  html+='<button onclick="confirmResetWidget(\''+w.id+'\',\''+w.name+'\')">Reset</button></div>';
+});
+document.getElementById('grid').innerHTML=html;
+}
+
+var pendingAction=null;
+
+function confirmReset(who){
+var nm=who==='a'?'🏰 Alexandre':'🐟 Klara';
+document.getElementById('ctitle').textContent='Reset '+nm+' ?';
+document.getElementById('ctext').textContent='Ça va effacer tes données perso (mood, eau, sport, horny, message) dans tous les widgets. Les données de l\'autre restent intactes.';
+pendingAction=function(){resetPerson(who)};
+document.getElementById('confirm').classList.add('v');
+}
+
+function confirmResetWidget(id,name){
+document.getElementById('ctitle').textContent='Reset '+name+' ?';
+document.getElementById('ctext').textContent='Ça va effacer TOUT ce widget (pour les deux). Sûr ?';
+pendingAction=function(){resetWidget(id)};
+document.getElementById('confirm').classList.add('v');
+}
+
+document.getElementById('cok').onclick=function(){
+if(pendingAction)pendingAction();
+closeConfirm();
+};
+
+function closeConfirm(){
+document.getElementById('confirm').classList.remove('v');
+pendingAction=null;
+}
+
+function resetPerson(who){
+var personalWidgets=['mood3','eau','sport','horny','message'];
+var promises=[];
+personalWidgets.forEach(function(id){
+  var ref=db.collection('couple').doc(id);
+  if(id==='mood3'){
+    // mood uses flat keys like a_now, a_matin, etc
+    var slots=['now','matin','midi','aprem','soir'];
+    var updates={};
+    slots.forEach(function(s){updates[who+'_'+s]=firebase.firestore.FieldValue.delete()});
+    promises.push(ref.update(updates).catch(function(){}));
+  } else if(id==='message'){
+    var u={};
+    u['msg_'+who]=firebase.firestore.FieldValue.delete();
+    u['time_'+who]=firebase.firestore.FieldValue.delete();
+    promises.push(ref.update(u).catch(function(){}));
+  } else {
+    var u={};
+    u[who]=firebase.firestore.FieldValue.delete();
+    promises.push(ref.update(u).catch(function(){}));
+  }
+});
+Promise.all(promises).then(function(){
+  var nm=who==='a'?'Alexandre':'Klara';
+  showStatus('✅ Reset '+nm+' terminé !');
+});
+}
+
+function resetWidget(id){
+db.collection('couple').doc(id).delete().then(function(){
+  showStatus('✅ '+id+' effacé !');
+});
+}
+
+function showStatus(msg){
+document.getElementById('status').textContent=msg;
+setTimeout(function(){document.getElementById('status').textContent=''},2500);
+}
+
+buildGrid();
+</script>
+</body>
+</html>
